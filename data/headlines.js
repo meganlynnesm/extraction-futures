@@ -1,4 +1,4 @@
-/* Snapshot of the In the Headlines database, used when the page is opened outside claude.ai. */
+/* Snapshot of the In the Headlines database */
 window.HEADLINES_SNAPSHOT = {
 "lastScan": "2026-11-10",
 "events": [

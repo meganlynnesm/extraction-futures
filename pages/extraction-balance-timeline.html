@@ -24,16 +24,22 @@ h1{font:italic 400 clamp(30px,4vw,48px)/1.17 var(--font-head);letter-spacing:-.0
 .scroller.drag{cursor:grabbing;user-select:none}
 .scroller:focus-visible{outline:1px solid var(--pink);outline-offset:-2px}
 .row{display:grid;grid-auto-flow:column;grid-auto-columns:440px;width:max-content}
-.era{position:relative;height:270px}
+.era{position:relative;height:300px}
+.lead{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+.lead line{stroke:rgba(252,251,250,.5);stroke-width:.75}
+.photo{z-index:1}
 .photo{position:absolute}
 .slot{position:relative;display:block;width:100%;cursor:pointer;background:transparent center/cover no-repeat;outline:1px dashed rgba(190,182,172,.3);outline-offset:-1px}
-.slot.has{outline:0;filter:grayscale(.75) contrast(.85) sepia(.03) brightness(1.02)}
+.slot.has{outline:0;filter:grayscale(1) contrast(.92) brightness(1.02)}
 .slot::after{content:"";position:absolute;inset:0;background:var(--pink);mix-blend-mode:screen;opacity:0;transition:opacity .3s ease;pointer-events:none}
 .slot.has:hover::after,.slot.has:focus-within::after{opacity:.85}
 .slot:focus-within{outline:1px solid var(--pink)}
 .slot input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer}
 .slot svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .cap{text-align:center;font-size:13px;font-weight:400;line-height:18px;color:var(--fg-muted);margin-top:8px}
+.cap a{color:inherit;text-decoration:underline;text-decoration-color:rgba(190,182,172,.5);text-underline-offset:3px}
+.cap a:hover,.cap a:focus-visible{color:var(--pink);text-decoration-color:var(--pink)}
+.slot.fixed{cursor:default}
 .line{position:relative}
 .line::before{content:"";position:absolute;left:0;right:0;top:9px;border-top:2.5px dashed rgba(252,251,250,.85)}
 .specline{position:absolute;top:11px;bottom:0;width:0;border-left:1px dashed rgba(207,114,155,.63);pointer-events:none}
@@ -55,8 +61,8 @@ h1{font:italic 400 clamp(30px,4vw,48px)/1.17 var(--font-head);letter-spacing:-.0
 </style>
 
 <header>
-  <h1>Extraction and balance</h1>
-  <p class="desc">Peat harvesting and data centres in Ireland, from the bog forming to two possible futures. Scroll sideways through time.</p>
+  <h1>Extraction and Balance</h1>
+  <p class="desc">Peat harvesting and data centres in Ireland, from the bog forming to two possible futures. Scroll to the right.</p>
 </header>
 
 <div class="scroller" id="scroller" tabindex="0" aria-label="Timeline, scroll sideways">
@@ -69,13 +75,13 @@ h1{font:italic 400 clamp(30px,4vw,48px)/1.17 var(--font-head);letter-spacing:-.0
 <script>
 const COL=440;
 const ERAS=[
- {key:"bog",yr:"c. 10,000 years ago",txt:"Bogs form after the last Ice Age, growing about 1 mm a year.",cap:"Sphagnum, the bog builder",tool:"moss",ph:{l:80,t:30,w:240,h:150}},
- {key:"hearth",yr:"Before 1934",txt:"Households cut turf by hand from their own bank of bog.",cap:"Hand cutting with a sleán",tool:"slean",ph:{l:150,t:0,w:190,h:200}},
- {key:"state",yr:"1934 to 1946",txt:"The Turf Development Board becomes Bord na Móna. Bogs are drained.",cap:"Draining a production bog",tool:"drain",ph:{l:40,t:56,w:280,h:130}},
- {key:"power",yr:"1950 to 1967",txt:"Portarlington, the first turf-fired power station, opens in 1950.",cap:"Turf-fired power station",tool:"chimney",ph:{l:130,t:10,w:220,h:180}},
- {key:"scale",yr:"1974 to 2005",txt:"Milled peat feeds new stations. Older stations close.",cap:"Milled peat harvester",tool:"miller",ph:{l:50,t:44,w:270,h:140}},
- {key:"overlap",yr:"2015 to 2021",txt:"Data centres use 5% of Ireland's electricity while peat is still harvested, until 2021.",cap:"Grid across the cutaway",tool:"pylon",ph:{l:170,t:0,w:180,h:196}},
- {key:"now",yr:"2022 to 2025",txt:"Data centres use 23% of Ireland's electricity. Cutaway bog is rehabilitated.",cap:"Data centre campus",tool:"rack",ph:{l:60,t:40,w:290,h:140}},
+ {imgs:[{src:"bog-sphagnum.jpg",cap:"Sphagnum, the bog builder",by:"IPCC",url:"https://www.ipcc.ie/a-to-z-peatlands/peatland-species/bog-plants/",l:8,t:74,w:110,ar:1.066,at:0.28},{src:"bog-heather.jpg",cap:"Ling heather",by:"IPCC",url:"https://www.ipcc.ie/a-to-z-peatlands/peatland-species/bog-plants/",l:156,t:8,w:84,ar:0.78,at:0.5},{src:"bog-cottongrass.jpg",cap:"Bog cotton",by:"IPCC",url:"https://www.ipcc.ie/a-to-z-peatlands/peatland-species/bog-plants/",l:292,t:108,w:92,ar:0.835,at:0.72}],key:"bog",yr:"c. 10,000 years ago",txt:"Bogs form after the last Ice Age, growing about 1 mm a year.",cap:"Sphagnum, the bog builder",tool:"moss",ph:{l:80,t:30,w:240,h:150}},
+ {imgs:[{src:"hearth-errigal.jpg",cap:"Footing turf below Errigal",by:"Vala Alta",url:"https://valaalta.co/blogs/writings/irelands-forgotten-fossil-fuel",l:270,t:150,w:160,ar:2.16,at:0.72},{src:"hearth-tools.jpg",cap:"Turf sods and a cutting spade",by:"Irish Getaways",url:"https://www.irishgetaways.com/blog/peat-cutting-ireland-tradition",l:140,t:18,w:130,ar:1.78,at:0.42},{src:"hearth-valentia.jpg",cap:"1858: Valentia cable",by:"Atlantic Cable",url:"https://atlantic-cable.com/Article/CableTrail/ValentiaHC/index.htm",l:8,t:120,w:100,ar:1.393,at:0.12}],key:"hearth",yr:"Before 1934",txt:"Households cut turf by hand from their own bank of bog.",cap:"Hand cutting with a sleán",tool:"slean",ph:{l:150,t:0,w:190,h:200}},
+ {imgs:[{src:"state-drain.jpg",cap:"A drained production bog",by:"IPCC",url:"https://www.ipcc.ie/advice/peatland-management-diy-tool-kit/restoration-of-industrial-cutaway-peatlands/",l:140,t:36,w:170,ar:1.263,at:0.5}],key:"state",yr:"1934 to 1946",txt:"The Turf Development Board becomes Bord na Móna. Bogs are drained.",cap:"Draining a production bog",tool:"drain",ph:{l:40,t:56,w:280,h:130}},
+ {imgs:[{src:"power-portarlington.jpg",cap:"Portarlington power station, opened 1950",by:"Bord na Móna Living History",url:"https://www.bordnamonalivinghistory.ie/blog-detail/portarlington-power-station/",l:8,t:64,w:190,ar:1.497,at:0.08},{src:"power-ad.jpg",cap:"Recruiting turf workers, 1950s",by:"Bord na Móna Living History",url:"https://www.bordnamonalivinghistory.ie/article-detail/bord-na-mona-in-the-ads/",l:214,t:8,w:105,ar:0.734,at:0.3}],key:"power",yr:"1950 to 1967",txt:"Portarlington, the first turf-fired power station, opens in 1950.",cap:"Turf-fired power station",tool:"chimney",ph:{l:130,t:10,w:220,h:180}},
+ {imgs:[{src:"scale-machinery.jpg",cap:"Industrial peat harvesting",by:"Irish Getaways",url:"https://www.irishgetaways.com/blog/peat-cutting-ireland-tradition",l:214,t:10,w:180,ar:1.82,at:0.6},{src:"scale-clara.jpg",cap:"Drains cut on Clara East, 1983 to 1984",by:"Raised Bogs",url:"https://www.raisedbogs.ie/history-4/",l:40,t:92,w:130,ar:1.263,at:0.31}],key:"scale",yr:"1974 to 2005",txt:"Milled peat feeds new stations. Older stations close.",cap:"Milled peat harvester",tool:"miller",ph:{l:50,t:44,w:270,h:140}},
+ {imgs:[{src:"overlap-derryadd.jpg",cap:"Derryadd cutaway, proposed wind farm",by:"An Bord Pleanála",url:"https://www.pleanala.ie/publicaccess/EIAR-NIS/322204/Volume%20II-%20Main%20Text/11400%20Derryadd%20rEIAR%20-%20Chapter%2012%20LVIA_Final.pdf",l:140,t:58,w:230,ar:2.29,at:0.62}],key:"overlap",yr:"2015 to 2021",txt:"Data centres use 5% of Ireland's electricity while peat is still harvested, until 2021.",cap:"Grid across the cutaway",tool:"pylon",ph:{l:170,t:0,w:180,h:196}},
+ {imgs:[{src:"now-racks.jpg",cap:"Server racks",by:"Politico",url:"https://www.politico.eu/article/big-tech-artificial-intelligence-ai-dream-ireland-energy-nightmare/",l:96,t:8,w:150,ar:1.5,at:0.55},{src:"now-turf-turbines.jpg",cap:"Footing turf beside a wind farm, 2025",by:"The Guardian",url:"https://www.theguardian.com/environment/gallery/2025/jun/15/on-irelands-peat-bogs-climate-action-clashes-with-tradition-in-pictures",l:262,t:104,w:150,ar:1.7,at:0.95}],key:"now",yr:"2022 to 2025",txt:"Data centres use 23% of Ireland's electricity. Cutaway bog is rehabilitated.",cap:"Data centre campus",tool:"rack",ph:{l:60,t:40,w:290,h:140}},
  {key:"futA",yr:"Future A",txt:"Extraction. The land keeps pace with the infrastructure.",cap:"Render: extraction",tool:null,tbd:true,spec:true,ph:{l:110,t:20,w:230,h:160}},
  {key:"futB",yr:"Future B",txt:"Balance. The bog is rewetted and the infrastructure follows the land.",cap:"Render: balance",tool:null,tbd:true,spec:true,ph:{l:70,t:6,w:230,h:190}},
  {key:"peat",yr:"Back to the peat",txt:"",cap:"",tool:null,blank:true,ph:{l:130,t:30,w:210,h:160}}
@@ -97,6 +103,9 @@ ERAS.forEach(e=>{
   if(e.blank){ photos.appendChild(col); const s=document.createElement('div'); s.className='stop'; s.innerHTML=`<div class="yr">${e.yr}</div>`; stops.appendChild(s); return; }
   if(e.tbd){ col.innerHTML=`<figure class="photo" style="left:${ph.l}px;top:${ph.t}px;width:${ph.w}px;margin:0"><div class="slot blank" style="height:${ph.h-30}px"><span class="tbd">TBD</span></div><figcaption class="cap">${e.cap}</figcaption></figure>`;
     photos.appendChild(col); const s=document.createElement('div'); s.className='stop spec'; s.innerHTML=`<div class="yr">${e.yr}</div><div class="txt">${e.txt}</div>`; stops.appendChild(s); return; }
+  if(e.imgs){ col.innerHTML=e.imgs.map(m=>`<figure class="photo" style="left:${m.l}px;top:${m.t}px;width:${m.w}px;margin:0"><div class="slot has fixed" role="img" aria-label="${m.cap}" style="height:${Math.round(m.w/m.ar)}px;background-image:url(timeline-img/${m.src})"></div><figcaption class="cap">${m.cap}${m.url?`. <a href="${m.url}" target="_blank" rel="noopener">${m.by}</a>`:''}</figcaption></figure>`).join('');
+    col.insertAdjacentHTML('beforeend','<svg class="lead" width="440" height="312" aria-hidden="true"></svg>'); col._imgs=e.imgs;
+    photos.appendChild(col); const s=document.createElement('div'); s.className='stop'; s.innerHTML=`<div class="yr">${e.yr}</div><div class="txt">${e.txt}</div>`; stops.appendChild(s); return; }
   col.innerHTML=`<figure class="photo" style="left:${ph.l}px;top:${ph.t}px;width:${ph.w}px;margin:0"><label class="slot" style="height:${ph.h-30}px"><input type="file" accept="image/*" aria-label="Add a photo: ${e.cap}"><svg viewBox="0 0 420 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${TOOLS[e.tool]}</svg></label><figcaption class="cap">${e.cap}</figcaption></figure>`;
   photos.appendChild(col);
   const s=document.createElement('div'); s.className='stop'+(e.spec?' spec':''); s.innerHTML=`<div class="yr">${e.yr}</div><div class="txt">${e.txt}</div>`; stops.appendChild(s);
@@ -108,6 +117,12 @@ ERAS.forEach(e=>{
 });
 
 [7,8].forEach(k=>{ const d=document.createElement('div'); d.className='specline'; d.style.left=(k*COL)+'px'; stops.appendChild(d); });
+
+/* leader lines: from the foot of each caption down to its estimated date on the timeline */
+function leaders(){ document.querySelectorAll('.era').forEach(col=>{ if(!col._imgs) return; const svg=col.querySelector('.lead'), H=col.offsetHeight+9;
+  svg.innerHTML=[...col.querySelectorAll('.photo')].map((f,i)=>{ const m=col._imgs[i], x1=f.offsetLeft+f.offsetWidth/2, y1=f.offsetTop+f.offsetHeight+4, x2=Math.round(m.at*440);
+    return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${H}"/><line x1="${x2}" y1="${H-4}" x2="${x2}" y2="${H+4}"/>`; }).join(''); }); }
+leaders(); document.fonts.ready.then(leaders); addEventListener('resize',leaders);
 
 /* scrolling: vertical wheel moves the timeline sideways, drag with the mouse, arrow keys step */
 const sc=document.getElementById('scroller');
