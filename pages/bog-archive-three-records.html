@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The bog as archive: three records</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Platypi:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:#CF729B; --ochre:#D3913F; --yellow:#F4D387; --green-light:#99AD67;
+  --spruce:#0B4430; --blue-mist:#BCD7E6; --blue-slate:#3B5F88; --ink:#221E1C;
+  --grey:#BEB6AC; --grey-text:#6B635C; --paper:#FCFBFA;
+  --bg:var(--paper); --fg:var(--ink); --fg-muted:var(--grey-text);
+  --rule:rgba(190,182,172,0.6); --grain-opacity:0.06; --grain-blend:multiply;
+  --font-head:'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body:'Platypi', Georgia, serif;
+  --measure:34rem;
+}
+* { box-sizing:border-box; }
+*, em, i, cite, blockquote, address, figcaption { font-style:normal; }
+html { background:var(--bg); color:var(--fg); }
+body { margin:0; font:400 18px/1.6 var(--font-body); }
+body::after {
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:999;
+  opacity:var(--grain-opacity); mix-blend-mode:var(--grain-blend);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+h1,h2,h3,.label,.meta,.fig,nav,button,.legend,.tip,th { font-family:var(--font-head); }
+h1 { font-weight:700; font-size:48px; line-height:1.125; letter-spacing:-0.015em; margin:16px 0 24px; }
+h2 { font-weight:600; font-size:32px; line-height:1.19; letter-spacing:-0.01em; margin:8px 0 16px; }
+h3 { font-weight:600; font-size:22px; line-height:1.27; margin:32px 0 8px; }
+.label { font-weight:600; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--fg-muted); }
+.meta, .fig { font-weight:400; font-size:12px; letter-spacing:0.04em; font-variant-numeric:tabular-nums; color:var(--fg-muted); }
+p { max-width:var(--measure); margin:0 0 1em; }
+.lead { font-size:22px; line-height:33px; }
+.caption { font-size:14px; line-height:20px; color:var(--fg-muted); max-width:var(--measure); }
+strong { font-weight:600; }
+a { color:inherit; text-decoration:underline; text-decoration-color:var(--pink); text-underline-offset:4px; text-decoration-thickness:1px; }
+a:hover, a:focus-visible { text-decoration-thickness:2px; }
+
+header.top { display:flex; justify-content:space-between; align-items:baseline; padding:24px 6vw; border-bottom:1px solid var(--rule); }
+header.top .name { font-family:var(--font-head); font-weight:600; font-size:16px; }
+main { max-width:1440px; margin:0 auto; padding:96px 6vw 128px; }
+.intro { margin-bottom:96px; }
+
+.plate { position:relative; margin:0 0 128px; padding:48px; border:1px solid var(--ink); }
+.plate::before { content:""; position:absolute; inset:8px; border:1px solid var(--rule); pointer-events:none; }
+.plate .fig.top { position:absolute; top:20px; left:24px; }
+.plate-grid { display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:48px; }
+@media (max-width:900px){ .plate-grid { grid-template-columns:1fr; } .plate { padding:40px 20px 32px; } h1 { font-size:34px; } }
+.titleblock { margin-top:32px; margin-left:auto; width:max-content; max-width:100%; border:1px solid var(--ink); padding:8px 12px; display:grid; grid-template-columns:auto auto; gap:2px 16px; }
+.titleblock b { font-family:var(--font-head); font-weight:600; font-size:13px; }
+
+.chart-wrap { position:relative; }
+svg.chart { width:100%; height:auto; display:block; overflow:visible; }
+svg text { font-family:var(--font-head); font-size:11px; fill:var(--grey-text); font-variant-numeric:tabular-nums; letter-spacing:0.04em; }
+svg .ann { font-family:var(--font-body); font-size:13px; fill:var(--ink); letter-spacing:0; }
+svg .dlabel { font-family:var(--font-head); font-size:12px; font-weight:600; fill:var(--ink); paint-order:stroke; stroke:var(--paper); stroke-width:3px; }
+.axis path, .axis line { stroke:var(--grey); }
+.grid line { stroke:var(--rule); stroke-width:0.5; }
+.grid path { display:none; }
+
+.legend { display:flex; flex-wrap:wrap; gap:8px 20px; font-size:12px; margin:0 0 16px; color:var(--ink); }
+.legend span { display:inline-flex; align-items:center; gap:8px; }
+.sw { width:12px; height:12px; border:1px solid var(--ink); display:inline-block; }
+
+.tip { position:absolute; pointer-events:none; background:var(--paper); border:1px solid var(--ink); padding:8px 10px; font-size:12px; line-height:16px; color:var(--ink); min-width:160px; opacity:0; transition:opacity 120ms; z-index:5; font-variant-numeric:tabular-nums; }
+.tip b { font-weight:600; }
+.tip .row { display:flex; justify-content:space-between; gap:16px; }
+@media (prefers-reduced-motion: reduce){ .tip { transition:none; } }
+
+button, .btn { font-family:var(--font-head); font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:0.06em; background:transparent; color:var(--ink); border:1px solid var(--ink); border-radius:2px; padding:10px 18px; cursor:pointer; }
+button:hover, .btn:hover, button:focus-visible, .btn:focus-visible { background:var(--pink); }
+details { margin-top:24px; }
+summary { font-family:var(--font-head); font-size:13px; text-transform:uppercase; letter-spacing:0.06em; cursor:pointer; }
+table { border-collapse:collapse; font-size:12px; margin-top:12px; width:100%; font-variant-numeric:tabular-nums; }
+th, td { text-align:left; padding:4px 8px; border-bottom:1px solid var(--rule); font-family:var(--font-head); }
+th { font-weight:600; }
+.tablewrap { max-height:320px; overflow:auto; }
+
+.drop { border:1px dashed var(--grey-text); padding:40px 32px; min-height:420px; display:flex; flex-direction:column; justify-content:center; gap:16px; }
+.drop.over { background:rgba(207,114,155,0.12); border-color:var(--ink); }
+.drop p { margin:0; }
+.err { color:var(--ink); border-left:2px solid var(--pink); padding-left:12px; }
+input[type=file] { position:absolute; width:1px; height:1px; opacity:0; }
+footer { border-top:1px solid var(--rule); padding:32px 6vw 64px; font-size:13px; line-height:20px; }
+footer ul { padding-left:18px; max-width:52rem; }
+footer li { margin-bottom:6px; }
+</style>
+</head>
+<body>
+<header class="top"><span class="name">Planetary Media</span><span class="meta">The bog as archive · Plates 01 to 03</span></header>
+
+<main>
+  <section class="intro">
+    <div class="label">Irish bogs as archives</div>
+    <h1>Three records the bog keeps</h1>
+    <p class="lead">One record from each part of the archive: a nature record (pollen), an industrial record (coal soot) and a human record (buried farms). Each is drawn from Irish data.</p>
+  </section>
+
+  <!-- PLATE 01 POLLEN -->
+  <section class="plate" id="plate-pollen" aria-labelledby="h-pollen">
+    <span class="fig top">Fig. 01</span>
+    <div class="plate-grid">
+      <div>
+        <div class="label">A · Climate and nature</div>
+        <h2 id="h-pollen">Pollen at Glenulra, Céide Fields</h2>
+        <p>Pollen falls on the bog every year and gets buried. Counting it layer by layer shows which plants grew nearby. Read the graph from the bottom up: woodland first, then open ground as farming and bog spread.</p>
+        <p class="caption">Each band is a group of plants, as a share of the selected groups in that sample. The bands add up to 100%. Depth is from the bog surface.</p>
+        <h3>Load the data</h3>
+        <p class="caption">This page cannot reach PANGAEA directly. Download the GLU IV pollen counts as tab-delimited text from the dataset page, then drop the file onto the plate.</p>
+        <p class="caption"><a href="https://doi.org/10.1594/PANGAEA.912162">PANGAEA.912162 dataset page</a></p>
+      </div>
+      <div>
+        <div class="legend" id="legend-pollen"></div>
+        <div class="chart-wrap" id="chart-pollen">
+          <label class="drop" id="drop" for="file">
+            <span class="label">No data loaded</span>
+            <p><strong>Drop the GLU IV tab file here</strong>, or click to choose it.</p>
+            <p class="caption">Accepts the PANGAEA tab-delimited text (.tab or .txt) or a CSV with a depth column and taxon columns such as Pinus, Quercus, Corylus, Poaceae.</p>
+            <span class="btn" aria-hidden="true">Choose file</span>
+            <input type="file" id="file" accept=".tab,.txt,.csv,.tsv,text/plain,text/csv">
+          </label>
+          <div class="tip" id="tip-pollen" role="status"></div>
+        </div>
+        <details id="table-pollen" hidden><summary>Show data table</summary><div class="tablewrap"></div></details>
+      </div>
+    </div>
+    <div class="titleblock">
+      <b>Glenulra GLU IV pollen</b><span class="meta">54.301 N, 9.442 W</span>
+      <span class="meta">Molloy &amp; O'Connell 2020, PANGAEA</span><span class="meta">CC BY 4.0</span>
+    </div>
+  </section>
+
+  <!-- PLATE 02 SCP -->
+  <section class="plate" id="plate-scp" aria-labelledby="h-scp">
+    <span class="fig top">Fig. 02</span>
+    <div class="plate-grid">
+      <div>
+        <div class="label">B · Human pollution</div>
+        <h2 id="h-scp">Coal soot at Dead Island Bog</h2>
+        <p>Tiny round soot particles form only when coal or oil is burned above 1000 °C. Their arrival in the peat marks when industry began to write itself into the bog.</p>
+        <p>At Dead Island Bog, Co. Londonderry, the soot record starts in the 1850s, rises fast in the 1950s and peaks around 1979. A thin layer of ash from Iceland's Hekla eruption of 1947 lies just beneath the fast rise.</p>
+        <p class="caption"><strong>The curve's shape is schematic.</strong> The source gives the three dated features but no measured values. Only the dots are sourced. To draw the real curve, trace the published figure or ask the author for the counts.</p>
+      </div>
+      <div>
+        <div class="legend">
+          <span><i class="sw" style="background:var(--pink)"></i>Soot, schematic shape</span>
+          <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="#221E1C"/></svg>Dated feature (sourced)</span>
+          <span><svg width="22" height="12" aria-hidden="true"><line x1="0" y1="6" x2="22" y2="6" stroke="#3B5F88" stroke-width="2"/></svg>Hekla 1947 ash</span>
+        </div>
+        <div class="chart-wrap" id="chart-scp"><div class="tip" id="tip-scp" role="status"></div></div>
+        <details><summary>Show data table</summary><div class="tablewrap">
+          <table><thead><tr><th>Year</th><th>Feature</th><th>Status</th></tr></thead><tbody>
+            <tr><td>1850s</td><td>Soot record starts</td><td>Sourced</td></tr>
+            <tr><td>1947</td><td>Hekla ash layer, just beneath the fast rise</td><td>Sourced</td></tr>
+            <tr><td>1950s</td><td>Fast rise begins</td><td>Sourced</td></tr>
+            <tr><td>c. 1979</td><td>Peak concentration</td><td>Sourced</td></tr>
+            <tr><td>After 1979</td><td>Fall after the peak</td><td>Shape not given in source</td></tr>
+          </tbody></table></div></details>
+      </div>
+    </div>
+    <div class="titleblock">
+      <b>Dead Island Bog SCP record</b><span class="meta">54.887 N, 6.550 W</span>
+      <span class="meta">Swindles 2010, Mires and Peat 7(03)</span><span class="meta">Schematic</span>
+    </div>
+  </section>
+
+  <!-- PLATE 03 CEIDE -->
+  <section class="plate" id="plate-ceide" aria-labelledby="h-ceide">
+    <span class="fig top">Fig. 03</span>
+    <div class="plate-grid">
+      <div>
+        <div class="label">C · Records of people</div>
+        <h2 id="h-ceide">Pines over the buried fields, north Mayo</h2>
+        <p>Neolithic farmers built a 12 km² system of stone-walled fields at Céide. Blanket bog grew over them. Later, pine trees grew on top of the new peat, and some even rooted on top of the buried walls.</p>
+        <p>Each dot is a pine stump, dated by radiocarbon. Its height shows how much peat had already formed over the old ground when the tree took root. The authors date the fields' abandonment under shallow peat to about 4,500 radiocarbon years ago.</p>
+        <p class="caption">Ages are uncalibrated radiocarbon years before present (BP), as published. They are not calendar years. Hollow dots: the height comes from the paper's text, not its table.</p>
+      </div>
+      <div>
+        <div class="legend">
+          <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="#0B4430"/></svg>Pine stump</span>
+          <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="#FCFBFA" stroke="#0B4430" stroke-width="1.5"/></svg>Pine, height from text</span>
+          <span><svg width="14" height="14" aria-hidden="true"><rect x="2" y="2" width="10" height="10" transform="rotate(45 7 7)" fill="#CF729B" stroke="#221E1C"/></svg>Pine rooted on a field wall</span>
+          <span><svg width="12" height="12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" fill="#D3913F" stroke="#221E1C"/></svg>Basal peat sample</span>
+        </div>
+        <div class="chart-wrap" id="chart-ceide"><div class="tip" id="tip-ceide" role="status"></div></div>
+        <details><summary>Show data table</summary><div class="tablewrap" id="table-ceide"></div></details>
+      </div>
+    </div>
+    <div class="titleblock">
+      <b>North Mayo bog pines</b><span class="meta">Céide, Belderrig, Erris</span>
+      <span class="meta">Caulfield, O'Donnell &amp; Mitchell 1998, Radiocarbon 40(2)</span><span class="meta">Table 2</span>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="label">Sources</div>
+  <ul>
+    <li>Molloy, K., O'Connell, M. (2020). A Holocene pollen profile (GLU IV) from Glenulra, Céide Fields, Co. Mayo, Ireland [dataset]. PANGAEA. <a href="https://doi.org/10.1594/PANGAEA.912162">doi.org/10.1594/PANGAEA.912162</a></li>
+    <li>Age model GLU IV, incl. tephra at 228 to 232 cm (c. 600 BC). PANGAEA. <a href="https://doi.org/10.1594/PANGAEA.917974">doi.org/10.1594/PANGAEA.917974</a></li>
+    <li>Swindles, G.T. (2010/11). Dating recent peat profiles using spheroidal carbonaceous particles (SCPs). Mires and Peat 7, Art. 03. <a href="https://www.mires-and-peat.net/article/128410-dating-recent-peat-profiles-using-spheroidal-carbonaceous-particles-scps.pdf">mires-and-peat.net</a></li>
+    <li>Swindles, G.T. et al. (2015). Spheroidal carbonaceous particles are a defining stratigraphic marker for the Anthropocene. Scientific Reports 5, 10264. <a href="https://www.nature.com/articles/srep10264">nature.com/articles/srep10264</a></li>
+    <li>Caulfield, S., O'Donnell, R.G., Mitchell, P.I. (1998). 14C dating of a Neolithic field system at Céide Fields, County Mayo, Ireland. Radiocarbon 40(2). <a href="https://journals.uair.arizona.edu/index.php/radiocarbon/article/viewFile/3737/3162">journals.uair.arizona.edu</a>. Values were read from a scan; check against the printed table before publishing.</li>
+  </ul>
+  <p class="meta">Plates 01 to 03 · compiled 11 Nov 2026</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+const COL = { pink:'#CF729B', ochre:'#D3913F', yellow:'#F4D387', green:'#99AD67', spruce:'#0B4430', slate:'#3B5F88', ink:'#221E1C', grey:'#BEB6AC', greyText:'#6B635C', paper:'#FCFBFA' };
+
+function tipAt(tip, wrap, html, px, py){
+  tip.innerHTML = html;
+  const w = wrap.clientWidth, tw = tip.offsetWidth;
+  let left = px + 16; if (left + tw > w) left = px - tw - 16;
+  tip.style.left = Math.max(0,left) + 'px';
+  tip.style.top = Math.max(0, py - 12) + 'px';
+  tip.style.opacity = 1;
+}
+function hideTip(tip){ tip.style.opacity = 0; }
+function svgPoint(svg, evt){ const p = svg.createSVGPoint(); p.x = evt.clientX; p.y = evt.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); }
+function wrapPoint(wrap, evt){ const r = wrap.getBoundingClientRect(); return [evt.clientX - r.left, evt.clientY - r.top]; }
+
+/* ---------------- Fig 02: SCP (schematic) ---------------- */
+(function(){
+  const wrap = document.getElementById('chart-scp'), tip = document.getElementById('tip-scp');
+  const W = 640, H = 600, m = {t:24, r:200, b:48, l:56};
+  const svg = d3.select(wrap).insert('svg','.tip').attr('class','chart').attr('viewBox',`0 0 ${W} ${H}`)
+    .attr('role','img').attr('aria-label','Schematic coal soot curve at Dead Island Bog: starts 1850s, fast rise 1950s, peak about 1979, Hekla 1947 ash just beneath the rise.');
+  const y = d3.scaleLinear([2015, 1800], [m.t, H - m.b]);
+  const x = d3.scaleLinear([0, 1], [m.l, W - m.r]);
+  svg.append('g').attr('class','grid').attr('transform',`translate(${m.l},0)`)
+    .call(d3.axisLeft(y).tickValues(d3.range(1800, 2016, 25)).tickSize(-(W - m.l - m.r)).tickFormat(''));
+  svg.append('g').attr('class','axis').attr('transform',`translate(${m.l},0)`)
+    .call(d3.axisLeft(y).tickValues(d3.range(1800, 2016, 25)).tickFormat(d3.format('d')).tickSizeOuter(0));
+  svg.append('text').attr('x', m.l).attr('y', H - 12).text('Relative soot concentration (schematic, no values)');
+  svg.append('text').attr('transform',`translate(14,${(m.t + H - m.b)/2}) rotate(-90)`).attr('text-anchor','middle').text('Year AD (top = recent)');
+
+  // schematic shape through the sourced anchors; values between anchors are illustrative only
+  const shape = [[1800,0],[1850,0],[1900,0.04],[1950,0.12],[1962,0.42],[1979,1],[1992,0.66],[2010,0.42],[2015,0.38]];
+  const before = shape.filter(d => d[0] <= 1979), after = shape.filter(d => d[0] >= 1979);
+  const area = d3.area().y(d => y(d[0])).x0(x(0)).x1(d => x(d[1])).curve(d3.curveMonotoneY);
+  const line = d3.line().y(d => y(d[0])).x(d => x(d[1])).curve(d3.curveMonotoneY);
+  svg.append('path').attr('d', area(before)).attr('fill', COL.pink).attr('fill-opacity', 0.55);
+  svg.append('path').attr('d', area(after)).attr('fill', COL.pink).attr('fill-opacity', 0.25);
+  svg.append('path').attr('d', line(before)).attr('fill','none').attr('stroke', COL.ink).attr('stroke-width', 1);
+  svg.append('path').attr('d', line(after)).attr('fill','none').attr('stroke', COL.ink).attr('stroke-width', 1).attr('stroke-dasharray','4 4');
+  svg.append('line').attr('x1', x(0)).attr('x2', x(0)).attr('y1', y(2015)).attr('y2', y(1800)).attr('stroke', COL.ink);
+
+  // Hekla 1947
+  svg.append('line').attr('x1', m.l).attr('x2', W - m.r + 8).attr('y1', y(1947)).attr('y2', y(1947)).attr('stroke', COL.slate).attr('stroke-width', 2);
+  svg.append('text').attr('class','ann').attr('x', W - m.r + 14).attr('y', y(1947) + 4).text('Hekla 1947 ash');
+
+  const anchors = [
+    {yr:1850, v:0, label:'1850s · record starts', note:'Soot first appears in the peat.'},
+    {yr:1950, v:0.12, label:'1950s · fast rise', note:'Rapid increase after the Second World War, just above the Hekla 1947 ash.'},
+    {yr:1979, v:1, label:'c. 1979 · peak', note:'Highest soot concentration in the record.'}
+  ];
+  const g = svg.append('g');
+  anchors.forEach(a => {
+    g.append('circle').attr('cx', x(a.v)).attr('cy', y(a.yr)).attr('r', 6).attr('fill', COL.ink).attr('stroke', COL.paper).attr('stroke-width', 2);
+    g.append('text').attr('class','dlabel').attr('x', W - m.r + 14).attr('y', y(a.yr) + (a.yr === 1950 ? -8 : 4)).text(a.label);
+    g.append('line').attr('x1', x(a.v) + 8).attr('x2', W - m.r + 8).attr('y1', y(a.yr)).attr('y2', y(a.yr) + (a.yr === 1950 ? -12 : 0)).attr('stroke', COL.grey).attr('stroke-dasharray','2 3');
+  });
+  svg.append('text').attr('class','ann').attr('x', x(0.62) + 6).attr('y', y(2003)).text('after the peak:');
+  svg.append('text').attr('class','ann').attr('x', x(0.62) + 6).attr('y', y(2003) + 16).text('shape not in source');
+
+  // hover: nearest anchor
+  const hit = svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill','transparent');
+  hit.on('mousemove', evt => {
+    const p = svgPoint(svg.node(), evt); const yr = y.invert(p.y);
+    const a = anchors.reduce((b, c) => Math.abs(c.yr - yr) < Math.abs(b.yr - yr) ? c : b);
+    if (Math.abs(y(a.yr) - p.y) > 40) { hideTip(tip); return; }
+    const [px, py] = wrapPoint(wrap, evt);
+    tipAt(tip, wrap, `<b>${a.label}</b><br>${a.note}<br><span style="color:${COL.greyText}">Swindles 2010</span>`, px, py);
+  }).on('mouseleave', () => hideTip(tip));
+})();
+
+/* ---------------- Fig 03: Céide pines ---------------- */
+const pines = [
+  // lab, site, type, height cm, fromText, age BP, err
+  ['UCD-C45','Behy, 1 m from pre-bog wall','pine',0,false,4450,60],
+  ['UCD-C51','Behy, near tomb','pine',5,false,4500,60],
+  ['UCD-C57','Behy, 65 m W of tomb','pine',0,false,4420,50],
+  ['UCD-C42','Glenulra','pine',90,true,4530,60],
+  ['UCD-C44','Glenulra, base of peat','pine',0,false,5370,70],
+  ['UCD-C21','Ballyknock','pine',10,false,4490,60],
+  ['UCD-C23','Ballyknock','pine',75,false,4540,60],
+  ['UCD-C29','Ballyknock','pine',30,false,4510,50],
+  ['UCD-C37','Ballyknock','pine',30,false,4500,50],
+  ['UCD-C22','Aghoo','pine',25,true,4210,60],
+  ['UCD-C27','Aghoo','pine',30,true,4170,50],
+  ['UCD-C30','Aghoo','pine',20,true,4190,50],
+  ['UCD-C33','Aghoo','pine',30,true,4100,60],
+  ['UCD-C04','Belderg More, 2 m from wall','pine',30,true,4480,60],
+  ['UCD-C11','Belderg More','pine',50,true,4010,60],
+  ['UCD-C14','Belderg More','pine',25,true,4310,70],
+  ['UCD-C18','Belderg More, 30 m E of wall junction','pine',0,false,4150,60],
+  ['UCD-C49','Belderg More, rooted on wall','wall',0,false,4580,60],
+  ['UCD-C07','Belderg Beg','pine',70,true,3330,50],
+  ['UCD-C31','Belderg Beg','pine',0,false,4510,50],
+  ['UCD-C58','Belderg Beg','pine',75,true,3960,70],
+  ['UCD-C47','Geevraun','pine',45,true,4210,60],
+  ['UCD-C46','Geevraun, basal peat beneath C47','peat',5,true,5710,90],
+  ['UCD-C26','Annagh More, on wall','wall',0,false,4350,60],
+  ['UCD-C50','Annagh More, rooted in mineral soil','pine',0,false,4440,60],
+  ['UCD-C19','Erris: Gortmelia, 40 m from wall','pine',10,true,4530,60],
+  ['UCD-C25','Erris: Glencullin, within 5 m of wall','pine',15,true,4460,60],
+  ['UCD-C41','Erris: Muingerroon South, lower layer','pine',0,false,6720,90]
+].map(d => ({lab:d[0], site:d[1], type:d[2], h:d[3], fromText:d[4], age:d[5], err:d[6]}));
+
+(function(){
+  const wrap = document.getElementById('chart-ceide'), tip = document.getElementById('tip-ceide');
+  const W = 760, H = 460, m = {t:24, r:24, b:56, l:64};
+  const svg = d3.select(wrap).insert('svg','.tip').attr('class','chart').attr('viewBox',`0 0 ${W} ${H}`)
+    .attr('role','img').attr('aria-label','Scatter of north Mayo pine stump radiocarbon ages against height above the buried mineral soil. Most cluster around 4,500 to 4,100 BP, within a metre above the old field surface.');
+  const x = d3.scaleLinear([7000, 3200], [m.l, W - m.r]);   // older on the left
+  const y = d3.scaleLinear([-24, 100], [H - m.b, m.t]);
+
+  // mineral soil band (old ground surface)
+  svg.append('rect').attr('x', m.l).attr('y', y(0)).attr('width', W - m.l - m.r).attr('height', y(-24) - y(0)).attr('fill', COL.grey).attr('fill-opacity', 0.35);
+  svg.append('text').attr('class','ann').attr('x', m.l + 8).attr('y', y(-14)).text('Mineral soil: the Neolithic ground surface with its field walls');
+  // peat above
+  svg.append('rect').attr('x', m.l).attr('y', y(100)).attr('width', W - m.l - m.r).attr('height', y(0) - y(100)).attr('fill', COL.green).attr('fill-opacity', 0.12);
+
+  svg.append('g').attr('class','grid').attr('transform',`translate(${m.l},0)`)
+    .call(d3.axisLeft(y).tickValues([0,20,40,60,80,100]).tickSize(-(W - m.l - m.r)).tickFormat(''));
+  svg.append('g').attr('class','axis').attr('transform',`translate(${m.l},0)`)
+    .call(d3.axisLeft(y).tickValues([0,20,40,60,80,100]).tickSizeOuter(0));
+  svg.append('g').attr('class','axis').attr('transform',`translate(0,${y(-24)})`)
+    .call(d3.axisBottom(x).ticks(8).tickFormat(d3.format(',')).tickSizeOuter(0));
+  svg.append('text').attr('x', (m.l + W - m.r)/2).attr('y', H - 12).attr('text-anchor','middle').text('Radiocarbon age, years BP (uncalibrated) · older ← → younger');
+  svg.append('text').attr('transform',`translate(16,${(m.t + y(0))/2}) rotate(-90)`).attr('text-anchor','middle').text('Height above mineral soil (cm)');
+  svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', COL.ink);
+
+  // main pine cluster mean 4280 ± 70
+  svg.append('rect').attr('x', x(4350)).attr('y', m.t).attr('width', x(4210) - x(4350)).attr('height', y(0) - m.t).attr('fill', COL.pink).attr('fill-opacity', 0.28);
+  svg.append('text').attr('class','ann').attr('x', x(4210) + 6).attr('y', m.t + 14).text('Main pine cluster');
+  svg.append('text').attr('class','ann').attr('x', x(4210) + 6).attr('y', m.t + 30).text('mean 4280 ± 70 BP (n = 39)');
+  // abandonment line ~4500 BP
+  svg.append('line').attr('x1', x(4500)).attr('x2', x(4500)).attr('y1', m.t).attr('y2', y(0)).attr('stroke', COL.ink).attr('stroke-dasharray','4 4');
+  svg.append('text').attr('class','ann').attr('text-anchor','end').attr('x', x(4500) - 6).attr('y', m.t + 14).text('Fields under shallow peat');
+  svg.append('text').attr('class','ann').attr('text-anchor','end').attr('x', x(4500) - 6).attr('y', m.t + 30).text('by about 4500 BP');
+
+  const yPos = d => d.type === 'wall' ? y(0) - 7 : y(d.h);
+  // error bars
+  svg.append('g').selectAll('line').data(pines).join('line')
+    .attr('x1', d => x(d.age - d.err)).attr('x2', d => x(d.age + d.err)).attr('y1', yPos).attr('y2', yPos)
+    .attr('stroke', COL.ink).attr('stroke-opacity', 0.45).attr('stroke-width', 1);
+  const g = svg.append('g');
+  pines.forEach(d => {
+    const cx = x(d.age), cy = yPos(d);
+    if (d.type === 'wall') g.append('rect').attr('x', cx - 6).attr('y', cy - 6).attr('width', 12).attr('height', 12).attr('transform',`rotate(45 ${cx} ${cy})`).attr('fill', COL.pink).attr('stroke', COL.ink);
+    else if (d.type === 'peat') g.append('rect').attr('x', cx - 6).attr('y', cy - 6).attr('width', 12).attr('height', 12).attr('fill', COL.ochre).attr('stroke', COL.ink);
+    else g.append('circle').attr('cx', cx).attr('cy', cy).attr('r', d.fromText ? 4.5 : 5.5)
+      .attr('fill', d.fromText ? COL.paper : COL.spruce).attr('stroke', d.fromText ? COL.spruce : COL.paper).attr('stroke-width', d.fromText ? 1.5 : 2);
+  });
+  // direct labels, selective
+  const lab = (d, txt, dx, dy, anchor) => svg.append('text').attr('class','dlabel').attr('x', x(d.age) + dx).attr('y', yPos(d) + dy).attr('text-anchor', anchor || 'start').text(txt);
+  lab(pines.find(p => p.lab === 'UCD-C41'), 'Erris, lower pine layer', 10, -10);
+  lab(pines.find(p => p.lab === 'UCD-C46'), 'Basal peat, Geevraun', 10, -10);
+  lab(pines.find(p => p.lab === 'UCD-C49'), 'Pines rooted on walls', 50, 26, 'start');
+
+  // hover via delaunay
+  const pts = pines.map(d => [x(d.age), yPos(d)]);
+  const del = d3.Delaunay.from(pts);
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', y(-24) - m.t).attr('fill','transparent')
+    .on('mousemove', evt => {
+      const p = svgPoint(svg.node(), evt); const i = del.find(p.x, p.y);
+      if (Math.hypot(pts[i][0] - p.x, pts[i][1] - p.y) > 22) { hideTip(tip); return; }
+      const d = pines[i]; const [px, py] = wrapPoint(wrap, evt);
+      const kind = d.type === 'wall' ? 'Pine rooted on top of a field wall' : d.type === 'peat' ? 'Basal peat sample' : 'Pine stump';
+      const hTxt = d.type === 'wall' ? 'on top of wall' : `${d.h} cm${d.fromText ? ' (from text)' : ''}`;
+      tipAt(tip, wrap, `<b>${d.lab}</b><br>${d.site}<br>${kind}<div class="row"><span>Age</span><span>${d.age.toLocaleString()} ± ${d.err} BP</span></div><div class="row"><span>Height</span><span>${hTxt}</span></div>`, px, py);
+    }).on('mouseleave', () => hideTip(tip));
+
+  // table
+  const rows = pines.map(d => `<tr><td>${d.lab}</td><td>${d.site}</td><td>${d.type === 'wall' ? 'pine on wall' : d.type}</td><td>${d.type === 'wall' ? 'on wall' : d.h + (d.fromText ? ' (text)' : '')}</td><td>${d.age} ± ${d.err}</td></tr>`).join('');
+  document.getElementById('table-ceide').innerHTML = `<table><thead><tr><th>Lab code</th><th>Site</th><th>Sample</th><th>Height cm</th><th>14C age BP</th></tr></thead><tbody>${rows}</tbody></table>`;
+})();
+
+/* ---------------- Fig 01: Pollen (loaded from file) ---------------- */
+const GROUPS = [
+  {key:'Pine', taxa:['pinus'], color:COL.spruce},
+  {key:'Oak, elm, ash', taxa:['quercus','ulmus','fraxinus'], color:COL.green},
+  {key:'Hazel', taxa:['corylus'], color:COL.yellow},
+  {key:'Birch, alder', taxa:['betula','alnus'], color:COL.slate},
+  {key:'Open ground', taxa:['poaceae','calluna','plantago lanceolata','cyperaceae'], color:COL.pink, note:'grasses, heather, ribwort plantain, sedges'}
+];
+document.getElementById('legend-pollen').innerHTML = GROUPS.map(g => `<span><i class="sw" style="background:${g.color}"></i>${g.key}${g.note ? ' <span class="meta">(' + g.note + ')</span>' : ''}</span>`).join('');
+
+function parseTable(text){
+  const lines = text.split(/\r?\n/); let i = 0;
+  if (lines[0] && lines[0].trim().startsWith('/*')) { while (i < lines.length && !lines[i].includes('*/')) i++; i++; }
+  while (i < lines.length && !lines[i].trim()) i++;
+  if (i >= lines.length) throw new Error('The file looks empty.');
+  const delim = lines[i].includes('\t') ? '\t' : ',';
+  const header = lines[i].split(delim).map(s => s.trim().replace(/^"|"$/g,''));
+  const rows = lines.slice(i + 1).filter(l => l.trim()).map(l => l.split(delim).map(s => s.trim().replace(/^"|"$/g,'')));
+  return {header, rows};
+}
+function baseName(h){ return h.replace(/\s*\[.*$/,'').replace(/\s*\(.*$/,'').trim().toLowerCase(); }
+
+function buildPollen(text){
+  const {header, rows} = parseTable(text);
+  const di = header.findIndex(h => /^depth/i.test(h));
+  if (di < 0) throw new Error('No depth column found. Columns seen: ' + header.slice(0, 12).join(', '));
+  const toCm = /\[m\]/i.test(header[di]) ? 100 : 1;
+  const ai = header.findIndex(h => /^age/i.test(h));
+  const skip = /tracheid|stomat|macro|charcoal|lycopodium|concentration|sum/i;
+  const groupCols = GROUPS.map(g => header.map((h, j) => ({h, j})).filter(c => !skip.test(c.h) && g.taxa.some(t => { const b = baseName(c.h); return b === t || b.startsWith(t + '/') || b.startsWith(t + ' ') || b.startsWith(t + '-'); })).map(c => c.j));
+  const found = groupCols.flat().length;
+  if (!found) throw new Error('No matching taxon columns found (looked for Pinus, Quercus, Ulmus, Fraxinus, Corylus, Betula, Alnus, Poaceae, Calluna, Plantago lanceolata, Cyperaceae).');
+  const data = rows.map(r => {
+    const depth = parseFloat(r[di]) * toCm; if (!isFinite(depth)) return null;
+    const sums = groupCols.map(cols => d3.sum(cols, j => +r[j] || 0));
+    const tot = d3.sum(sums); if (!tot) return null;
+    const o = {depth, age: ai >= 0 ? r[ai] : '', total: tot};
+    GROUPS.forEach((g, k) => o[g.key] = sums[k] / tot * 100);
+    return o;
+  }).filter(Boolean).sort((a, b) => a.depth - b.depth);
+  if (data.length < 2) throw new Error('Fewer than two usable samples found.');
+  const usedCols = groupCols.map((cols, k) => GROUPS[k].key + ': ' + (cols.map(j => header[j]).join(', ') || 'none'));
+  drawPollen(data, usedCols);
+}
+
+function drawPollen(data, usedCols){
+  const wrap = document.getElementById('chart-pollen'), tip = document.getElementById('tip-pollen');
+  wrap.querySelector('.drop')?.remove(); wrap.querySelector('svg')?.remove();
+  const W = 640, H = 760, m = {t:24, r:150, b:48, l:56};
+  const svg = d3.select(wrap).insert('svg','.tip').attr('class','chart').attr('viewBox',`0 0 ${W} ${H}`)
+    .attr('role','img').attr('aria-label','Stacked pollen diagram for Glenulra GLU IV by depth, five plant groups adding to 100 percent.');
+  const y = d3.scaleLinear(d3.extent(data, d => d.depth), [m.t, H - m.b]);
+  const x = d3.scaleLinear([0, 100], [m.l, W - m.r]);
+  const keys = GROUPS.map(g => g.key);
+  const series = d3.stack().keys(keys)(data);
+  const area = d3.area().y(d => y(d.data.depth)).x0(d => x(d[0])).x1(d => x(d[1])).curve(d3.curveLinear);
+  svg.append('g').selectAll('path').data(series).join('path')
+    .attr('d', area).attr('fill', (s, i) => GROUPS[i].color).attr('stroke', COL.paper).attr('stroke-width', 2);
+  svg.append('g').attr('class','axis').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(10).tickSizeOuter(0));
+  svg.append('g').attr('class','axis').attr('transform',`translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues([0,25,50,75,100]).tickFormat(d => d + '%').tickSizeOuter(0));
+  svg.append('text').attr('x', (m.l + W - m.r)/2).attr('y', H - 10).attr('text-anchor','middle').text('Share of the five plant groups (%)');
+  svg.append('text').attr('transform',`translate(14,${(m.t + H - m.b)/2}) rotate(-90)`).attr('text-anchor','middle').text('Depth below bog surface (cm)');
+
+  // tephra 228 to 232 cm (c. 600 BC)
+  const [d0, d1] = y.domain();
+  if (230 >= d0 && 230 <= d1) {
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r + 8).attr('y1', y(230)).attr('y2', y(230)).attr('stroke', COL.ink).attr('stroke-dasharray','4 3');
+    svg.append('text').attr('class','ann').attr('x', W - m.r + 12).attr('y', y(230) + 4).text('Ash layer, c. 600 BC');
+  }
+  // direct labels at widest point of each band
+  const placed = [];
+  series.forEach((s, i) => {
+    const cands = s.map(d => ({w: x(d[1]) - x(d[0]), d})).filter(c => c.w > 80).sort((a, b) => b.w - a.w);
+    const pick = cands.find(c => placed.every(py => Math.abs(py - y(c.d.data.depth)) > 40));
+    if (pick) {
+      placed.push(y(pick.d.data.depth));
+      svg.append('text').attr('class','dlabel').attr('text-anchor','middle')
+        .attr('x', x((pick.d[0] + pick.d[1]) / 2)).attr('y', y(pick.d.data.depth) + 4).text(GROUPS[i].key);
+    }
+  });
+  // hover crosshair
+  const cross = svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('stroke', COL.ink).attr('stroke-width', 1).style('opacity', 0);
+  const bis = d3.bisector(d => d.depth).center;
+  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill','transparent')
+    .on('mousemove', evt => {
+      const p = svgPoint(svg.node(), evt); const d = data[bis(data, y.invert(p.y))];
+      cross.attr('y1', y(d.depth)).attr('y2', y(d.depth)).style('opacity', 1);
+      const [px, py] = wrapPoint(wrap, evt);
+      const rowsH = GROUPS.slice().reverse().map(g => `<div class="row"><span><i class="sw" style="background:${g.color};width:8px;height:8px"></i> ${g.key}</span><span>${d[g.key].toFixed(1)}%</span></div>`).join('');
+      tipAt(tip, wrap, `<b>${d.depth.toFixed(1)} cm</b>${d.age ? ' · age ' + d.age : ''}${rowsH}<span style="color:${COL.greyText}">${Math.round(d.total)} grains in these groups</span>`, px, py);
+    }).on('mouseleave', () => { cross.style('opacity', 0); hideTip(tip); });
+
+  // table
+  const det = document.getElementById('table-pollen'); det.hidden = false;
+  det.querySelector('.tablewrap').innerHTML = `<p class="caption">Columns used: ${usedCols.join('; ')}.</p><table><thead><tr><th>Depth cm</th>${keys.map(k => `<th>${k} %</th>`).join('')}</tr></thead><tbody>${data.map(d => `<tr><td>${d.depth.toFixed(1)}</td>${keys.map(k => `<td>${d[k].toFixed(1)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+}
+
+function showErr(msg){
+  const drop = document.getElementById('drop'); if (!drop) return;
+  let e = drop.querySelector('.err'); if (!e) { e = document.createElement('p'); e.className = 'err'; drop.appendChild(e); }
+  e.textContent = msg;
+}
+function readFile(f){ if (!f) return; const r = new FileReader(); r.onload = () => { try { buildPollen(r.result); } catch (e) { showErr(e.message); } }; r.readAsText(f); }
+document.getElementById('file').addEventListener('change', e => readFile(e.target.files[0]));
+const drop = document.getElementById('drop');
+['dragenter','dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => readFile(e.dataTransfer.files[0]));
+</script>
+</body>
+</html>

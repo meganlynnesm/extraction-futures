@@ -1,0 +1,228 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Extraction and Balance Timeline</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&family=Platypi:wght@400&display=swap">
+<style>
+/* Layout: one dark plate. Title and description, then a sideways scroll of floating archive photos, a dashed timeline with crosses, and the ground in section with a grid and layer lines beneath it. */
+:root{
+  --pink:#CF729B; --ochre:#D3913F; --green-light:#99AD67; --spruce:#0B4430; --blue-mist:#BCD7E6;
+  --ink:#221E1C; --grey:#BEB6AC; --paper:#FCFBFA;
+  --bg:var(--ink); --fg:var(--paper); --fg-muted:var(--grey);
+  --font-head:'Bricolage Grotesque',system-ui,sans-serif; --font-body:'Platypi',Georgia,serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+*,em,i,figcaption{font-style:normal}
+html,body{background:var(--bg);color:var(--fg)}
+body{font:400 17px/1.6 var(--font-body);min-height:100%;margin:0}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.09;mix-blend-mode:screen;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+header{padding-left:max(16px,6vw,env(safe-area-inset-left,0px));padding-right:max(16px,6vw,env(safe-area-inset-right,0px));padding-block:64px 24px}
+h1{font:700 clamp(30px,4vw,44px)/1.1 var(--font-head);letter-spacing:-.015em;margin:0}
+.desc{max-width:34rem;margin:14px 0 0;color:var(--fg)}
+.scroller{overflow-x:auto;overflow-y:hidden;cursor:grab;scrollbar-width:thin;scrollbar-color:rgba(190,182,172,.3) transparent}
+.scroller.drag{cursor:grabbing;user-select:none}
+.scroller:focus-visible{outline:1px solid var(--pink);outline-offset:-2px}
+.row{display:grid;grid-auto-flow:column;grid-auto-columns:440px;width:max-content}
+.era{position:relative;height:270px}
+.photo{position:absolute}
+.slot{position:relative;display:block;width:100%;cursor:pointer;background:transparent center/cover no-repeat;outline:1px dashed rgba(190,182,172,.3);outline-offset:-1px}
+.slot.has{outline:0;filter:grayscale(.75) contrast(.85) sepia(.03) brightness(1.02)}
+.slot::after{content:"";position:absolute;inset:0;background:var(--pink);mix-blend-mode:screen;opacity:0;transition:opacity .3s ease;pointer-events:none}
+.slot.has:hover::after,.slot.has:focus-within::after{opacity:.85}
+.slot:focus-within{outline:1px solid var(--pink)}
+.slot input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer}
+.slot svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.cap{text-align:center;font-size:13px;line-height:18px;color:var(--fg-muted);margin-top:8px}
+.line{position:relative}
+.line::before{content:"";position:absolute;left:0;right:0;top:10px;border-top:1px dashed rgba(190,182,172,.7)}
+.stop{position:relative;text-align:center;padding:30px 48px 0;min-height:132px}
+.stop::before,.stop::after{content:"";position:absolute;left:50%;background:var(--fg)}
+.stop::before{top:3px;width:1px;height:15px;margin-left:-.5px}
+.stop::after{top:10px;width:15px;height:1px;margin-left:-7.5px}
+.stop.spec::before,.stop.spec::after{background:var(--pink)}
+.yr{font:400 13px/18px var(--font-head);letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--fg)}
+.stop.spec .yr{color:var(--pink)}
+.txt{font-size:13.5px;line-height:20px;color:var(--fg-muted);margin-top:6px}
+#section{position:relative;width:4400px;display:block;line-height:0}
+#section canvas{display:block}
+.ruler{position:sticky;left:0;width:0;height:0;z-index:2;line-height:1}
+.ruler span{position:absolute;left:8px;font:400 11px/16px var(--font-head);letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--fg);background:var(--ink);padding:0 4px;white-space:nowrap}
+@media (prefers-reduced-motion:reduce){.slot::after{transition:none}}
+</style>
+
+<header>
+  <h1>Extraction and balance</h1>
+  <p class="desc">Peat harvesting and data centres in Ireland, from the bog forming to two possible futures. Scroll sideways through time.</p>
+</header>
+
+<div class="scroller" id="scroller" tabindex="0" aria-label="Timeline, scroll sideways">
+  <div class="row" id="photos"></div>
+  <div class="row line" id="stops"></div>
+  <div id="section" aria-hidden="true"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js"></script>
+<script>
+const COL=440;
+const ERAS=[
+ {key:"bog",yr:"c. 10,000 years ago",txt:"Bogs form after the last Ice Age, growing about 1 mm a year.",cap:"Sphagnum, the bog builder",tool:"moss",ph:{l:80,t:30,w:240,h:150}},
+ {key:"hearth",yr:"Before 1934",txt:"Households cut turf by hand from their own bank of bog.",cap:"Hand cutting with a sleán",tool:"slean",ph:{l:150,t:0,w:190,h:200}},
+ {key:"state",yr:"1934 to 1946",txt:"The Turf Development Board becomes Bord na Móna. Bogs are drained.",cap:"Draining a production bog",tool:"drain",ph:{l:40,t:56,w:280,h:130}},
+ {key:"power",yr:"1950 to 1967",txt:"Portarlington, the first turf-fired power station, opens in 1950.",cap:"Turf-fired power station",tool:"chimney",ph:{l:130,t:10,w:220,h:180}},
+ {key:"scale",yr:"1974 to 2005",txt:"Milled peat feeds new stations. Older stations close.",cap:"Milled peat harvester",tool:"miller",ph:{l:50,t:44,w:270,h:140}},
+ {key:"overlap",yr:"2015 to 2021",txt:"Data centres use 5% of Ireland's electricity while peat is still harvested, until 2021.",cap:"Grid across the cutaway",tool:"pylon",ph:{l:170,t:0,w:180,h:196}},
+ {key:"now",yr:"2022 to 2025",txt:"Data centres use 23% of Ireland's electricity. Cutaway bog is rehabilitated.",cap:"Data centre campus",tool:"rack",ph:{l:60,t:40,w:290,h:140}},
+ {key:"futA",yr:"Future A",txt:"Extraction. The land keeps pace with the infrastructure.",cap:"Render: extraction",tool:"rack",spec:true,ph:{l:110,t:20,w:230,h:160}},
+ {key:"futB",yr:"Future B",txt:"Balance. The bog is rewetted and the infrastructure follows the land.",cap:"Render: balance",tool:"turbine",spec:true,ph:{l:70,t:6,w:230,h:190}},
+ {key:"peat",yr:"Back to the peat",txt:"Each layer of peat holds about a thousand years per metre.",cap:"A cut face of peat",tool:"layers",ph:{l:130,t:30,w:210,h:160}}
+];
+const TOOLS={
+ moss:'<g fill="none" stroke="#FCFBFA" stroke-width=".9" opacity=".85"><path d="M150 190c-6-24 2-46 14-58M160 190c2-30 12-52 26-60M172 190c8-26 22-40 36-44M140 190c-10-18-12-34-6-48"/><circle cx="164" cy="128" r="5"/><circle cx="187" cy="128" r="4"/><circle cx="209" cy="145" r="4"/></g>',
+ slean:'<g fill="none" stroke="#FCFBFA" stroke-width="1" opacity=".85"><path d="M210 18v150M198 18h24"/><path d="M210 168l-4 26h22l4-22z"/><path d="M228 172l14-6v18l-10 4"/></g>',
+ drain:'<g fill="none" stroke="#FCFBFA" stroke-width=".9" opacity=".85"><path d="M20 120h380"/><path d="M60 120l6 40 6-40M140 120l6 40 6-40M220 120l6 40 6-40M300 120l6 40 6-40"/></g>',
+ chimney:'<g fill="none" stroke="#FCFBFA" stroke-width=".9" opacity=".85"><path d="M150 190V110h110v80M170 110v80M190 110v80M210 110v80M230 110v80M250 110v80"/><path d="M262 190V24h18v166M262 50h18M262 76h18M262 102h18"/><path d="M100 190l50-60M108 190l50-60"/></g>',
+ miller:'<g fill="none" stroke="#FCFBFA" stroke-width=".9" opacity=".85"><rect x="120" y="120" width="140" height="44"/><path d="M140 120v-26h40v26M260 132h60l26 32H120"/><circle cx="150" cy="176" r="12"/><circle cx="230" cy="176" r="12"/></g>',
+ pylon:'<g fill="none" stroke="#FCFBFA" stroke-width=".9" opacity=".85"><path d="M188 198L210 20L232 198M194 150h32M198 112h24M202 74h16M194 150l28-38M226 150l-28-38M198 112l20-38M222 112l-20-38"/><path d="M170 50h80M176 50l34 -14M244 50l-34 -14"/></g>',
+ rack:'<g fill="none" stroke="#FCFBFA" stroke-width=".9" opacity=".85"><rect x="80" y="70" width="260" height="110"/><path d="M80 98h260"/><path d="M90 70v28M100 70v28M110 70v28M120 70v28M130 70v28M140 70v28M150 70v28M160 70v28M170 70v28M180 70v28M190 70v28M200 70v28"/><rect x="230" y="56" width="26" height="14"/><rect x="266" y="56" width="26" height="14"/></g>',
+ turbine:'<g fill="none" stroke="#FCFBFA" stroke-width=".9" opacity=".85"><path d="M206 196l3-150h4l3 150"/><rect x="204" y="40" width="16" height="8"/><path d="M208 44l-6-40M208 44l38 18M208 44l-34 22"/></g>',
+ layers:'<g fill="none" stroke="#FCFBFA" stroke-width=".8" opacity=".85"><path d="M10 40q100 4 200 0t200 2M10 62q100 -3 200 1t200 -2M10 80q100 5 200 0t200 1M10 104q100 -2 200 2t200 0M10 120q100 3 200 -1t200 2M10 146q100 -4 200 1t200 -1M10 166q100 3 200 0t200 1"/></g>'
+};
+const photos=document.getElementById('photos'), stops=document.getElementById('stops');
+ERAS.forEach(e=>{
+  const ph=e.ph, col=document.createElement('div'); col.className='era';
+  col.innerHTML=`<figure class="photo" style="left:${ph.l}px;top:${ph.t}px;width:${ph.w}px;margin:0"><label class="slot" style="height:${ph.h-30}px"><input type="file" accept="image/*" aria-label="Add a photo: ${e.cap}"><svg viewBox="0 0 420 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${TOOLS[e.tool]}</svg></label><figcaption class="cap">${e.cap}</figcaption></figure>`;
+  photos.appendChild(col);
+  const s=document.createElement('div'); s.className='stop'+(e.spec?' spec':''); s.innerHTML=`<div class="yr">${e.yr}</div><div class="txt">${e.txt}</div>`; stops.appendChild(s);
+  const inp=col.querySelector('input'), slot=col.querySelector('.slot');
+  const show=url=>{slot.style.backgroundImage=`url(${url})`;slot.classList.add('has')};
+  try{const v=localStorage.getItem('photo-'+e.key); if(v) show(v);}catch(_){}
+  inp.addEventListener('change',()=>{const f=inp.files&&inp.files[0]; if(!f) return;
+    const r=new FileReader(); r.onload=()=>{show(r.result); try{localStorage.setItem('photo-'+e.key,r.result)}catch(_){}}; r.readAsDataURL(f);});
+});
+
+/* scrolling: vertical wheel moves the timeline sideways, drag with the mouse, arrow keys step */
+const sc=document.getElementById('scroller');
+sc.addEventListener('wheel',ev=>{ if(Math.abs(ev.deltaY)<=Math.abs(ev.deltaX)) return;
+  const max=sc.scrollWidth-sc.clientWidth, x=sc.scrollLeft;
+  if((ev.deltaY<0&&x<=0)||(ev.deltaY>0&&x>=max-1)) return; ev.preventDefault(); sc.scrollLeft+=ev.deltaY;},{passive:false});
+let drag=null;
+sc.addEventListener('pointerdown',ev=>{ if(ev.target.closest('.slot')||ev.pointerType!=='mouse') return; drag={x:ev.clientX,s:sc.scrollLeft}; sc.classList.add('drag');});
+addEventListener('pointermove',ev=>{ if(drag) sc.scrollLeft=drag.s-(ev.clientX-drag.x);});
+addEventListener('pointerup',()=>{drag=null; sc.classList.remove('drag')});
+sc.addEventListener('keydown',ev=>{ if(ev.key==='ArrowRight'){sc.scrollBy({left:COL,behavior:'smooth'});ev.preventDefault()} if(ev.key==='ArrowLeft'){sc.scrollBy({left:-COL,behavior:'smooth'});ev.preventDefault()}});
+
+/* section: same geometry as the CAD underlay (4400 wide, mineral top y 292, 1 m peat = 60 px) */
+const BASE=292, PXM=60, W=ERAS.length*COL, END=COL*9;
+const SH=Math.max(420, Math.round(innerHeight-(document.getElementById('section').getBoundingClientRect().top+scrollY)-14));
+const THICK=[3.0,3.0,2.8,2.3,1.9,1.6,1.3,0.6,1.35,1.35];
+const SURF=THICK.map(t=>BASE-t*PXM);
+const TEPHRA=BASE-0.75*PXM, PINE=BASE-0.5*PXM;   // schematic heights above the mineral soil
+const lerp=(a,b,t)=>a+(b-a)*t;
+function sAt(x,arr){const f=x/COL-.5; if(f<=0) return arr[0]; if(f>=arr.length-1) return arr[arr.length-1]; const i=Math.floor(f),t=f-i,s=t*t*(3-2*t); return lerp(arr[i],arr[i+1],s)}
+function surf(x){ x=Math.min(x,END); return x<COL? Math.max(sAt(x,SURF),lerp(BASE-24,SURF[0],Math.min(1,x/(COL*.85)))) : sAt(x,SURF) }
+
+/* sticky depth numbers */
+(function(){ const r=document.createElement('div'); r.className='ruler'; r.setAttribute('aria-hidden','true');
+  let h=''; for(let m=0;m<=3;m++){ h+=`<span style="top:${BASE-m*PXM-8}px">${m} m</span>`; } r.innerHTML=h; document.getElementById('section').prepend(r); })();
+
+new p5(p=>{
+  const hubs=[];
+  p.setup=()=>{
+    const c=p.createCanvas(W,SH); c.parent('section'); p.frameRate(20); p.randomSeed(4); p.noiseSeed(4); p.textFont('Platypi');
+    const g=p.createGraphics(W,SH); g.pixelDensity(p.pixelDensity()); g.background(34,30,28);
+    const ctx=g.drawingContext;
+    const groundPath=()=>{ ctx.beginPath(); ctx.moveTo(0,SH); for(let x=0;x<=W;x+=4) ctx.lineTo(x,surf(x)); ctx.lineTo(W,SH); ctx.closePath(); };
+    const dash=a=>ctx.setLineDash(a);
+    // ground: peat tint, mineral dots, grid aligned to the mineral soil line, all clipped below the section line
+    ctx.save(); groundPath(); ctx.clip();
+    for(let i=0;i<1400;i++){ g.stroke(190,182,172,70); g.strokeWeight(1.2); g.point(p.random(W),p.random(BASE+6,SH)); }
+    for(let k=-20;k<=10;k++){ const y=BASE+k*20; g.stroke(190,182,172,k%3===0?70:38); g.strokeWeight(.5); g.line(0,y,W,y); }
+    for(let x=0;x<=W;x+=20){ g.stroke(190,182,172,38); g.line(x,0,x,SH); }
+    // material layers (each line is one material)
+    g.noFill();
+    g.stroke(190,182,172,200); g.strokeWeight(.8); g.line(0,BASE,END,BASE);                                  // iron pan on mineral soil
+    dash([1,4]); g.stroke(252,251,250,170); g.strokeWeight(1);                                              // volcanic ash (tephra)
+    g.beginShape(); for(let x=0;x<=END;x+=4){ const y=TEPHRA+(p.noise(x*.01)-.5)*3; if(surf(x)<y-3) g.vertex(x,y); else { g.endShape(); g.beginShape(); } } g.endShape(); dash([]);
+    dash([3,4]); g.stroke(188,215,230,160); g.strokeWeight(.7);                                              // water table
+    const WTM=[0.03,0.05,0.22,0.30,0.34,0.34,0.34,0.25,0.08,0.08].map(m=>m*PXM);
+    g.beginShape(); for(let x=0;x<=END;x+=6){ const y=surf(x)+Math.max(2,sAt(x,WTM)); if(y<BASE-1) g.vertex(x,y); } g.endShape(); dash([]);
+    ctx.restore();
+
+    // above ground
+    const L=a=>{g.stroke(252,251,250,a); g.noFill(); g.strokeWeight(.7);};
+    const tuft=(x,s,h)=>{ g.stroke(190,182,172,170); g.strokeWeight(.6); for(let j=0;j<5;j++){ const bx=x+j*1.4-3; g.line(bx,s,bx+p.random(-3,3),s-h*p.random(.5,1.1)); } };
+    for(let x=6;x<COL*2.2;x+=p.random(4,9)){ if(x>COL+130&&x<COL+330) continue; tuft(x,surf(x),p.random(4,9)); }
+    for(let x=COL*8+6;x<COL*9;x+=p.random(3,6)){ if(x>COL*8+180&&x<COL*8+300) continue; tuft(x,surf(x),p.random(5,10)); }
+    // equal hand-cut banks
+    const banks=[COL+150,COL+210,COL+270]; banks.forEach(x=>{ const s=surf(x), d=24; g.noStroke(); g.fill(34,30,28); g.rect(x+1,s+1,28,d-1); L(220); g.beginShape(); g.vertex(x,s); g.vertex(x,s+d); g.vertex(x+30,s+d); g.vertex(x+30,s); g.endShape(); });
+    // drains
+    for(let x=COL*2+20;x<COL*7;x+=38){ const s=surf(x); L(180); g.line(x-4,s,x,s+9); g.line(x+4,s,x,s+9); }
+    // surface before extraction
+    dash([2,5]); g.stroke(252,251,250,80); g.line(COL*1.5,SURF[0],END,SURF[0]); dash([]);
+    const SIL=[190,182,172];
+    const sky=()=>{ ctx.save(); ctx.beginPath(); ctx.moveTo(0,0); for(let x=0;x<=W;x+=4) ctx.lineTo(x,surf(x)); ctx.lineTo(W,0); ctx.closePath(); ctx.clip(); };
+    const station=(x,sc)=>{ const s=surf(x+50), hw=100*sc, hh=60*sc, cx=x+hw-18*sc, ch=140*sc; sky(); g.noStroke(); g.fill(...SIL); ctx.fillStyle='rgb(190,182,172)';
+      g.rect(x,s-hh,hw,hh+40); g.rect(cx,s-ch,13*sc,ch+40); g.quad(x-70*sc,s+6,x-60*sc,s+6,x+6,s-hh+4,x,s-hh+4); ctx.restore(); return {x:cx,y:s-ch}; };
+    const st1=station(COL*3+250,1); station(COL*4+280,.82);
+    const pyl=[]; for(let x=COL*4.55;x<COL*5.7;x+=140) pyl.push(x);
+    pyl.forEach(x=>{ const s=surf(x), h=86; L(200); g.line(x-11,s,x,s-h); g.line(x+11,s,x,s-h); for(let k=0;k<5;k++){ const y1=s-k*h/5,y2=s-(k+1)*h/5,w1=11*(1-k/5),w2=11*(1-(k+1)/5); g.stroke(252,251,250,90); g.line(x-w1,y1,x+w2,y2); g.line(x+w1,y1,x-w2,y2);} L(200); g.line(x-22,s-h*.72,x+22,s-h*.72); });
+    g.stroke(252,251,250,110); g.strokeWeight(.5);
+    for(let i=0;i<pyl.length-1;i++){ [22,-22].forEach(dx2=>{ const a=pyl[i],b=pyl[i+1]; g.beginShape(); for(let t=0;t<=1.001;t+=.05) g.vertex(lerp(a+dx2,b+dx2,t),lerp(surf(a),surf(b),t)-62+Math.sin(Math.PI*t)*10); g.endShape(); }); }
+    const dc=(x,w,h)=>{ const top=Math.min(surf(x),surf(x+w))-h; sky(); g.noStroke(); g.fill(...SIL); ctx.fillStyle='rgb(190,182,172)'; g.rect(x,top,w,h+60); for(let i=8;i+16<w;i+=24) g.rect(x+i,top-7,16,8); ctx.restore(); return top-7; };
+    const dc1=dc(COL*5+290,90,38); dc(COL*6+120,120,46); const dc2=dc(COL*6+280,130,54);
+    dc(COL*7+20,96,54); const dc3=dc(COL*7+130,96,60); dc(COL*7+240,96,58); dc(COL*7+340,80,50); dc(COL*8+190,84,34);
+    const tur=(x,h)=>{ const s=surf(x); L(220); g.line(x-2.5,s,x-1,s-h); g.line(x+2.5,s,x+1,s-h); hubs.push({x,y:s-h,r:h*.3}); return s-h; };
+    const t1=tur(COL*6+40,118); const t2=tur(COL*8+50,124); tur(COL*8+140,100);
+    g.stroke(252,251,250,235); g.strokeWeight(1); g.noFill(); g.beginShape(); for(let x=0;x<=END;x+=4) g.vertex(x,surf(x)); g.endShape();
+    g.stroke(207,114,155,160); g.strokeWeight(.8); dash([3,5]); g.line(COL*7,0,COL*7,SH); g.line(COL*8,0,COL*8,SH); dash([]);
+
+    // annotations: leader line up from the change, label at its top
+    const ann=(x,y,ly,text,right=false)=>{ g.stroke(190,182,172,170); g.strokeWeight(.6); g.line(x,y,x,ly+4); g.noStroke(); g.fill(252,251,250); g.circle(x,y,3);
+      g.fill(190,182,172); g.textFont('Platypi'); g.textSize(12); g.textAlign(right?p.RIGHT:p.LEFT,p.BOTTOM); g.text(text,right?x-4:x+4,ly+4); };
+    ann(COL*.62,surf(COL*.62)-4,60,'Living bog surface');
+    ann(COL+165,surf(COL+165)+12,62,'Hand-cut turf banks');
+    ann(COL*2+20,surf(COL*2+20)+5,62,'First drains');
+    ann(COL*2+300,SURF[0],62,'Surface before extraction');
+    ann(st1.x,st1.y,8,'Peat-fired power station',true);
+    ann(COL*4+130,surf(COL*4+130)-2,62,'Milled peat fields');
+    ann(COL*4.55+140,surf(COL*4.55+140)-86,40,'Transmission grid');
+    ann(COL*5+335,dc1,70,'First data centres');
+    ann(COL*6+40,t1,24,'Wind turbines on cutaway');
+    ann(COL*6+345,dc2,88,'Data centre campus');
+    ann(COL*7+178,dc3,110,'Data centres on thinning peat');
+    ann(COL*8+50,t2,24,'Own renewable supply');
+    ann(COL*8+320,surf(COL*8+320)+3,110,'Rewetted bog');
+    ann(COL*9-60,surf(COL*9-60)+2,140,'Detail',true);
+
+    // detail frame: the material layers, zoomed
+    const fx=COL*9+70, fy=40, fw=310, fh=SH-60, zs=fy+28, zp=150, zb=zs+1.35*zp;
+    g.noFill(); g.stroke(252,251,250,200); g.strokeWeight(.8); g.rect(fx,fy,fw,fh);
+    ctx.save(); ctx.beginPath(); ctx.rect(fx,fy,fw,fh); ctx.clip();
+    for(let i=0;i<260;i++){ g.stroke(190,182,172,70); g.strokeWeight(1.2); g.point(p.random(fx,fx+fw),p.random(zb+6,fy+fh)); }
+    g.stroke(190,182,172,38); g.strokeWeight(.5); for(let x=fx;x<=fx+fw;x+=20) g.line(x,zs,x,fy+fh); for(let y=zb;y>zs;y-=20) g.line(fx,y,fx+fw,y); for(let y=zb;y<fy+fh;y+=20) g.line(fx,y,fx+fw,y);
+    for(let x=fx+6;x<fx+fw;x+=7){ g.stroke(190,182,172,170); g.strokeWeight(.7); g.line(x,zs,x+p.random(-2,2),zs-p.random(5,14)); }
+    g.stroke(252,251,250,235); g.strokeWeight(1); g.line(fx,zs,fx+fw,zs);
+    dash([3,4]); g.stroke(188,215,230,170); g.strokeWeight(.8); g.line(fx,zs+.06*zp,fx+fw,zs+.06*zp); dash([]); g.stroke(252,251,250,170); g.strokeWeight(.8); g.line(fx,zs+.3*zp,fx+fw,zs+.3*zp);
+    const zt=zb-.75*zp, zpine=zb-.5*zp; dash([1,4]); g.stroke(252,251,250,190); g.line(fx,zt,fx+fw,zt); dash([]);
+    g.stroke(190,182,172,220); g.strokeWeight(.9); g.line(fx,zb,fx+fw,zb);
+    ctx.restore();
+    g.noStroke(); g.fill(190,182,172); g.textFont('Platypi'); g.textSize(12); g.textAlign(p.LEFT,p.BOTTOM);
+    const lab=(y,t)=>{ g.fill(34,30,28); g.rect(fx+8,y-16,g.textWidth(t)+8,15); g.fill(190,182,172); g.text(t,fx+12,y-2); };
+    lab(zs+.3*zp+18,'Living layer, about 30 cm'); lab(zs+.06*zp+16,'Water table'); lab(zt-3,'Volcanic ash'); lab(zb-3,'Iron pan'); lab(zb+22,'Mineral soil');
+    lab(zpine+(zb-zpine)/2+6,'Deep peat');
+    const dx=COL*9-60, ds=surf(dx); g.noFill(); g.stroke(252,251,250,160); g.strokeWeight(.6); g.rect(dx-10,ds,24,40);
+    dash([2,4]); g.line(dx+14,ds,fx,fy); g.line(dx+14,ds+40,fx,fy+fh); dash([]);
+    p.bg=g;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) p.noLoop();
+  };
+  p.draw=()=>{
+    p.image(p.bg,0,0);
+    const a=p.frameCount/20*1.2;
+    p.stroke(252,251,250,220); p.strokeWeight(.7);
+    hubs.forEach((h,i)=>{ for(let j=0;j<3;j++){ const an=a+i+j*2.094; p.line(h.x,h.y,h.x+Math.cos(an)*h.r,h.y+Math.sin(an)*h.r);} });
+  };
+});
+</script>
+
+</body></html>
