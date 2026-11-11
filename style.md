@@ -11,7 +11,7 @@ This file is the single source of truth for every page, map, diagram and gallery
 Miro, VISUALS STAGE 2 frame (capstone board):
 - GALLERY: specimen sheets of objects laid out on a strict grid with generous margins (black-and-white architectural fragments, cut-out silhouettes of land parcels on a dot grid, mixed object "catalogue" sheets with crosshair markers).
 - MAPPING: vintage survey sheets (muted greens, blues, buff paper, fine graticules), a soft relief map with a single pink area of focus, a nautical chart with hairline contours, a timeline diagram where lines fan down from a map into dated circles.
-- FONTS: Bricolage Grotesque (headings) with Platypi (body) shown on a pink panel. This pairing is the project's type system.
+- FONTS: originally Bricolage Grotesque with Platypi; since replaced (11 Nov 2026) by Libre Caslon Text Italic for titles, closer to vintage map lettering, with Crimson Pro Light for body text.
 - Palette swatches (the final colloquium palette below).
 - Reference links: Net.art and Art Academia aesthetics.
 
@@ -113,34 +113,38 @@ When to use which:
 
 | Role | Family | Source | Notes |
 |---|---|---|---|
-| Headings, titles, nav, labels | Bricolage Grotesque (sans serif) | Google Fonts | Weights 400, 600, 700 |
-| Body text, captions, long reading | Platypi (serif) | Google Fonts | Weights 400, 600 (bold). Load upright styles only |
+| Titles and headings (Display, H1, H2, H3) | Libre Caslon Text Italic | Google Fonts | Weight 400 italic. Engraved map lettering |
+| Labels, navigation, kickers, title blocks, figure codes, map lettering | Libre Caslon Text (upright), set in tracked capitals | Google Fonts | Weight 400. Uppercase with wide letter spacing, like Ordnance Survey and admiralty sheet lettering |
+| Body text, captions, legends, long reading | Crimson Pro Light | Google Fonts | Weight 300 for text, 500 for bold. Upright only |
 
-Headings and titles are always sans serif. Body text is always serif. Bricolage Grotesque and Platypi are the only two typefaces; data labels, coordinates and figure codes use Bricolage Grotesque with tabular (fixed-width) numbers so columns still align. No monospace web font is loaded, and no other display serif is used, including on cover and section opener pages.
+Libre Caslon and Crimson Pro are the only two typefaces. Titles are always Caslon italic; body text is always Crimson Pro, upright. Numbers in data and coordinates use tabular (fixed-width) figures so columns align. No sans serif and no monospace web font is loaded. (Replaces the earlier Bricolage Grotesque and Platypi pairing.)
 
-### 4.2 No italics
+### 4.2 Italics
 
-- No italic or oblique type anywhere unless explicitly requested for a specific item.
-- Do not load italic font files. Set `font-style: normal` globally, including on `em`, `i`, `cite`, `blockquote`, `address` and `figcaption`.
-- For emphasis use bold (Platypi 600 in body, Bricolage 600/700 in headings), or a pink underline for links.
-- Titles of books, works and projects are set upright. Use quotation marks or bold if they need setting apart.
+- Italic is used for one job only: titles and headings in Libre Caslon Text Italic, the way old maps letter their titles.
+- Everything else is upright: body text, captions, labels, buttons, quotes and emphasis. Set `font-style: normal` on `em`, `i`, `cite`, `blockquote`, `address` and `figcaption`.
+- Do not load Crimson Pro italic.
+- For emphasis in body text use Crimson Pro Medium (500), or a pink underline for links.
+- Titles of books, works and projects in body text are set upright. Use quotation marks if they need setting apart.
 
-### 4.3 Type scale (desktop; scale factor 1.25, base 18px)
+### 4.3 Type scale (desktop; scale factor 1.25, base 19px)
 
-| Level | Use | Family / weight | Size / line height | Tracking | Case |
+| Level | Use | Family / style | Size / line height | Tracking | Case |
 |---|---|---|---|---|---|
-| Display | Cover title, chapter opener | Bricolage 700 | 72 / 76px | -0.02em | Sentence case |
-| H1 | Page title | Bricolage 700 | 48 / 54px | -0.015em | Sentence case |
-| H2 | Section heading | Bricolage 600 | 32 / 38px | -0.01em | Sentence case |
-| H3 | Sub-section, card title | Bricolage 600 | 22 / 28px | 0 | Sentence case |
-| Kicker / label | Section number, plate label above a heading | Bricolage 600 | 12 / 16px | +0.12em | UPPERCASE |
-| Body | Running text | Platypi 400 | 18 / 29px | 0 | Sentence case |
-| Body bold | Emphasis in body | Platypi 600 | 18 / 29px | 0 | |
-| Lead | Intro paragraph | Platypi 400 | 22 / 33px | 0 | |
-| Caption | Figure captions, sources | Platypi 400 | 14 / 20px | 0 | |
-| Meta / data | Coordinates, dates, fig. codes, legends | Bricolage 400, tabular numbers | 12 / 16px | +0.04em | as needed |
+| Display | Cover title, chapter opener | Caslon italic 400 | 72 / 80px | -0.01em | Sentence case |
+| H1 | Page title | Caslon italic 400 | 48 / 56px | -0.005em | Sentence case |
+| H2 | Section heading | Caslon italic 400 | 30 / 38px | 0 | Sentence case |
+| H3 | Sub-section, card title | Caslon italic 400 | 22 / 28px | 0 | Sentence case |
+| Kicker / label | Plate number, section label, nav | Caslon upright 400 | 11 to 12 / 16px | +0.14em | UPPERCASE |
+| Lead | Intro paragraph | Crimson Pro 300 | 23 / 36px | 0 | Sentence case |
+| Body | Running text | Crimson Pro 300 | 19 / 30px | 0 | Sentence case |
+| Body bold | Emphasis in body | Crimson Pro 500 | 19 / 30px | 0 | |
+| Caption | Figure captions, sources, legends | Crimson Pro 300 | 15 / 22px | 0 | |
+| Meta / data | Coordinates, dates, fig. codes, axis ticks | Caslon upright 400, tabular numbers | 11 to 12 / 16px | +0.08em | UPPERCASE for words |
 
-Mobile: Display 44, H1 34, H2 26, H3 20, Body 17/27, Caption 13.
+Mobile: Display 44, H1 34, H2 26, H3 20, Body 18/28, Caption 14.
+
+Small sizes: Crimson Pro Light gets thin below 14px. Use weight 400 for any text set at 13px or smaller.
 
 ### 4.4 Text rules
 
@@ -148,7 +152,7 @@ Mobile: Display 44, H1 34, H2 26, H3 20, Body 17/27, Caption 13.
 - Left aligned, ragged right. No justified text, no centred body paragraphs.
 - Paragraph spacing: one line (1em) between paragraphs, no first-line indent.
 - Heading spacing: space above a heading is twice the space below it.
-- Every figure has a caption in the format: `Fig. 03` (meta style) then a caption sentence (Platypi), then the source line in grey-text.
+- Every figure has a caption in the format: `FIG. 03` (meta style) then a caption sentence (Crimson Pro), then the source line in grey-text.
 - Numbers in data and coordinates use tabular figures (`font-variant-numeric: tabular-nums`) so columns align.
 
 ---
@@ -222,10 +226,10 @@ Maps follow the vintage survey sheet look from the MAPPING references.
 
 - Base: paper colour with grain. Land in light green at 35 to 50% opacity, water in misty blue, uplands and peat in spruce at low opacity. Muted tones only; no saturated GIS defaults.
 - Linework: ink at 0.5 to 1px for coastlines, roads and boundaries; slate blue for infrastructure (grid lines, cables, data centres); hairline contours in --grey.
-- Graticule: a visible coordinate grid in --rule, with tick labels in the meta style (Bricolage 400, tabular numbers) at 10 to 11px around the frame.
+- Graticule: a visible coordinate grid in --rule, with tick labels in the meta style (Caslon upright capitals, tabular numbers) at 11px around the frame.
 - Focus: one pink area or pink point set per map (the subject). Everything else stays muted.
-- Frame and title block: thin ink frame, title block bottom-right with map title (Bricolage 600), scale bar, north arrow (simple line), source and date (meta style).
-- Legend: small square swatches with ink outlines, labels in Platypi 13px. Order legends in the same order as the palette hierarchy.
+- Frame and title block: thin ink frame, title block bottom-right with map title (Caslon italic), scale bar, north arrow (simple line), source and date (meta style).
+- Legend: small square swatches with ink outlines, labels in Crimson Pro 400 at 13px. Order legends in the same order as the palette hierarchy.
 - No hatching (stated preference); use flat fills, dot stipple or line density instead.
 - Basemap tiles, if used, must be greyscale and lightened (for example a light grey basemap with a paper-colour multiply).
 - Scale sequence across pages: national, then county, then peatland cluster. Keep the frame, legend and graticule identical at each scale so they read as one atlas.
@@ -238,7 +242,7 @@ Maps follow the vintage survey sheet look from the MAPPING references.
 - Lines 1px (hairline 0.5px for grids); dots 6 to 12px; no 3D, no shadows, no gradients.
 - Series colours, in order: pink (main data), spruce (peat), slate blue (infrastructure / data centres), ochre (extraction), light green, yellow, misty blue.
 - Peat-related series use greens; data centre and infrastructure series use blues; the project's key series is pink.
-- Axis labels and ticks in the meta style at 11px, grey-text. Titles in Bricolage 600. Annotations in Platypi 14px.
+- Axis labels and ticks in the meta style at 11px, grey-text. Titles in Caslon italic. Annotations in Crimson Pro 400 at 14px.
 - Gridlines in --rule. Remove chart borders and background fills.
 - Timelines: horizontal rule in ink, events as dots on short vertical stems, dates in the meta style below; extraction (past) to the left, projections (future) to the right, with projections drawn as dashed lines.
 - Every chart is labelled as a figure (Fig. 00) with a source line.
@@ -263,7 +267,7 @@ Net.art here means the plain, structural language of the early web, kept restrai
 ## 11. Components
 
 Navigation
-- Top bar, no background fill, thin --rule line below. Project name left (Bricolage 600, 16px), links right (Bricolage 400, 14px, uppercase, +0.08em).
+- Top bar, no background fill, thin --rule line below. Project name left (Caslon italic, 18px), links right (Caslon upright capitals, 12px, +0.14em).
 - Active page: pink underline 2px, offset 6px.
 - A light/dark switch is a plain text toggle in the meta style: `[ light / dark ]`.
 
@@ -271,20 +275,20 @@ Links
 - Body links: ink text with a 1px pink underline; hover thickens the underline to 2px and turns the text pink in dark mode only.
 
 Buttons
-- Text buttons with a 1px ink border, 0 to 2px radius, Bricolage 600 13px uppercase, padding 10 by 18px. Hover: pink fill, ink text.
+- Text buttons with a 1px ink border, 0 to 2px radius, Caslon upright capitals 12px, +0.14em, padding 10 by 18px. Hover: pink fill, ink text.
 
 Gallery tile
-- Image (desaturated) + below it: `Fig. 12` (meta style 12px) and a one-line caption (Platypi 14px). Optional year or location in grey-text.
+- Image (desaturated) + below it: `Fig. 12` (meta style 12px) and a one-line caption (Crimson Pro 15px). Optional year or location in grey-text.
 - No card background, no border. Hover: pink duotone on image, pink caption underline.
 
 Plate (map or diagram sheet)
 - Full-width sheet on paper, inset ink frame, title block bottom-right, figure number top-left in the meta style.
 
 Headline gallery (floating headlines)
-- Each headline as a small paper slip: Platypi 16px headline, source and date in the meta style. Slips sit on the dot-field grid with slight, fixed offsets (no rotation over 2 degrees). Hover: pink underline and lift the slip to full opacity from 80%.
+- Each headline as a small paper slip: Crimson Pro 400 17px headline, source and date in the meta style. Slips sit on the dot-field grid with slight, fixed offsets (no rotation over 2 degrees). Hover: pink underline and lift the slip to full opacity from 80%.
 
 Footer
-- Thin rule, sources and credits in Platypi 13px, a date stamp and page number in the meta style, in the style of a plate number.
+- Thin rule, sources and credits in Crimson Pro 400 at 13px, a date stamp and page number in the meta style, in the style of a plate number.
 
 ---
 
@@ -299,7 +303,7 @@ Footer
 | Telescope / speculative | Dark | Full-bleed image or ASCII band, short text | ASCII, pink highlights, grain |
 | Headlines | Light | Floating slips on a dot field | Meta-style source and date, pink hover |
 | Sources / bibliography | Light | Single text column, raw link list | Meta-style dates, pink underlines |
-| Section opener | Dark | Display title, kicker label, lots of space | Bricolage Grotesque Display title on off-black, grain |
+| Section opener | Dark | Display title, kicker label, lots of space | Caslon italic Display title on off-black, grain |
 
 ---
 
@@ -308,8 +312,8 @@ Footer
 Before publishing any page, confirm:
 1. Uses the tokens in section 14; no new colours or hex values.
 2. Background is --paper or --ink, never #FFF or #000, with grain applied.
-3. Headings in Bricolage Grotesque, body in Platypi, data labels in the Bricolage meta style. No other fonts.
-4. No italics anywhere (check em, i, blockquote and captions).
+3. Titles in Libre Caslon Text Italic, labels in Caslon upright capitals, body in Crimson Pro Light. No other fonts.
+4. Italic only on titles and headings (check em, i, blockquote and captions are upright).
 5. Type sizes come from the scale in 4.3; a clear hierarchy of kicker, title, lead, body, caption.
 6. Content sits on the 12-column grid with the section spacing in 5.3.
 7. Images desaturated with the filter in 7.1, pink hover in 7.2.
@@ -325,7 +329,7 @@ Before publishing any page, confirm:
 ## 14. CSS tokens (copy into every page)
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Platypi:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Crimson+Pro:wght@300;400;500&display=swap');
 
 :root {
   /* palette */
@@ -351,8 +355,8 @@ Before publishing any page, confirm:
   --grain-blend: multiply;
 
   /* type */
-  --font-head: 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-body: 'Platypi', Georgia, serif;
+  --font-head: 'Libre Caslon Text', Georgia, serif;
+  --font-body: 'Crimson Pro', Georgia, serif;
 
   /* spacing */
   --s1: 8px; --s2: 16px; --s3: 24px; --s4: 32px; --s5: 48px;
@@ -370,22 +374,22 @@ Before publishing any page, confirm:
 }
 
 html { background: var(--bg); color: var(--fg); }
-body { font: 400 18px/1.6 var(--font-body); }
-h1, h2, h3, h4, .label, nav { font-family: var(--font-head); }
-h1 { font-weight: 700; font-size: 48px; line-height: 1.125; letter-spacing: -0.015em; }
-h2 { font-weight: 600; font-size: 32px; line-height: 1.19; letter-spacing: -0.01em; }
-h3 { font-weight: 600; font-size: 22px; line-height: 1.27; }
-.label { font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; }
-.caption { font-size: 14px; line-height: 20px; color: var(--fg-muted); }
-.meta, .fig { font-family: var(--font-head); font-weight: 400; font-size: 12px;
-  letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+body { font: 300 19px/1.6 var(--font-body); }
+h1, h2, h3, h4, .label, nav, .meta, .fig, button { font-family: var(--font-head); }
+h1, h2, h3, h4 { font-style: italic; font-weight: 400; }
+h1 { font-size: 48px; line-height: 1.17; letter-spacing: -0.005em; }
+h2 { font-size: 30px; line-height: 1.27; }
+h3 { font-size: 22px; line-height: 1.27; }
+.label, nav, button { font-style: normal; font-weight: 400; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+.caption { font-size: 15px; line-height: 22px; color: var(--fg-muted); }
+.meta, .fig { font-style: normal; font-weight: 400; font-size: 11px; text-transform: uppercase;
+  letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
 .ascii { font-family: monospace; white-space: pre; line-height: 1; } /* live ASCII only */
 p { max-width: var(--measure); }
-strong, b { font-weight: 600; }
+strong, b { font-weight: 500; }
 
-/* no italics, ever, unless a class opts in */
-*, em, i, cite, blockquote, address, figcaption { font-style: normal; }
-.allow-italic { font-style: italic; }
+/* italic only on headings */
+em, i, cite, blockquote, address, figcaption, p, li { font-style: normal; }
 
 a { color: inherit; text-decoration: underline; text-decoration-color: var(--pink);
     text-underline-offset: 4px; text-decoration-thickness: 1px; }
@@ -425,12 +429,12 @@ Do
 - Off-white or off-black paper with grain.
 - Visible grids, crosshairs, graticules, figure numbers.
 - Desaturated, softened images that turn pink on hover.
-- Sans serif headings, serif body, sans with tabular numbers for data.
+- Caslon italic titles, Caslon capitals for labels, Crimson Pro Light body.
 - Bold for emphasis.
 - Large margins and empty cells.
 
 Don't
-- Use italics (unless requested).
+- Use italics anywhere except titles and headings.
 - Use pure white, pure black, or high contrast photographs.
 - Use pink for body text on off-white.
 - Introduce colours outside the palette (including purples, the old berry/brique, the earlier pink #D6338A, the dropped red-orange #A04326, or the old yellow #F8C46C).

@@ -1,24 +1,24 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Extraction and Balance Timeline</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700&family=Platypi:wght@400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Crimson+Pro:wght@300;400;500&display=swap">
 <style>
 /* Layout: one dark plate. Title and description, then a sideways scroll of floating archive photos, a dashed timeline with crosses, and the ground in section with a grid and layer lines beneath it. */
 :root{
   --pink:#CF729B; --ochre:#D3913F; --green-light:#99AD67; --spruce:#0B4430; --blue-mist:#BCD7E6;
   --ink:#221E1C; --grey:#BEB6AC; --paper:#FCFBFA;
   --bg:var(--ink); --fg:var(--paper); --fg-muted:var(--grey);
-  --font-head:'Bricolage Grotesque',system-ui,sans-serif; --font-body:'Platypi',Georgia,serif;
+  --font-head:'Libre Caslon Text',Georgia,serif; --font-body:'Crimson Pro',Georgia,serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
 *,em,i,figcaption{font-style:normal}
 html,body{background:var(--bg);color:var(--fg)}
-body{font:400 17px/1.6 var(--font-body);min-height:100%;margin:0}
+body{font:300 19px/1.58 var(--font-body);min-height:100%;margin:0}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.09;mix-blend-mode:screen;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 header{padding-left:max(16px,6vw,env(safe-area-inset-left,0px));padding-right:max(16px,6vw,env(safe-area-inset-right,0px));padding-block:64px 24px}
-h1{font:700 clamp(30px,4vw,44px)/1.1 var(--font-head);letter-spacing:-.015em;margin:0}
+h1{font:italic 400 clamp(30px,4vw,48px)/1.17 var(--font-head);letter-spacing:-.005em;margin:0}
 .desc{max-width:34rem;margin:14px 0 0;color:var(--fg)}
 .scroller{overflow-x:auto;overflow-y:hidden;cursor:grab;scrollbar-width:thin;scrollbar-color:rgba(190,182,172,.3) transparent}
 .scroller.drag{cursor:grabbing;user-select:none}
@@ -33,21 +33,24 @@ h1{font:700 clamp(30px,4vw,44px)/1.1 var(--font-head);letter-spacing:-.015em;mar
 .slot:focus-within{outline:1px solid var(--pink)}
 .slot input{position:absolute;inset:0;width:100%;opacity:0;cursor:pointer}
 .slot svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.cap{text-align:center;font-size:13px;line-height:18px;color:var(--fg-muted);margin-top:8px}
+.cap{text-align:center;font-size:13px;font-weight:400;line-height:18px;color:var(--fg-muted);margin-top:8px}
 .line{position:relative}
-.line::before{content:"";position:absolute;left:0;right:0;top:10px;border-top:1px dashed rgba(190,182,172,.7)}
+.line::before{content:"";position:absolute;left:0;right:0;top:9px;border-top:2.5px dashed rgba(252,251,250,.85)}
+.specline{position:absolute;top:11px;bottom:0;width:0;border-left:1px dashed rgba(207,114,155,.63);pointer-events:none}
+.tbd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-head);letter-spacing:.14em;color:var(--fg-muted)}
+.slot.blank{cursor:default}
 .stop{position:relative;text-align:center;padding:30px 48px 0;min-height:132px}
 .stop::before,.stop::after{content:"";position:absolute;left:50%;background:var(--fg)}
 .stop::before{top:3px;width:1px;height:15px;margin-left:-.5px}
 .stop::after{top:10px;width:15px;height:1px;margin-left:-7.5px}
 .stop.spec::before,.stop.spec::after{background:var(--pink)}
-.yr{font:400 13px/18px var(--font-head);letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--fg)}
+.yr{font:400 11px/18px var(--font-head);letter-spacing:.14em;text-transform:uppercase;font-variant-numeric:tabular-nums;color:var(--fg)}
 .stop.spec .yr{color:var(--pink)}
-.txt{font-size:13.5px;line-height:20px;color:var(--fg-muted);margin-top:6px}
+.txt{font-size:14px;font-weight:400;line-height:20px;color:var(--fg-muted);margin-top:6px}
 #section{position:relative;width:4400px;display:block;line-height:0}
 #section canvas{display:block}
 .ruler{position:sticky;left:0;width:0;height:0;z-index:2;line-height:1}
-.ruler span{position:absolute;left:8px;font:400 11px/16px var(--font-head);letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--fg);background:var(--ink);padding:0 4px;white-space:nowrap}
+.ruler span{position:absolute;left:8px;font:400 11px/16px var(--font-head);letter-spacing:.08em;font-variant-numeric:tabular-nums;color:var(--fg);background:var(--ink);padding:0 4px;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){.slot::after{transition:none}}
 </style>
 
@@ -73,9 +76,9 @@ const ERAS=[
  {key:"scale",yr:"1974 to 2005",txt:"Milled peat feeds new stations. Older stations close.",cap:"Milled peat harvester",tool:"miller",ph:{l:50,t:44,w:270,h:140}},
  {key:"overlap",yr:"2015 to 2021",txt:"Data centres use 5% of Ireland's electricity while peat is still harvested, until 2021.",cap:"Grid across the cutaway",tool:"pylon",ph:{l:170,t:0,w:180,h:196}},
  {key:"now",yr:"2022 to 2025",txt:"Data centres use 23% of Ireland's electricity. Cutaway bog is rehabilitated.",cap:"Data centre campus",tool:"rack",ph:{l:60,t:40,w:290,h:140}},
- {key:"futA",yr:"Future A",txt:"Extraction. The land keeps pace with the infrastructure.",cap:"Render: extraction",tool:"rack",spec:true,ph:{l:110,t:20,w:230,h:160}},
- {key:"futB",yr:"Future B",txt:"Balance. The bog is rewetted and the infrastructure follows the land.",cap:"Render: balance",tool:"turbine",spec:true,ph:{l:70,t:6,w:230,h:190}},
- {key:"peat",yr:"Back to the peat",txt:"Each layer of peat holds about a thousand years per metre.",cap:"A cut face of peat",tool:"layers",ph:{l:130,t:30,w:210,h:160}}
+ {key:"futA",yr:"Future A",txt:"Extraction. The land keeps pace with the infrastructure.",cap:"Render: extraction",tool:null,tbd:true,spec:true,ph:{l:110,t:20,w:230,h:160}},
+ {key:"futB",yr:"Future B",txt:"Balance. The bog is rewetted and the infrastructure follows the land.",cap:"Render: balance",tool:null,tbd:true,spec:true,ph:{l:70,t:6,w:230,h:190}},
+ {key:"peat",yr:"Back to the peat",txt:"",cap:"",tool:null,blank:true,ph:{l:130,t:30,w:210,h:160}}
 ];
 const TOOLS={
  moss:'<g fill="none" stroke="#FCFBFA" stroke-width=".9" opacity=".85"><path d="M150 190c-6-24 2-46 14-58M160 190c2-30 12-52 26-60M172 190c8-26 22-40 36-44M140 190c-10-18-12-34-6-48"/><circle cx="164" cy="128" r="5"/><circle cx="187" cy="128" r="4"/><circle cx="209" cy="145" r="4"/></g>',
@@ -91,6 +94,9 @@ const TOOLS={
 const photos=document.getElementById('photos'), stops=document.getElementById('stops');
 ERAS.forEach(e=>{
   const ph=e.ph, col=document.createElement('div'); col.className='era';
+  if(e.blank){ photos.appendChild(col); const s=document.createElement('div'); s.className='stop'; s.innerHTML=`<div class="yr">${e.yr}</div>`; stops.appendChild(s); return; }
+  if(e.tbd){ col.innerHTML=`<figure class="photo" style="left:${ph.l}px;top:${ph.t}px;width:${ph.w}px;margin:0"><div class="slot blank" style="height:${ph.h-30}px"><span class="tbd">TBD</span></div><figcaption class="cap">${e.cap}</figcaption></figure>`;
+    photos.appendChild(col); const s=document.createElement('div'); s.className='stop spec'; s.innerHTML=`<div class="yr">${e.yr}</div><div class="txt">${e.txt}</div>`; stops.appendChild(s); return; }
   col.innerHTML=`<figure class="photo" style="left:${ph.l}px;top:${ph.t}px;width:${ph.w}px;margin:0"><label class="slot" style="height:${ph.h-30}px"><input type="file" accept="image/*" aria-label="Add a photo: ${e.cap}"><svg viewBox="0 0 420 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">${TOOLS[e.tool]}</svg></label><figcaption class="cap">${e.cap}</figcaption></figure>`;
   photos.appendChild(col);
   const s=document.createElement('div'); s.className='stop'+(e.spec?' spec':''); s.innerHTML=`<div class="yr">${e.yr}</div><div class="txt">${e.txt}</div>`; stops.appendChild(s);
@@ -100,6 +106,8 @@ ERAS.forEach(e=>{
   inp.addEventListener('change',()=>{const f=inp.files&&inp.files[0]; if(!f) return;
     const r=new FileReader(); r.onload=()=>{show(r.result); try{localStorage.setItem('photo-'+e.key,r.result)}catch(_){}}; r.readAsDataURL(f);});
 });
+
+[7,8].forEach(k=>{ const d=document.createElement('div'); d.className='specline'; d.style.left=(k*COL)+'px'; stops.appendChild(d); });
 
 /* scrolling: vertical wheel moves the timeline sideways, drag with the mouse, arrow keys step */
 const sc=document.getElementById('scroller');
@@ -124,12 +132,12 @@ function surf(x){ x=Math.min(x,END); return x<COL? Math.max(sAt(x,SURF),lerp(BAS
 
 /* sticky depth numbers */
 (function(){ const r=document.createElement('div'); r.className='ruler'; r.setAttribute('aria-hidden','true');
-  let h=''; for(let m=0;m<=3;m++){ h+=`<span style="top:${BASE-m*PXM-8}px">${m} m</span>`; } r.innerHTML=h; document.getElementById('section').prepend(r); })();
+  let h=''; for(let m=0;m<=3;m++){ h+=`<span style="top:${BASE-m*PXM-8}px">${m===3?'0':'−'+(3-m)} m</span>`; } r.innerHTML=h; document.getElementById('section').prepend(r); })();
 
-new p5(p=>{
+Promise.all([document.fonts.load('400 10px "Libre Caslon Text"'),document.fonts.load('300 14px "Crimson Pro"')]).catch(()=>{}).then(()=>new p5(p=>{
   const hubs=[];
   p.setup=()=>{
-    const c=p.createCanvas(W,SH); c.parent('section'); p.frameRate(20); p.randomSeed(4); p.noiseSeed(4); p.textFont('Platypi');
+    const c=p.createCanvas(W,SH); c.parent('section'); p.frameRate(20); p.randomSeed(4); p.noiseSeed(4); p.textFont('Libre Caslon Text');
     const g=p.createGraphics(W,SH); g.pixelDensity(p.pixelDensity()); g.background(34,30,28);
     const ctx=g.drawingContext;
     const groundPath=()=>{ ctx.beginPath(); ctx.moveTo(0,SH); for(let x=0;x<=W;x+=4) ctx.lineTo(x,surf(x)); ctx.lineTo(W,SH); ctx.closePath(); };
@@ -162,14 +170,14 @@ new p5(p=>{
     dash([2,5]); g.stroke(252,251,250,80); g.line(COL*1.5,SURF[0],END,SURF[0]); dash([]);
     const SIL=[190,182,172];
     const sky=()=>{ ctx.save(); ctx.beginPath(); ctx.moveTo(0,0); for(let x=0;x<=W;x+=4) ctx.lineTo(x,surf(x)); ctx.lineTo(W,0); ctx.closePath(); ctx.clip(); };
-    const station=(x,sc)=>{ const s=surf(x+50), hw=100*sc, hh=60*sc, cx=x+hw-18*sc, ch=140*sc; sky(); g.noStroke(); g.fill(...SIL); ctx.fillStyle='rgb(190,182,172)';
-      g.rect(x,s-hh,hw,hh+40); g.rect(cx,s-ch,13*sc,ch+40); g.quad(x-70*sc,s+6,x-60*sc,s+6,x+6,s-hh+4,x,s-hh+4); ctx.restore(); return {x:cx,y:s-ch}; };
+    const station=(x,sc)=>{ const s=surf(x+50), hw=100*sc, hh=60*sc, cx=x+hw-18*sc, ch=140*sc; sky(); g.noFill(); g.stroke(...SIL); g.strokeWeight(.9); ctx.strokeStyle='rgb(190,182,172)'; ctx.lineWidth=.9;
+      g.beginShape(); [[x,s+40],[x,s-hh],[cx,s-hh],[cx,s-ch],[cx+13*sc,s-ch],[cx+13*sc,s-hh],[x+hw,s-hh],[x+hw,s+40]].forEach(v=>g.vertex(...v)); g.endShape(); g.quad(x-70*sc,s+6,x-60*sc,s+6,x+6,s-hh+4,x,s-hh+4); ctx.restore(); return {x:cx,y:s-ch}; };
     const st1=station(COL*3+250,1); station(COL*4+280,.82);
     const pyl=[]; for(let x=COL*4.55;x<COL*5.7;x+=140) pyl.push(x);
     pyl.forEach(x=>{ const s=surf(x), h=86; L(200); g.line(x-11,s,x,s-h); g.line(x+11,s,x,s-h); for(let k=0;k<5;k++){ const y1=s-k*h/5,y2=s-(k+1)*h/5,w1=11*(1-k/5),w2=11*(1-(k+1)/5); g.stroke(252,251,250,90); g.line(x-w1,y1,x+w2,y2); g.line(x+w1,y1,x-w2,y2);} L(200); g.line(x-22,s-h*.72,x+22,s-h*.72); });
     g.stroke(252,251,250,110); g.strokeWeight(.5);
     for(let i=0;i<pyl.length-1;i++){ [22,-22].forEach(dx2=>{ const a=pyl[i],b=pyl[i+1]; g.beginShape(); for(let t=0;t<=1.001;t+=.05) g.vertex(lerp(a+dx2,b+dx2,t),lerp(surf(a),surf(b),t)-62+Math.sin(Math.PI*t)*10); g.endShape(); }); }
-    const dc=(x,w,h)=>{ const top=Math.min(surf(x),surf(x+w))-h; sky(); g.noStroke(); g.fill(...SIL); ctx.fillStyle='rgb(190,182,172)'; g.rect(x,top,w,h+60); for(let i=8;i+16<w;i+=24) g.rect(x+i,top-7,16,8); ctx.restore(); return top-7; };
+    const dc=(x,w,h)=>{ const top=Math.min(surf(x),surf(x+w))-h; sky(); g.noFill(); g.stroke(...SIL); g.strokeWeight(.9); ctx.strokeStyle='rgb(190,182,172)'; ctx.lineWidth=.9; g.rect(x,top,w,h+60); for(let i=8;i+16<w;i+=24) g.rect(x+i,top-7,16,7); ctx.restore(); return top-7; };
     const dc1=dc(COL*5+290,90,38); dc(COL*6+120,120,46); const dc2=dc(COL*6+280,130,54);
     dc(COL*7+20,96,54); const dc3=dc(COL*7+130,96,60); dc(COL*7+240,96,58); dc(COL*7+340,80,50); dc(COL*8+190,84,34);
     const tur=(x,h)=>{ const s=surf(x); L(220); g.line(x-2.5,s,x-1,s-h); g.line(x+2.5,s,x+1,s-h); hubs.push({x,y:s-h,r:h*.3}); return s-h; };
@@ -178,8 +186,8 @@ new p5(p=>{
     g.stroke(207,114,155,160); g.strokeWeight(.8); dash([3,5]); g.line(COL*7,0,COL*7,SH); g.line(COL*8,0,COL*8,SH); dash([]);
 
     // annotations: leader line up from the change, label at its top
-    const ann=(x,y,ly,text,right=false)=>{ g.stroke(190,182,172,170); g.strokeWeight(.6); g.line(x,y,x,ly+4); g.noStroke(); g.fill(252,251,250); g.circle(x,y,3);
-      g.fill(190,182,172); g.textFont('Platypi'); g.textSize(12); g.textAlign(right?p.RIGHT:p.LEFT,p.BOTTOM); g.text(text,right?x-4:x+4,ly+4); };
+    const ann=(x,y,ly,text,right=false)=>{ g.stroke(190,182,172,170); g.strokeWeight(.6); g.line(x,y,x,ly+4); g.noStroke();
+      g.fill(190,182,172); ctx.fillStyle='rgb(190,182,172)'; g.textFont('Libre Caslon Text'); g.textSize(10); ctx.letterSpacing='1.4px'; g.textAlign(right?p.RIGHT:p.LEFT,p.BOTTOM); g.text(text.toUpperCase(),right?x-4:x+4,ly+4); ctx.letterSpacing='0px'; };
     ann(COL*.62,surf(COL*.62)-4,60,'Living bog surface');
     ann(COL+165,surf(COL+165)+12,62,'Hand-cut turf banks');
     ann(COL*2+20,surf(COL*2+20)+5,62,'First drains');
@@ -193,26 +201,10 @@ new p5(p=>{
     ann(COL*7+178,dc3,110,'Data centres on thinning peat');
     ann(COL*8+50,t2,24,'Own renewable supply');
     ann(COL*8+320,surf(COL*8+320)+3,110,'Rewetted bog');
-    ann(COL*9-60,surf(COL*9-60)+2,140,'Detail',true);
 
-    // detail frame: the material layers, zoomed
-    const fx=COL*9+70, fy=40, fw=310, fh=SH-60, zs=fy+28, zp=150, zb=zs+1.35*zp;
-    g.noFill(); g.stroke(252,251,250,200); g.strokeWeight(.8); g.rect(fx,fy,fw,fh);
-    ctx.save(); ctx.beginPath(); ctx.rect(fx,fy,fw,fh); ctx.clip();
-    for(let i=0;i<260;i++){ g.stroke(190,182,172,70); g.strokeWeight(1.2); g.point(p.random(fx,fx+fw),p.random(zb+6,fy+fh)); }
-    g.stroke(190,182,172,38); g.strokeWeight(.5); for(let x=fx;x<=fx+fw;x+=20) g.line(x,zs,x,fy+fh); for(let y=zb;y>zs;y-=20) g.line(fx,y,fx+fw,y); for(let y=zb;y<fy+fh;y+=20) g.line(fx,y,fx+fw,y);
-    for(let x=fx+6;x<fx+fw;x+=7){ g.stroke(190,182,172,170); g.strokeWeight(.7); g.line(x,zs,x+p.random(-2,2),zs-p.random(5,14)); }
-    g.stroke(252,251,250,235); g.strokeWeight(1); g.line(fx,zs,fx+fw,zs);
-    dash([3,4]); g.stroke(188,215,230,170); g.strokeWeight(.8); g.line(fx,zs+.06*zp,fx+fw,zs+.06*zp); dash([]); g.stroke(252,251,250,170); g.strokeWeight(.8); g.line(fx,zs+.3*zp,fx+fw,zs+.3*zp);
-    const zt=zb-.75*zp, zpine=zb-.5*zp; dash([1,4]); g.stroke(252,251,250,190); g.line(fx,zt,fx+fw,zt); dash([]);
-    g.stroke(190,182,172,220); g.strokeWeight(.9); g.line(fx,zb,fx+fw,zb);
-    ctx.restore();
-    g.noStroke(); g.fill(190,182,172); g.textFont('Platypi'); g.textSize(12); g.textAlign(p.LEFT,p.BOTTOM);
-    const lab=(y,t)=>{ g.fill(34,30,28); g.rect(fx+8,y-16,g.textWidth(t)+8,15); g.fill(190,182,172); g.text(t,fx+12,y-2); };
-    lab(zs+.3*zp+18,'Living layer, about 30 cm'); lab(zs+.06*zp+16,'Water table'); lab(zt-3,'Volcanic ash'); lab(zb-3,'Iron pan'); lab(zb+22,'Mineral soil');
-    lab(zpine+(zb-zpine)/2+6,'Deep peat');
-    const dx=COL*9-60, ds=surf(dx); g.noFill(); g.stroke(252,251,250,160); g.strokeWeight(.6); g.rect(dx-10,ds,24,40);
-    dash([2,4]); g.line(dx+14,ds,fx,fy); g.line(dx+14,ds+40,fx,fy+fh); dash([]);
+    // back to the peat: left blank for now
+    g.noStroke(); g.fill(34,30,28); g.rect(COL*9+1,0,COL,SH);
+    g.fill(190,182,172); g.textFont('Libre Caslon Text'); g.textSize(11); ctx.letterSpacing='1.6px'; g.textAlign(p.CENTER,p.CENTER); g.text('TO BE DETAILED',COL*9.5,SH/2); ctx.letterSpacing='0px';
     p.bg=g;
     if(matchMedia('(prefers-reduced-motion: reduce)').matches) p.noLoop();
   };
@@ -222,7 +214,7 @@ new p5(p=>{
     p.stroke(252,251,250,220); p.strokeWeight(.7);
     hubs.forEach((h,i)=>{ for(let j=0;j<3;j++){ const an=a+i+j*2.094; p.line(h.x,h.y,h.x+Math.cos(an)*h.r,h.y+Math.sin(an)*h.r);} });
   };
-});
+}));
 </script>
 
 </body></html>

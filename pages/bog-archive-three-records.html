@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The bog as archive: three records</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Platypi:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Crimson+Pro:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
   --pink:#CF729B; --ochre:#D3913F; --yellow:#F4D387; --green-light:#99AD67;
@@ -13,8 +13,8 @@
   --grey:#BEB6AC; --grey-text:#6B635C; --paper:#FCFBFA;
   --bg:var(--paper); --fg:var(--ink); --fg-muted:var(--grey-text);
   --rule:rgba(190,182,172,0.6); --grain-opacity:0.06; --grain-blend:multiply;
-  --font-head:'Bricolage Grotesque', system-ui, sans-serif;
-  --font-body:'Platypi', Georgia, serif;
+  --font-head:'Libre Caslon Text', Georgia, serif;
+  --font-body:'Crimson Pro', Georgia, serif;
   --measure:34rem;
 }
 * { box-sizing:border-box; }
@@ -88,45 +88,36 @@ footer { border-top:1px solid var(--rule); padding:32px 6vw 64px; font-size:13px
 footer ul { padding-left:18px; max-width:52rem; }
 footer li { margin-bottom:6px; }
 </style>
+<style>/* typography per style.md v2: Caslon italic titles, Caslon capitals for labels, Crimson Pro Light body */
+body{font:300 19px/1.58 var(--font-body)}
+h1,h2,h3{font-style:italic;font-weight:400;letter-spacing:0}
+h1{letter-spacing:-.005em}
+.label,button,.btn,summary{font-weight:400;letter-spacing:.14em;text-transform:uppercase}
+.meta,.fig{font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+header.top .name,.titleblock b{font-style:italic;font-weight:400;font-size:18px}
+.titleblock b{font-size:14px}
+.caption{font-size:15px;line-height:22px}
+strong{font-weight:500} th,.tip b,svg .dlabel{font-weight:400}
+.tip,.legend,footer{font-weight:400}
+</style>
 </head>
 <body>
-<header class="top"><span class="name">Planetary Media</span><span class="meta">The bog as archive · Plates 01 to 03</span></header>
+<header class="top"><span class="name">Planetary Media</span><span class="meta">The bog as archive</span></header>
 
 <main>
   <section class="intro">
-    <div class="label">Irish bogs as archives</div>
     <h1>Three records the bog keeps</h1>
     <p class="lead">One record from each part of the archive: a nature record (pollen), an industrial record (coal soot) and a human record (buried farms). Each is drawn from Irish data.</p>
   </section>
 
   <!-- PLATE 01 POLLEN -->
   <section class="plate" id="plate-pollen" aria-labelledby="h-pollen">
-    <span class="fig top">Fig. 01</span>
-    <div class="plate-grid">
-      <div>
-        <div class="label">A · Climate and nature</div>
-        <h2 id="h-pollen">Pollen at Glenulra, Céide Fields</h2>
-        <p>Pollen falls on the bog every year and gets buried. Counting it layer by layer shows which plants grew nearby. Read the graph from the bottom up: woodland first, then open ground as farming and bog spread.</p>
-        <p class="caption">Each band is a group of plants, as a share of the selected groups in that sample. The bands add up to 100%. Depth is from the bog surface.</p>
-        <h3>Load the data</h3>
-        <p class="caption">This page cannot reach PANGAEA directly. Download the GLU IV pollen counts as tab-delimited text from the dataset page, then drop the file onto the plate.</p>
-        <p class="caption"><a href="https://doi.org/10.1594/PANGAEA.912162">PANGAEA.912162 dataset page</a></p>
-      </div>
-      <div>
-        <div class="legend" id="legend-pollen"></div>
-        <div class="chart-wrap" id="chart-pollen">
-          <label class="drop" id="drop" for="file">
-            <span class="label">No data loaded</span>
-            <p><strong>Drop the GLU IV tab file here</strong>, or click to choose it.</p>
-            <p class="caption">Accepts the PANGAEA tab-delimited text (.tab or .txt) or a CSV with a depth column and taxon columns such as Pinus, Quercus, Corylus, Poaceae.</p>
-            <span class="btn" aria-hidden="true">Choose file</span>
-            <input type="file" id="file" accept=".tab,.txt,.csv,.tsv,text/plain,text/csv">
-          </label>
-          <div class="tip" id="tip-pollen" role="status"></div>
-        </div>
-        <details id="table-pollen" hidden><summary>Show data table</summary><div class="tablewrap"></div></details>
-      </div>
-    </div>
+    <h2 id="h-pollen">Pollen at Glenulra, Céide Fields</h2>
+    <p>Pollen falls on the bog every year and gets buried. Counting it layer by layer shows which plants grew nearby. Read the chart from left to right, from the deepest and oldest sample (5.5 m, about 6765 BC) to the shallowest (1.5 m, about AD 703).</p>
+    <figure style="margin:32px 0 0">
+      <img src="glenulra-pollen.png" alt="Stacked pollen chart for the Glenulra GLU IV core, Céide Fields, from about 6765 BC to AD 703. Bands show pine, broadleaf trees and shrubs, hazel, grasses and farming herbs, sedges and heather as a share of each sample. A dashed line marks an ash layer at about 600 BC." style="display:block;width:100%;height:auto">
+      <figcaption class="caption" style="margin-top:12px">Pollen groups as a share of each sample, with depth in the core along the top and modelled dates along the bottom. Dashed line: ash layer (tephra), about 600 BC.</figcaption>
+    </figure>
     <div class="titleblock">
       <b>Glenulra GLU IV pollen</b><span class="meta">54.301 N, 9.442 W</span>
       <span class="meta">Molloy &amp; O'Connell 2020, PANGAEA</span><span class="meta">CC BY 4.0</span>
@@ -135,10 +126,8 @@ footer li { margin-bottom:6px; }
 
   <!-- PLATE 02 SCP -->
   <section class="plate" id="plate-scp" aria-labelledby="h-scp">
-    <span class="fig top">Fig. 02</span>
     <div class="plate-grid">
       <div>
-        <div class="label">B · Human pollution</div>
         <h2 id="h-scp">Coal soot at Dead Island Bog</h2>
         <p>Tiny round soot particles form only when coal or oil is burned above 1000 °C. Their arrival in the peat marks when industry began to write itself into the bog.</p>
         <p>At Dead Island Bog, Co. Londonderry, the soot record starts in the 1850s, rises fast in the 1950s and peaks around 1979. A thin layer of ash from Iceland's Hekla eruption of 1947 lies just beneath the fast rise.</p>
@@ -169,10 +158,8 @@ footer li { margin-bottom:6px; }
 
   <!-- PLATE 03 CEIDE -->
   <section class="plate" id="plate-ceide" aria-labelledby="h-ceide">
-    <span class="fig top">Fig. 03</span>
     <div class="plate-grid">
       <div>
-        <div class="label">C · Records of people</div>
         <h2 id="h-ceide">Pines over the buried fields, north Mayo</h2>
         <p>Neolithic farmers built a 12 km² system of stone-walled fields at Céide. Blanket bog grew over them. Later, pine trees grew on top of the new peat, and some even rooted on top of the buried walls.</p>
         <p>Each dot is a pine stump, dated by radiocarbon. Its height shows how much peat had already formed over the old ground when the tree took root. The authors date the fields' abandonment under shallow peat to about 4,500 radiocarbon years ago.</p>
@@ -197,7 +184,7 @@ footer li { margin-bottom:6px; }
 </main>
 
 <footer>
-  <div class="label">Sources</div>
+  <h3 style="margin-top:0">Sources</h3>
   <ul>
     <li>Molloy, K., O'Connell, M. (2020). A Holocene pollen profile (GLU IV) from Glenulra, Céide Fields, Co. Mayo, Ireland [dataset]. PANGAEA. <a href="https://doi.org/10.1594/PANGAEA.912162">doi.org/10.1594/PANGAEA.912162</a></li>
     <li>Age model GLU IV, incl. tephra at 228 to 232 cm (c. 600 BC). PANGAEA. <a href="https://doi.org/10.1594/PANGAEA.917974">doi.org/10.1594/PANGAEA.917974</a></li>
@@ -205,7 +192,7 @@ footer li { margin-bottom:6px; }
     <li>Swindles, G.T. et al. (2015). Spheroidal carbonaceous particles are a defining stratigraphic marker for the Anthropocene. Scientific Reports 5, 10264. <a href="https://www.nature.com/articles/srep10264">nature.com/articles/srep10264</a></li>
     <li>Caulfield, S., O'Donnell, R.G., Mitchell, P.I. (1998). 14C dating of a Neolithic field system at Céide Fields, County Mayo, Ireland. Radiocarbon 40(2). <a href="https://journals.uair.arizona.edu/index.php/radiocarbon/article/viewFile/3737/3162">journals.uair.arizona.edu</a>. Values were read from a scan; check against the printed table before publishing.</li>
   </ul>
-  <p class="meta">Plates 01 to 03 · compiled 11 Nov 2026</p>
+  <p class="meta">Compiled 11 Nov 2026</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
@@ -382,114 +369,6 @@ const pines = [
   document.getElementById('table-ceide').innerHTML = `<table><thead><tr><th>Lab code</th><th>Site</th><th>Sample</th><th>Height cm</th><th>14C age BP</th></tr></thead><tbody>${rows}</tbody></table>`;
 })();
 
-/* ---------------- Fig 01: Pollen (loaded from file) ---------------- */
-const GROUPS = [
-  {key:'Pine', taxa:['pinus'], color:COL.spruce},
-  {key:'Oak, elm, ash', taxa:['quercus','ulmus','fraxinus'], color:COL.green},
-  {key:'Hazel', taxa:['corylus'], color:COL.yellow},
-  {key:'Birch, alder', taxa:['betula','alnus'], color:COL.slate},
-  {key:'Open ground', taxa:['poaceae','calluna','plantago lanceolata','cyperaceae'], color:COL.pink, note:'grasses, heather, ribwort plantain, sedges'}
-];
-document.getElementById('legend-pollen').innerHTML = GROUPS.map(g => `<span><i class="sw" style="background:${g.color}"></i>${g.key}${g.note ? ' <span class="meta">(' + g.note + ')</span>' : ''}</span>`).join('');
-
-function parseTable(text){
-  const lines = text.split(/\r?\n/); let i = 0;
-  if (lines[0] && lines[0].trim().startsWith('/*')) { while (i < lines.length && !lines[i].includes('*/')) i++; i++; }
-  while (i < lines.length && !lines[i].trim()) i++;
-  if (i >= lines.length) throw new Error('The file looks empty.');
-  const delim = lines[i].includes('\t') ? '\t' : ',';
-  const header = lines[i].split(delim).map(s => s.trim().replace(/^"|"$/g,''));
-  const rows = lines.slice(i + 1).filter(l => l.trim()).map(l => l.split(delim).map(s => s.trim().replace(/^"|"$/g,'')));
-  return {header, rows};
-}
-function baseName(h){ return h.replace(/\s*\[.*$/,'').replace(/\s*\(.*$/,'').trim().toLowerCase(); }
-
-function buildPollen(text){
-  const {header, rows} = parseTable(text);
-  const di = header.findIndex(h => /^depth/i.test(h));
-  if (di < 0) throw new Error('No depth column found. Columns seen: ' + header.slice(0, 12).join(', '));
-  const toCm = /\[m\]/i.test(header[di]) ? 100 : 1;
-  const ai = header.findIndex(h => /^age/i.test(h));
-  const skip = /tracheid|stomat|macro|charcoal|lycopodium|concentration|sum/i;
-  const groupCols = GROUPS.map(g => header.map((h, j) => ({h, j})).filter(c => !skip.test(c.h) && g.taxa.some(t => { const b = baseName(c.h); return b === t || b.startsWith(t + '/') || b.startsWith(t + ' ') || b.startsWith(t + '-'); })).map(c => c.j));
-  const found = groupCols.flat().length;
-  if (!found) throw new Error('No matching taxon columns found (looked for Pinus, Quercus, Ulmus, Fraxinus, Corylus, Betula, Alnus, Poaceae, Calluna, Plantago lanceolata, Cyperaceae).');
-  const data = rows.map(r => {
-    const depth = parseFloat(r[di]) * toCm; if (!isFinite(depth)) return null;
-    const sums = groupCols.map(cols => d3.sum(cols, j => +r[j] || 0));
-    const tot = d3.sum(sums); if (!tot) return null;
-    const o = {depth, age: ai >= 0 ? r[ai] : '', total: tot};
-    GROUPS.forEach((g, k) => o[g.key] = sums[k] / tot * 100);
-    return o;
-  }).filter(Boolean).sort((a, b) => a.depth - b.depth);
-  if (data.length < 2) throw new Error('Fewer than two usable samples found.');
-  const usedCols = groupCols.map((cols, k) => GROUPS[k].key + ': ' + (cols.map(j => header[j]).join(', ') || 'none'));
-  drawPollen(data, usedCols);
-}
-
-function drawPollen(data, usedCols){
-  const wrap = document.getElementById('chart-pollen'), tip = document.getElementById('tip-pollen');
-  wrap.querySelector('.drop')?.remove(); wrap.querySelector('svg')?.remove();
-  const W = 640, H = 760, m = {t:24, r:150, b:48, l:56};
-  const svg = d3.select(wrap).insert('svg','.tip').attr('class','chart').attr('viewBox',`0 0 ${W} ${H}`)
-    .attr('role','img').attr('aria-label','Stacked pollen diagram for Glenulra GLU IV by depth, five plant groups adding to 100 percent.');
-  const y = d3.scaleLinear(d3.extent(data, d => d.depth), [m.t, H - m.b]);
-  const x = d3.scaleLinear([0, 100], [m.l, W - m.r]);
-  const keys = GROUPS.map(g => g.key);
-  const series = d3.stack().keys(keys)(data);
-  const area = d3.area().y(d => y(d.data.depth)).x0(d => x(d[0])).x1(d => x(d[1])).curve(d3.curveLinear);
-  svg.append('g').selectAll('path').data(series).join('path')
-    .attr('d', area).attr('fill', (s, i) => GROUPS[i].color).attr('stroke', COL.paper).attr('stroke-width', 2);
-  svg.append('g').attr('class','axis').attr('transform',`translate(${m.l},0)`).call(d3.axisLeft(y).ticks(10).tickSizeOuter(0));
-  svg.append('g').attr('class','axis').attr('transform',`translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues([0,25,50,75,100]).tickFormat(d => d + '%').tickSizeOuter(0));
-  svg.append('text').attr('x', (m.l + W - m.r)/2).attr('y', H - 10).attr('text-anchor','middle').text('Share of the five plant groups (%)');
-  svg.append('text').attr('transform',`translate(14,${(m.t + H - m.b)/2}) rotate(-90)`).attr('text-anchor','middle').text('Depth below bog surface (cm)');
-
-  // tephra 228 to 232 cm (c. 600 BC)
-  const [d0, d1] = y.domain();
-  if (230 >= d0 && 230 <= d1) {
-    svg.append('line').attr('x1', m.l).attr('x2', W - m.r + 8).attr('y1', y(230)).attr('y2', y(230)).attr('stroke', COL.ink).attr('stroke-dasharray','4 3');
-    svg.append('text').attr('class','ann').attr('x', W - m.r + 12).attr('y', y(230) + 4).text('Ash layer, c. 600 BC');
-  }
-  // direct labels at widest point of each band
-  const placed = [];
-  series.forEach((s, i) => {
-    const cands = s.map(d => ({w: x(d[1]) - x(d[0]), d})).filter(c => c.w > 80).sort((a, b) => b.w - a.w);
-    const pick = cands.find(c => placed.every(py => Math.abs(py - y(c.d.data.depth)) > 40));
-    if (pick) {
-      placed.push(y(pick.d.data.depth));
-      svg.append('text').attr('class','dlabel').attr('text-anchor','middle')
-        .attr('x', x((pick.d[0] + pick.d[1]) / 2)).attr('y', y(pick.d.data.depth) + 4).text(GROUPS[i].key);
-    }
-  });
-  // hover crosshair
-  const cross = svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('stroke', COL.ink).attr('stroke-width', 1).style('opacity', 0);
-  const bis = d3.bisector(d => d.depth).center;
-  svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill','transparent')
-    .on('mousemove', evt => {
-      const p = svgPoint(svg.node(), evt); const d = data[bis(data, y.invert(p.y))];
-      cross.attr('y1', y(d.depth)).attr('y2', y(d.depth)).style('opacity', 1);
-      const [px, py] = wrapPoint(wrap, evt);
-      const rowsH = GROUPS.slice().reverse().map(g => `<div class="row"><span><i class="sw" style="background:${g.color};width:8px;height:8px"></i> ${g.key}</span><span>${d[g.key].toFixed(1)}%</span></div>`).join('');
-      tipAt(tip, wrap, `<b>${d.depth.toFixed(1)} cm</b>${d.age ? ' · age ' + d.age : ''}${rowsH}<span style="color:${COL.greyText}">${Math.round(d.total)} grains in these groups</span>`, px, py);
-    }).on('mouseleave', () => { cross.style('opacity', 0); hideTip(tip); });
-
-  // table
-  const det = document.getElementById('table-pollen'); det.hidden = false;
-  det.querySelector('.tablewrap').innerHTML = `<p class="caption">Columns used: ${usedCols.join('; ')}.</p><table><thead><tr><th>Depth cm</th>${keys.map(k => `<th>${k} %</th>`).join('')}</tr></thead><tbody>${data.map(d => `<tr><td>${d.depth.toFixed(1)}</td>${keys.map(k => `<td>${d[k].toFixed(1)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-}
-
-function showErr(msg){
-  const drop = document.getElementById('drop'); if (!drop) return;
-  let e = drop.querySelector('.err'); if (!e) { e = document.createElement('p'); e.className = 'err'; drop.appendChild(e); }
-  e.textContent = msg;
-}
-function readFile(f){ if (!f) return; const r = new FileReader(); r.onload = () => { try { buildPollen(r.result); } catch (e) { showErr(e.message); } }; r.readAsText(f); }
-document.getElementById('file').addEventListener('change', e => readFile(e.target.files[0]));
-const drop = document.getElementById('drop');
-['dragenter','dragover'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.add('over'); }));
-['dragleave','drop'].forEach(t => drop.addEventListener(t, e => { e.preventDefault(); drop.classList.remove('over'); }));
-drop.addEventListener('drop', e => readFile(e.dataTransfer.files[0]));
 </script>
 </body>
 </html>

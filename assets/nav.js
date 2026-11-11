@@ -1,4 +1,4 @@
-/* Extraction futures: one nav bar for every page.
+/* Extracted Archives: one nav bar for every page.
    To add or relink a page, edit NAV below. Every page loads this file and
    marks itself with <body data-page="...">. */
 (function () {
@@ -31,7 +31,7 @@
   nav.className = "site-nav";
   nav.setAttribute("aria-label", "Site");
 
-  var brand = link({ id: "home-brand", label: "Extraction futures", href: "index.html" }, "brand");
+  var brand = link({ id: "home-brand", label: "Extracted Archives", href: "index.html" }, "brand");
   nav.appendChild(brand);
 
   var menuBtn = document.createElement("button");
