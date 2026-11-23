@@ -7,40 +7,31 @@
 <meta name="description" content="Peat harvesting and data centres in Ireland, read as two archives and two extractions.">
 <link rel="stylesheet" href="assets/site.css">
 <style>
-  /* Landing: one full-bleed image with the title set over it. */
+  /* Landing: one full-bleed image, centred title; click anywhere to enter. */
   body.landing { margin: 0; min-height: 100vh; overflow: hidden; background: var(--ink); color: var(--paper); }
+  a.enter-all { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; color: var(--paper); text-decoration: none; cursor: pointer; padding: 0 var(--margin); }
   .landing .bleed { position: fixed; inset: 0; }
   .landing .bleed img { width: 100%; height: 100%; object-fit: cover; display: block;
     filter: grayscale(0.75) contrast(0.85) sepia(0.03) brightness(0.9); }
-  /* shown until assets/landing.jpg is added */
-  .landing .placeholder { position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
-    background-image: radial-gradient(rgba(190,182,172,.35) 1px, transparent 1.5px); background-size: 24px 24px; }
   .landing .bleed.empty img { display: none; }
-  .landing .bleed.empty .placeholder { display: flex; }
-  .landing .placeholder span { font: 400 11px/1 var(--font-head); letter-spacing: .14em; text-transform: uppercase; color: var(--grey);
-    border: 1px solid rgba(190,182,172,.5); padding: 10px 14px; }
-  .landing .veil { position: fixed; inset: 0; background: linear-gradient(rgba(34,30,28,.15), rgba(34,30,28,.65)); pointer-events: none; }
-  .landing .title { position: fixed; left: var(--margin); right: var(--margin); bottom: 12vh; }
+  .landing .veil { position: fixed; inset: 0; background: rgba(34,30,28,.35); pointer-events: none; }
   .landing .label { color: var(--grey); }
-  .landing h1 { font-size: clamp(52px, 8vw, 104px); line-height: 1.02; margin: 14px 0 28px; letter-spacing: -0.01em; }
-  .landing .enter { display: inline-block; font: 400 12px/1 var(--font-head); letter-spacing: .14em; text-transform: uppercase;
-    color: var(--paper); text-decoration: none; border: 1px solid var(--paper); padding: 14px 22px; border-radius: 2px; }
-  .landing .enter:hover, .landing .enter:focus-visible { background: var(--pink); border-color: var(--pink); color: var(--ink); }
-  .landing .coords { position: fixed; right: var(--margin); top: 28px; text-align: right; color: var(--grey); }
+  .landing h1 { font-size: clamp(52px, 8vw, 104px); line-height: 1.02; margin: 18px 0 22px; letter-spacing: -0.01em; }
+  .landing .hint { font: 400 12px/1 var(--font-head); letter-spacing: .14em; text-transform: uppercase; color: var(--grey); }
+  a.enter-all:hover .hint, a.enter-all:focus-visible .hint { color: var(--pink); }
 </style>
 </head>
 <body class="landing" data-page="landing">
   <div class="bleed" id="bleed">
     <!-- Add your landing image as assets/landing.jpg -->
     <img src="assets/landing.jpg" alt="" onerror="document.getElementById('bleed').classList.add('empty')">
-    <div class="placeholder"><span>Landing image to be added: assets/landing.jpg</span></div>
   </div>
   <div class="veil"></div>
-  <p class="meta coords">53.35° N<br>7.60° W<br>Island of Ireland</p>
-  <div class="title">
-    <div class="label">Peat harvesting and data centres in Ireland</div>
+  <a class="enter-all" href="menu.html" aria-label="Enter Extracted Archives">
+    <span class="label">Peat harvesting and data centres in Ireland</span>
     <h1>Extracted Archives</h1>
-    <a class="enter" href="menu.html">Enter</a>
-  </div>
+    <span class="hint">(click to enter)</span>
+  </a>
 </body>
 </html>

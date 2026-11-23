@@ -88,6 +88,17 @@
   #paper{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30;mix-blend-mode:multiply}
   @media (max-width:1100px){#ctl{top:auto;bottom:58px;line-height:1.7}#scale{bottom:150px}#matrix,#notes{bottom:150px}}
   @media (max-width:800px){#head{left:56px;top:64px;right:56px}#matrix,#notes{left:56px;right:56px;top:300px}#neat{inset:20px}#foot,#zoom{left:56px}#ctl,#scale{right:56px}}
+
+  /* site-wide title format (matches In the Headlines); no frame borders */
+  #neat{display:none}
+  #head{top:64px;left:max(48px,6vw);max-width:600px}
+  h1{font-weight:400;font-style:italic;font-size:48px;line-height:56px;margin:0 0 14px;letter-spacing:-.005em}
+  .caption{font-size:15px;line-height:22px;color:var(--ink)}
+  #ctl{top:78px;right:max(48px,6vw)}
+  #matrix{border:0;left:max(48px,6vw);right:max(48px,6vw)}
+  #foot{left:max(48px,6vw)}
+  #scale,#panel{right:max(48px,6vw)}
+  @media (max-width:800px){h1{font-size:36px;line-height:42px}}
 </style>
 <style>/* typography per style.md v2 */
 h1{font-style:italic;font-weight:400;letter-spacing:-.005em;font-size:46px;line-height:1.17}

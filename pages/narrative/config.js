@@ -1,7 +1,7 @@
 // Extracted Archives: story map configuration.
 // Paste your Mapbox public token below (the one from your mapping tutorials).
 var config = {
-  accessToken: 'YOUR_MAPBOX_ACCESS_TOKEN',
+  accessToken: 'pk.eyJ1IjoibWVnYW5seW5uZXNtIiwiYSI6ImNtcXJpMTh6ZzBxeGwycnFhN3Y0bmhuM3YifQ.z-8xhPazFG43FP7ARedTRg',
   style: 'mapbox://styles/mapbox/satellite-v9',
 
   // Places shown on the map. Points are approximate (town, works or photo geotag),
