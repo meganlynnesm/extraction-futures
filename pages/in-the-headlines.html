@@ -5,17 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>In the Headlines</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Crimson+Pro:wght@300;400;500&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Crimson+Pro:wght@300;400;500&display=swap');
     :root{ --paper:#FCFBFA; --ink:#221E1C; --grey:#BEB6AC; --grey-text:#6B635C; --rule:rgba(190,182,172,.6);
          --pink:#CF729B; --slate:#3B5F88; --spruce:#0B4430; --red-orange:#A04326; --ochre:#F4D387; --green-light:#99AD67; --yellow:#F8C46C; --blue-mist:#BCD7E6;
          --m:max(48px,6vw);
-         --body:"Crimson Pro",Georgia,serif; --grot:"Libre Caslon Text",Georgia,serif; }
+         --body:"Crimson Pro",Georgia,serif; --grot:'IM Fell English',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,monospace; }
   *{box-sizing:border-box;font-style:normal;font-optical-sizing:auto}
   html,body{margin:0;height:100%;background:var(--paper);color:var(--ink);font-family:var(--body);overflow:hidden}
   body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.022;mix-blend-mode:multiply;
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
   #neat{position:fixed;inset:16px;border:1px solid var(--ink);pointer-events:none}
-  .meta{font-family:var(--grot);font-size:12px;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--grey-text)}
+  .meta{font-family:var(--mono);font-size:12px;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--grey-text)}
   #head{position:fixed;top:64px;left:var(--m);max-width:600px;z-index:5}
   #head .meta{margin:0 0 14px;text-transform:uppercase;letter-spacing:.08em}
   h1{font-family:var(--grot);font-weight:400;font-style:italic;font-size:48px;line-height:56px;margin:0 0 14px;letter-spacing:-.005em}
@@ -29,12 +29,12 @@
   .dot:hover .c,.dot:focus .c{stroke:var(--ink);stroke-width:1.8}
   #tip{position:fixed;z-index:40;max-width:320px;background:var(--paper);border:1px solid var(--ink);padding:12px 14px 13px;display:none}
   #tip h2{font-family:var(--body);font-weight:400;font-size:16px;line-height:23px;margin:0 0 8px}
-  #tip p{margin:0;font-family:var(--grot);font-size:12px;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--grey-text)}
-  #tip .kw{font-family:var(--grot);font-size:12px;letter-spacing:.04em;color:var(--ink);margin:0 0 7px}
+  #tip p{margin:0;font-family:var(--mono);font-size:12px;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--grey-text)}
+  #tip .kw{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink);margin:0 0 7px}
   #tip .kw i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:0}
   #tip .kw b{font-weight:400;margin-right:12px}
-  #tip a{display:inline-block;margin-top:10px;font-family:var(--grot);font-size:12px;letter-spacing:.04em;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--pink);padding-bottom:1px}
-  #ctl{position:fixed;top:78px;right:var(--m);z-index:20;text-align:right;font-family:var(--grot);font-size:13px;line-height:1;text-transform:uppercase;letter-spacing:.08em;display:flex;gap:28px}
+  #tip a{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--pink);padding-bottom:1px}
+  #ctl{position:fixed;top:78px;right:var(--m);z-index:20;text-align:right;font-family:var(--mono);font-size:13px;line-height:1;text-transform:uppercase;letter-spacing:.08em;display:flex;gap:28px}
   .trig{position:relative;display:inline-flex;align-items:baseline;gap:8px}
   #ctl .trig>button{margin:0;color:var(--grey-text);font-size:12px}
   #ctl .trig>button::after{content:"";display:inline-block;width:5px;height:5px;border-right:1px solid currentColor;border-bottom:1px solid currentColor;transform:rotate(45deg);margin:0 0 3px 7px}
@@ -42,11 +42,11 @@
   .cur{color:var(--ink)}
   .pnl{display:none;position:absolute;right:0;top:24px;background:var(--paper);border:1px solid var(--ink);padding:10px 16px 12px;white-space:nowrap;line-height:2.3}
   .pnl.on{display:block}
-  #edbtn{position:fixed;right:var(--m);bottom:22px;z-index:30;font-family:var(--grot);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey-text);background:none;border:0;padding:0;cursor:pointer;display:none}
+  #edbtn{position:fixed;right:var(--m);bottom:22px;z-index:30;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--grey-text);background:none;border:0;padding:0;cursor:pointer;display:none}
   #edbtn:hover{color:var(--ink)}
   body.editing [data-edit]{outline:1px dashed var(--pink);outline-offset:3px;cursor:text}
   body.editing [data-edit]:focus{outline:1px solid var(--pink)}
-  #edp{position:fixed;right:var(--m);bottom:44px;z-index:30;background:var(--paper);border:1px solid var(--ink);padding:14px 16px;font-family:var(--grot);font-size:12px;letter-spacing:.04em;color:var(--ink);display:none;width:250px}
+  #edp{position:fixed;right:var(--m);bottom:44px;z-index:30;background:var(--paper);border:1px solid var(--ink);padding:14px 16px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--ink);display:none;width:250px}
   body.editing #edp{display:block}
   #edp h4{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:400;color:var(--grey-text);margin:0 0 8px}
   #edp label{display:flex;justify-content:space-between;align-items:center;margin:0 0 6px;gap:10px}
@@ -56,7 +56,7 @@
   #edp button{font:inherit;letter-spacing:.08em;text-transform:uppercase;font-size:11px;background:none;border:1px solid var(--ink);padding:6px 10px;cursor:pointer;color:var(--ink)}
   #edp button:hover{background:var(--pink)}
   #edp .note{color:var(--grey-text);margin:10px 0 0;font-size:11px;line-height:1.4}
-  .legend{margin:12px 0 0;font-family:var(--grot);font-size:12px;letter-spacing:.04em;color:var(--grey-text)}
+  .legend{margin:12px 0 0;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--grey-text)}
   .legend span{margin-right:16px}
   #ctl span.lbl{color:var(--grey-text);margin-right:10px;font-size:12px}
   #ctl button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:var(--grey-text);background:none;border:0;padding:0;margin:0 0 0 14px;cursor:pointer;text-decoration:none;text-underline-offset:6px}
@@ -66,13 +66,13 @@
   #foot .src{font-family:var(--body);font-size:13px;line-height:18px;color:var(--grey-text);max-width:640px}
   #list{position:fixed;left:var(--m);right:var(--m);top:270px;bottom:118px;overflow:auto;display:none}
   #list.on{display:block}
-  #list .yr{font-family:var(--grot);font-weight:400;font-size:14px;letter-spacing:.08em;color:var(--ink);margin:24px 0 6px}
-  #list a.row{display:grid;grid-template-columns:120px 1fr 260px;gap:16px;padding:9px 0;border-top:1px solid var(--rule);text-decoration:none;color:inherit}
+  #list .yr{font-family:var(--mono);font-weight:400;font-size:14px;letter-spacing:.08em;color:var(--ink);margin:24px 0 6px}
+  #list a.row{display:grid;grid-template-columns:120px 1fr 260px;gap:16px;padding:9px 0;border-top:0;text-decoration:none;color:inherit}
   #list a.row:hover h3{text-decoration:underline;text-decoration-color:var(--pink);text-underline-offset:4px}
   #list h3{font-family:var(--body);font-weight:400;font-size:16px;margin:0;line-height:23px}
-  #list .d,#list .s{font-family:var(--grot);font-size:12px;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--grey-text);padding-top:3px}
+  #list .d,#list .s{font-family:var(--mono);font-size:12px;letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--grey-text);padding-top:3px}
   #list i.t{display:inline-block;width:8px;height:8px;border-radius:50%;margin-left:7px;vertical-align:1px}
-  #msg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--grot);font-size:12px;letter-spacing:.04em;color:var(--grey-text);pointer-events:none}
+  #msg{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--grey-text);pointer-events:none}
   @media (max-width:900px){#ctl{top:auto;bottom:76px}#chart,#list{bottom:130px}.pnl{top:auto;bottom:24px}}
   @media (max-width:800px){h1{font-size:36px;line-height:42px}#head{right:var(--m)}#chart,#list{top:320px}#neat{inset:10px}}
 
@@ -132,7 +132,7 @@
   const COL={"data centres":"#CF729B","peatland":"#99AD67","energy":"#F4D387","carbon":"#3B5F88"};
   const ORDER=["data centres","peatland","energy","carbon"];
   const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  const NS="http://www.w3.org/2000/svg", SERIF='"Libre Caslon Text",Georgia,serif', BODY='"Crimson Pro",Georgia,serif';
+  const NS="http://www.w3.org/2000/svg", SERIF='"IBM Plex Mono",Georgia,serif', BODY='"Crimson Pro",Georgia,serif';
   const svg=document.getElementById("svg"), chart=document.getElementById("chart"), tip=document.getElementById("tip"), msg=document.getElementById("msg");
   let items=[]; const st={kw:"all",rg:"all",v:"t",b:"s"}; let scan="";
   function ok(it){ const r=it.region||"IE"; return (st.kw==="all"||kwsOf(it).includes(st.kw)) && (st.rg==="all"||r===st.rg||r==="IE+NI"); }

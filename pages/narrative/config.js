@@ -74,9 +74,9 @@ var config = {
       location: { center: [-8.2, 53.5], zoom: 6.4, pitch: 0, bearing: 0 },
       focus: ['drumack', 'annaverna', 'iveragh'],
       photos: [
-        { src: 'images/nli-footing-the-turf-c1885.jpg', cap: '"Footing the Turf", near Ballymena, c. 1885. Robert French, Lawrence Collection, NLI LROY 2870. No known copyright restrictions.', href: 'https://www.flickr.com/photos/nlireland/8538126493/' },
-        { src: 'images/nli-turf-cutting-annaverna-c1940.jpg', cap: '"Turf cutting", Annaverna, Co. Louth, c. 1940. Valentine Collection, NLI VAL 8428. No known copyright restrictions.', href: 'https://www.flickr.com/photos/nlireland/6028089667/' },
-        { src: 'images/nli-bringing-home-the-turf-kerry-1963.jpg', cap: '"Bringing home the turf", Iveragh, Co. Kerry, June 1963. Richard Tilbrook, NLI TIL852. No known copyright restrictions.', href: 'https://www.flickr.com/photos/nlireland/30482642527/' }
+        { src: 'images/nli-footing-the-turf-c1885.jpg', ref: 'NLI_LROY_2870', cap: '"Footing the Turf", near Ballymena, c. 1885. Robert French, Lawrence Collection, NLI LROY 2870. No known copyright restrictions.', href: 'https://www.flickr.com/photos/nlireland/8538126493/' },
+        { src: 'images/nli-turf-cutting-annaverna-c1940.jpg', ref: 'NLI_VAL_8428', cap: '"Turf cutting", Annaverna, Co. Louth, c. 1940. Valentine Collection, NLI VAL 8428. No known copyright restrictions.', href: 'https://www.flickr.com/photos/nlireland/6028089667/' },
+        { src: 'images/nli-bringing-home-the-turf-kerry-1963.jpg', ref: 'NLI_TIL852', cap: '"Bringing home the turf", Iveragh, Co. Kerry, June 1963. Richard Tilbrook, NLI TIL852. No known copyright restrictions.', href: 'https://www.flickr.com/photos/nlireland/30482642527/' }
       ]
     },
     {
@@ -99,8 +99,8 @@ var config = {
       location: { center: [-7.70, 53.24], zoom: 10.6, pitch: 55, bearing: -25 },
       focus: ['boora', 'rhode', 'ferbane', 'derrinlough'],
       photos: [
-        { src: 'images/nli-odea-bord-na-mona-train-rhode-1973.jpg', cap: 'Bord na Móna train at Rhode, Co. Offaly, 27 October 1973. James P. O\'Dea, NLI ODEA 113/10. No known copyright restrictions.', href: 'https://www.flickr.com/photos/nlireland/51610180624/' },
-        { src: 'images/campbell-lough-boora-1977.jpg', cap: 'Lough Boora, Co. Offaly, 9 September 1977: excavation huts, a milled peat train, Ferbane power station on the horizon. Kieran Campbell, CC BY-SA 2.0.', href: 'https://commons.wikimedia.org/wiki/File:Lough_Boora,_Broughal,_Co._Offaly_-_geograph.org.uk_-_1094987.jpg' }
+        { src: 'images/nli-odea-bord-na-mona-train-rhode-1973.jpg', ref: 'NLI_ODEA_113/10', cap: 'Bord na Móna train at Rhode, Co. Offaly, 27 October 1973. James P. O\'Dea, NLI ODEA 113/10. No known copyright restrictions.', href: 'https://www.flickr.com/photos/nlireland/51610180624/' },
+        { src: 'images/campbell-lough-boora-1977.jpg', ref: 'GEOGRAPH_1094987', cap: 'Lough Boora, Co. Offaly, 9 September 1977: excavation huts, a milled peat train, Ferbane power station on the horizon. Kieran Campbell, CC BY-SA 2.0.', href: 'https://commons.wikimedia.org/wiki/File:Lough_Boora,_Broughal,_Co._Offaly_-_geograph.org.uk_-_1094987.jpg' }
       ]
     },
     {

@@ -1,14 +1,14 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Extraction and Balance Timeline</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Crimson+Pro:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Crimson+Pro:wght@300;400;500&display=swap">
 <style>
 /* Layout: one dark plate. Title and description, then a sideways scroll of floating archive photos, a dashed timeline with crosses, and the ground in section with a grid and layer lines beneath it. */
 :root{
   --pink:#CF729B; --ochre:#D3913F; --green-light:#99AD67; --spruce:#0B4430; --blue-mist:#BCD7E6;
   --ink:#221E1C; --grey:#BEB6AC; --paper:#FCFBFA;
   --bg:var(--ink); --fg:var(--paper); --fg-muted:var(--grey);
-  --font-head:'Libre Caslon Text',Georgia,serif; --font-body:'Crimson Pro',Georgia,serif;
+  --font-head:'IM Fell English',Georgia,serif; --mono:'IBM Plex Mono',ui-monospace,monospace; --font-body:'Crimson Pro',Georgia,serif;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -17,7 +17,7 @@ html,body{background:var(--bg);color:var(--fg)}
 body{font:300 19px/1.58 var(--font-body);min-height:100%;margin:0}
 body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.09;mix-blend-mode:screen;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
-header{padding-left:max(16px,6vw,env(safe-area-inset-left,0px));padding-right:max(16px,6vw,env(safe-area-inset-right,0px));padding-block:64px 24px}
+header{padding-left:max(48px,6vw,env(safe-area-inset-left,0px));padding-right:max(48px,6vw,env(safe-area-inset-right,0px));padding-block:64px 24px}
 h1{font:italic 400 clamp(30px,4vw,48px)/1.17 var(--font-head);letter-spacing:-.005em;margin:0}
 .desc{max-width:34rem;margin:14px 0 0;color:var(--fg)}
 .scroller{overflow-x:auto;overflow-y:hidden;cursor:grab;scrollbar-width:thin;scrollbar-color:rgba(190,182,172,.3) transparent}
@@ -43,20 +43,20 @@ h1{font:italic 400 clamp(30px,4vw,48px)/1.17 var(--font-head);letter-spacing:-.0
 .line{position:relative}
 .line::before{content:"";position:absolute;left:0;right:0;top:9px;border-top:2.5px dashed rgba(252,251,250,.85)}
 .specline{position:absolute;top:11px;bottom:0;width:0;border-left:1px dashed rgba(207,114,155,.63);pointer-events:none}
-.tbd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-head);letter-spacing:.14em;color:var(--fg-muted)}
+.tbd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 12px/1 var(--font-head);letter-spacing:.04em;color:var(--fg-muted)}
 .slot.blank{cursor:default}
 .stop{position:relative;text-align:center;padding:30px 48px 0;min-height:132px}
 .stop::before,.stop::after{content:"";position:absolute;left:50%;background:var(--fg)}
 .stop::before{top:3px;width:1px;height:15px;margin-left:-.5px}
 .stop::after{top:10px;width:15px;height:1px;margin-left:-7.5px}
 .stop.spec::before,.stop.spec::after{background:var(--pink)}
-.yr{font:400 11px/18px var(--font-head);letter-spacing:.14em;text-transform:uppercase;font-variant-numeric:tabular-nums;color:var(--fg)}
+.yr{font:400 11px/18px var(--font-head);letter-spacing:.04em;text-transform:uppercase;font-variant-numeric:tabular-nums;color:var(--fg)}
 .stop.spec .yr{color:var(--pink)}
 .txt{font-size:14px;font-weight:400;line-height:20px;color:var(--fg-muted);margin-top:6px}
 #section{position:relative;width:4400px;display:block;line-height:0}
 #section canvas{display:block}
 .ruler{position:sticky;left:0;width:0;height:0;z-index:2;line-height:1}
-.ruler span{position:absolute;left:8px;font:400 11px/16px var(--font-head);letter-spacing:.08em;font-variant-numeric:tabular-nums;color:var(--fg);background:var(--ink);padding:0 4px;white-space:nowrap}
+.ruler span{position:absolute;left:8px;font:400 11px/16px var(--mono);letter-spacing:.04em;font-variant-numeric:tabular-nums;color:var(--fg);background:var(--ink);padding:0 4px;white-space:nowrap}
 @media (prefers-reduced-motion:reduce){.slot::after{transition:none}}
 </style>
 
@@ -149,10 +149,10 @@ function surf(x){ x=Math.min(x,END); return x<COL? Math.max(sAt(x,SURF),lerp(BAS
 (function(){ const r=document.createElement('div'); r.className='ruler'; r.setAttribute('aria-hidden','true');
   let h=''; for(let m=0;m<=3;m++){ h+=`<span style="top:${BASE-m*PXM-8}px">${m===3?'0':'−'+(3-m)} m</span>`; } r.innerHTML=h; document.getElementById('section').prepend(r); })();
 
-Promise.all([document.fonts.load('400 10px "Libre Caslon Text"'),document.fonts.load('300 14px "Crimson Pro"')]).catch(()=>{}).then(()=>new p5(p=>{
+Promise.all([document.fonts.load('400 10px "IBM Plex Mono"'),document.fonts.load('300 14px "Crimson Pro"')]).catch(()=>{}).then(()=>new p5(p=>{
   const hubs=[];
   p.setup=()=>{
-    const c=p.createCanvas(W,SH); c.parent('section'); p.frameRate(20); p.randomSeed(4); p.noiseSeed(4); p.textFont('Libre Caslon Text');
+    const c=p.createCanvas(W,SH); c.parent('section'); p.frameRate(20); p.randomSeed(4); p.noiseSeed(4); p.textFont('IBM Plex Mono');
     const g=p.createGraphics(W,SH); g.pixelDensity(p.pixelDensity()); g.background(34,30,28);
     const ctx=g.drawingContext;
     const groundPath=()=>{ ctx.beginPath(); ctx.moveTo(0,SH); for(let x=0;x<=W;x+=4) ctx.lineTo(x,surf(x)); ctx.lineTo(W,SH); ctx.closePath(); };
@@ -202,7 +202,7 @@ Promise.all([document.fonts.load('400 10px "Libre Caslon Text"'),document.fonts.
 
     // annotations: leader line up from the change, label at its top
     const ann=(x,y,ly,text,right=false)=>{ g.stroke(190,182,172,170); g.strokeWeight(.6); g.line(x,y,x,ly+4); g.noStroke();
-      g.fill(190,182,172); ctx.fillStyle='rgb(190,182,172)'; g.textFont('Libre Caslon Text'); g.textSize(10); ctx.letterSpacing='1.4px'; g.textAlign(right?p.RIGHT:p.LEFT,p.BOTTOM); g.text(text.toUpperCase(),right?x-4:x+4,ly+4); ctx.letterSpacing='0px'; };
+      g.fill(190,182,172); ctx.fillStyle='rgb(190,182,172)'; g.textFont('IBM Plex Mono'); g.textSize(10); ctx.letterSpacing='1.4px'; g.textAlign(right?p.RIGHT:p.LEFT,p.BOTTOM); g.text(text.toUpperCase(),right?x-4:x+4,ly+4); ctx.letterSpacing='0px'; };
     ann(COL*.62,surf(COL*.62)-4,60,'Living bog surface');
     ann(COL+165,surf(COL+165)+12,62,'Hand-cut turf banks');
     ann(COL*2+20,surf(COL*2+20)+5,62,'First drains');
@@ -219,7 +219,7 @@ Promise.all([document.fonts.load('400 10px "Libre Caslon Text"'),document.fonts.
 
     // back to the peat: left blank for now
     g.noStroke(); g.fill(34,30,28); g.rect(COL*9+1,0,COL,SH);
-    g.fill(190,182,172); g.textFont('Libre Caslon Text'); g.textSize(11); ctx.letterSpacing='1.6px'; g.textAlign(p.CENTER,p.CENTER); g.text('TO BE DETAILED',COL*9.5,SH/2); ctx.letterSpacing='0px';
+    g.fill(190,182,172); g.textFont('IBM Plex Mono'); g.textSize(11); ctx.letterSpacing='1.6px'; g.textAlign(p.CENTER,p.CENTER); g.text('TO BE DETAILED',COL*9.5,SH/2); ctx.letterSpacing='0px';
     p.bg=g;
     if(matchMedia('(prefers-reduced-motion: reduce)').matches) p.noLoop();
   };

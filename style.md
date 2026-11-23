@@ -1,6 +1,8 @@
 # style.md
 Colloquium / Capstone visual style guide
-Version 1.0, 10 Nov 2026. Built from Miro frame "VISUALS STAGE 2" and the Pinterest board "project style".
+Version 2.0, 23 Nov 2026. Built from Miro frame "VISUALS STAGE 2", the Pinterest board "project style", and five new references (23 Nov 2026).
+
+Changes in 2.0: Libre Caslon replaced by IM Fell English (titles) and IBM Plex Mono (labels, data, annotation tags). Two new layout moves: data stems and machine annotation. A numbered-list pattern for menus and lists. Paper stays the only page ground. Aim: balance historic and future, biological and industrial.
 
 This file is the single source of truth for every page, map, diagram and gallery in the project. Read it before adding a new page, and run the checklist in section 13 before publishing one.
 
@@ -11,7 +13,7 @@ This file is the single source of truth for every page, map, diagram and gallery
 Miro, VISUALS STAGE 2 frame (capstone board):
 - GALLERY: specimen sheets of objects laid out on a strict grid with generous margins (black-and-white architectural fragments, cut-out silhouettes of land parcels on a dot grid, mixed object "catalogue" sheets with crosshair markers).
 - MAPPING: vintage survey sheets (muted greens, blues, buff paper, fine graticules), a soft relief map with a single pink area of focus, a nautical chart with hairline contours, a timeline diagram where lines fan down from a map into dated circles.
-- FONTS: originally Bricolage Grotesque with Platypi; since replaced (11 Nov 2026) by Libre Caslon Text Italic for titles, closer to vintage map lettering, with Crimson Pro Light for body text.
+- FONTS: originally Bricolage Grotesque with Platypi; since replaced (11 Nov 2026) by Libre Caslon Text Italic for titles, closer to vintage map lettering, with Crimson Pro Light for body text. Replaced again (23 Nov 2026) by IM Fell English and IBM Plex Mono, see version 2.0.
 - Palette swatches (the final colloquium palette below).
 - Reference links: Net.art and Art Academia aesthetics.
 
@@ -26,13 +28,19 @@ Pinterest, "project style" (23 pins):
 
 ---
 
+New references (23 Nov 2026), and what each contributes:
+- Terrain elevation drawing: data stems, thin vertical lines rising from places on the land to bars and labels above the horizon.
+- AA migratory server collage: machine annotation over photographs (white frames, bracketed mono tags, dot fields, pink nodes on fine lines).
+- CHARLI XCX tracklist: the numbered list (mono numbers, large serif items, small notes beside each).
+- Super Cellule poster and Utah Energy Resources Map (1983): reviewed and not adopted (cut-up stencil titles; survey-sheet fills).
+
 ## 2. Design principles
 
 1. Paper first. Every surface reads as a printed or archival sheet: off-white or off-black, grain, faint fibre texture. Never flat digital white or pure black.
 2. The grid is visible. Layouts sit on a measured grid, and the grid is allowed to show through as hairlines, crosshairs or dot fields, like a specimen sheet or survey map.
 3. White space carries the work. Fewer items, larger margins. When in doubt, remove something.
 4. Quiet images, one loud colour. Images are desaturated and low contrast. Pink is the only colour that is allowed to call attention, and it appears on interaction or for the main data series.
-5. Archive meets net.art. Art academia (plates, figure numbers, catalogue labels, diagrams) is combined with early web language (ASCII, pixel steps, raw link lists, plain metadata). Both are restrained and hand-set, never kitsch.
+5. Archive meets machine. Every page carries one historic voice (IM Fell English or an archival photograph) and one machine voice (IBM Plex Mono tags or a data line). Archive meets net.art. Art academia (plates, figure numbers, catalogue labels, diagrams) is combined with early web language (ASCII, pixel steps, raw link lists, plain metadata). Both are restrained and hand-set, never kitsch.
 6. One system across all pages. The same tokens, type scale, captions and grid on every page. A new page should look like another plate from the same atlas.
 
 ---
@@ -113,15 +121,15 @@ When to use which:
 
 | Role | Family | Source | Notes |
 |---|---|---|---|
-| Titles and headings (Display, H1, H2, H3) | Libre Caslon Text Italic | Google Fonts | Weight 400 italic. Engraved map lettering |
-| Labels, navigation, kickers, title blocks, figure codes, map lettering | Libre Caslon Text (upright), set in tracked capitals | Google Fonts | Weight 400. Uppercase with wide letter spacing, like Ordnance Survey and admiralty sheet lettering |
+| Titles, headings, list items, quotes, archival captions (Display, H1, H2, H3) | IM Fell English, italic for titles, roman for list items | Google Fonts | Weight 400 only. A 17th-century print type: inky, uneven, historic |
+| Labels, navigation, kickers, figure codes, data, coordinates, source tags | IBM Plex Mono | Google Fonts | Weight 400 (500 for emphasis). Machine voice. Capitals with light tracking (+0.04em) for nav and labels; source tags in square brackets, e.g. [CSO_2025] |
 | Body text, captions, legends, long reading | Crimson Pro Light | Google Fonts | Weight 300 for text, 500 for bold. Upright only |
 
-Libre Caslon and Crimson Pro are the only two typefaces. Titles are always Caslon italic; body text is always Crimson Pro, upright. Numbers in data and coordinates use tabular (fixed-width) figures so columns align. No sans serif and no monospace web font is loaded. (Replaces the earlier Bricolage Grotesque and Platypi pairing.)
+IM Fell English, IBM Plex Mono and Crimson Pro are the only three typefaces: Fell is the historic voice, Plex Mono the machine voice, Crimson Pro the reading voice. Titles are Fell italic; body text is always Crimson Pro, upright; anything measured or sourced is set in Plex Mono. (Replaces Libre Caslon Text, used 11 to 23 Nov 2026, and lifts the earlier rule against a monospace face.)
 
 ### 4.2 Italics
 
-- Italic is used for one job only: titles and headings in Libre Caslon Text Italic, the way old maps letter their titles.
+- Italic is used for one job only: titles and headings in IM Fell English Italic. Menu list items are Fell roman, turning italic on hover.
 - Everything else is upright: body text, captions, labels, buttons, quotes and emphasis. Set `font-style: normal` on `em`, `i`, `cite`, `blockquote`, `address` and `figcaption`.
 - Do not load Crimson Pro italic.
 - For emphasis in body text use Crimson Pro Medium (500), or a pink underline for links.
@@ -131,16 +139,16 @@ Libre Caslon and Crimson Pro are the only two typefaces. Titles are always Caslo
 
 | Level | Use | Family / style | Size / line height | Tracking | Case |
 |---|---|---|---|---|---|
-| Display | Cover title, chapter opener | Caslon italic 400 | 72 / 80px | -0.01em | Sentence case |
-| H1 | Page title | Caslon italic 400 | 48 / 56px | -0.005em | Sentence case |
-| H2 | Section heading | Caslon italic 400 | 30 / 38px | 0 | Sentence case |
-| H3 | Sub-section, card title | Caslon italic 400 | 22 / 28px | 0 | Sentence case |
-| Kicker / label | Plate number, section label, nav | Caslon upright 400 | 11 to 12 / 16px | +0.14em | UPPERCASE |
+| Display | Cover title, chapter opener | Fell italic 400 | 72 / 80px | -0.01em | Sentence case |
+| H1 | Page title | Fell italic 400 | 48 / 56px | -0.005em | Sentence case |
+| H2 | Section heading | Fell italic 400 | 30 / 38px | 0 | Sentence case |
+| H3 | Sub-section, card title | Fell italic 400 | 22 / 28px | 0 | Sentence case |
+| Kicker / label | Plate number, section label, nav | Plex Mono 400 | 11 to 12 / 16px | +0.04em | UPPERCASE |
 | Lead | Intro paragraph | Crimson Pro 300 | 23 / 36px | 0 | Sentence case |
 | Body | Running text | Crimson Pro 300 | 19 / 30px | 0 | Sentence case |
 | Body bold | Emphasis in body | Crimson Pro 500 | 19 / 30px | 0 | |
 | Caption | Figure captions, sources, legends | Crimson Pro 300 | 15 / 22px | 0 | |
-| Meta / data | Coordinates, dates, fig. codes, axis ticks | Caslon upright 400, tabular numbers | 11 to 12 / 16px | +0.08em | UPPERCASE for words |
+| Meta / data | Coordinates, dates, fig. codes, axis ticks | Plex Mono 400, tabular numbers | 11 to 12 / 16px | +0.04em | UPPERCASE for words |
 
 Mobile: Display 44, H1 34, H2 26, H3 20, Body 18/28, Caption 14.
 
@@ -187,7 +195,7 @@ Taken from the specimen and survey sheets on both boards. Use one of these per p
 
 - Grain: a fine, monochrome noise overlay on every page background, fixed to the viewport, `mix-blend-mode: multiply` in light mode and `screen` in dark mode, opacity per --grain-opacity. Generate it with an SVG `feTurbulence` filter (baseFrequency around 0.8, numOctaves 3) so no image file is needed.
 - Paper: a very subtle fibre or mottled texture (large-scale noise, baseFrequency around 0.02) at 3 to 4% opacity on top of the paper colour. Optional on dark pages.
-- Edge details: plate-style frames are allowed on map and diagram sheets (a 1px ink border inset 16px from the sheet edge, with a title block bottom-right like a survey map).
+- Edge details: no frames around whole pages or plates (v2.0). Title blocks may sit bottom-right on maps without a surrounding frame.
 - Texture must never reduce text contrast below the values in 3.3. Keep grain off text layers.
 - No drop shadows, gradients, glows, glassmorphism, or rounded "app" cards. Corners are square (0 radius); 2px radius maximum for buttons.
 
@@ -226,9 +234,9 @@ Maps follow the vintage survey sheet look from the MAPPING references.
 
 - Base: paper colour with grain. Land in light green at 35 to 50% opacity, water in misty blue, uplands and peat in spruce at low opacity. Muted tones only; no saturated GIS defaults.
 - Linework: ink at 0.5 to 1px for coastlines, roads and boundaries; slate blue for infrastructure (grid lines, cables, data centres); hairline contours in --grey.
-- Graticule: a visible coordinate grid in --rule, with tick labels in the meta style (Caslon upright capitals, tabular numbers) at 11px around the frame.
+- Graticule: a visible coordinate grid in --rule, with tick labels in the meta style (Plex Mono capitals, tabular numbers) at 11px around the frame.
 - Focus: one pink area or pink point set per map (the subject). Everything else stays muted.
-- Frame and title block: thin ink frame, title block bottom-right with map title (Caslon italic), scale bar, north arrow (simple line), source and date (meta style).
+- Frame and title block: thin ink frame, title block bottom-right with map title (Fell italic), scale bar, north arrow (simple line), source and date (meta style).
 - Legend: small square swatches with ink outlines, labels in Crimson Pro 400 at 13px. Order legends in the same order as the palette hierarchy.
 - No hatching (stated preference); use flat fills, dot stipple or line density instead.
 - Basemap tiles, if used, must be greyscale and lightened (for example a light grey basemap with a paper-colour multiply).
@@ -242,7 +250,7 @@ Maps follow the vintage survey sheet look from the MAPPING references.
 - Lines 1px (hairline 0.5px for grids); dots 6 to 12px; no 3D, no shadows, no gradients.
 - Series colours, in order: pink (main data), spruce (peat), slate blue (infrastructure / data centres), ochre (extraction), light green, yellow, misty blue.
 - Peat-related series use greens; data centre and infrastructure series use blues; the project's key series is pink.
-- Axis labels and ticks in the meta style at 11px, grey-text. Titles in Caslon italic. Annotations in Crimson Pro 400 at 14px.
+- Axis labels and ticks in the meta style at 11px, grey-text. Titles in Fell italic. Annotations in Crimson Pro 400 at 14px.
 - Gridlines in --rule. Remove chart borders and background fills.
 - Timelines: horizontal rule in ink, events as dots on short vertical stems, dates in the meta style below; extraction (past) to the left, projections (future) to the right, with projections drawn as dashed lines.
 - Every chart is labelled as a figure (Fig. 00) with a source line.
@@ -254,7 +262,7 @@ Maps follow the vintage survey sheet look from the MAPPING references.
 
 Net.art here means the plain, structural language of the early web, kept restrained to match the academic look.
 
-- ASCII images: photographs or map tiles converted to ASCII characters, ink on paper or paper on ink. ASCII needs equal-width characters to hold its shape, so render ASCII pieces as images (PNG or SVG exported from the generator) rather than live text. If an ASCII piece must be live text, use the device's built-in monospace (`font-family: monospace`) for that piece only; no monospace web font is loaded. Character ramp suggestion: ` .:-=+*#%@`. Optionally colour the densest characters pink.
+- ASCII images: photographs or map tiles converted to ASCII characters, ink on paper or paper on ink. ASCII needs equal-width characters to hold its shape, so render ASCII pieces as images (PNG or SVG exported from the generator) rather than live text. If an ASCII piece must be live text, set it in IBM Plex Mono (`var(--font-mono)`). Character ramp suggestion: ` .:-=+*#%@`. Optionally colour the densest characters pink.
 - Use ASCII in dark mode bands, as loading states, as section dividers (a line of `+ - - - - +` or `.:.:.:`), or as the hover reveal of a gallery tile.
 - Raw link lists: plain underlined text links in a list are a valid layout (index pages, sources pages).
 - Plain metadata: file names, coordinates, dates, figure codes, small counters, set in the meta style.
@@ -267,7 +275,7 @@ Net.art here means the plain, structural language of the early web, kept restrai
 ## 11. Components
 
 Navigation
-- Top bar, no background fill, thin --rule line below. Project name left (Caslon italic, 18px), links right (Caslon upright capitals, 12px, +0.14em).
+- Top bar, no background fill, thin --rule line below. Project name left (Fell italic, 18px), links right (Plex Mono capitals, 12px, +0.04em).
 - Active page: pink underline 2px, offset 6px.
 - A light/dark switch is a plain text toggle in the meta style: `[ light / dark ]`.
 
@@ -275,7 +283,7 @@ Links
 - Body links: ink text with a 1px pink underline; hover thickens the underline to 2px and turns the text pink in dark mode only.
 
 Buttons
-- Text buttons with a 1px ink border, 0 to 2px radius, Caslon upright capitals 12px, +0.14em, padding 10 by 18px. Hover: pink fill, ink text.
+- Text buttons with a 1px ink border, 0 to 2px radius, Plex Mono capitals 12px, +0.04em, padding 10 by 18px. Hover: pink fill, ink text.
 
 Gallery tile
 - Image (desaturated) + below it: `Fig. 12` (meta style 12px) and a one-line caption (Crimson Pro 15px). Optional year or location in grey-text.
@@ -296,14 +304,15 @@ Footer
 
 | Page | Mode | Layout | Key visuals |
 |---|---|---|---|
-| Home / index | Light | Large title on a 12-col grid, short lead paragraph, plate-style index of sections | Crosshair grid layer, one desaturated hero image or ASCII image |
+| Landing | Dark | Centred Fell italic title over a full-bleed image; click anywhere to enter | One desaturated image, no grid layer |
+| Menu | Light | Numbered list (15.3) | No grid layer |
 | Gallery | Light | Visual grid, 3 to 4 columns desktop, 2 tablet, 1 mobile, consistent image ratios per row | Desaturated images, pink hover, figure captions |
 | Atlas (maps) | Light | One map plate per screen, text in a narrow column beside or below | Survey map style, graticule, pink focus |
 | Timelines | Dark or light | Horizontal scrolling or stacked section timeline | Dots on stems, past solid, future dashed |
 | Telescope / speculative | Dark | Full-bleed image or ASCII band, short text | ASCII, pink highlights, grain |
-| Headlines | Light | Floating slips on a dot field | Meta-style source and date, pink hover |
+| Headlines | Light | Timeline of dots, list view as a numbered list (15.3); no page frame | Mono source and date, pink hover |
 | Sources / bibliography | Light | Single text column, raw link list | Meta-style dates, pink underlines |
-| Section opener | Dark | Display title, kicker label, lots of space | Caslon italic Display title on off-black, grain |
+| Section opener | Dark | Display title, kicker label, lots of space | Fell italic Display title on off-black, grain |
 
 ---
 
@@ -312,7 +321,7 @@ Footer
 Before publishing any page, confirm:
 1. Uses the tokens in section 14; no new colours or hex values.
 2. Background is --paper or --ink, never #FFF or #000, with grain applied.
-3. Titles in Libre Caslon Text Italic, labels in Caslon upright capitals, body in Crimson Pro Light. No other fonts.
+3. Titles in IM Fell English (italic), labels and data in IBM Plex Mono, body in Crimson Pro Light. No other fonts.
 4. Italic only on titles and headings (check em, i, blockquote and captions are upright).
 5. Type sizes come from the scale in 4.3; a clear hierarchy of kicker, title, lead, body, caption.
 6. Content sits on the 12-column grid with the section spacing in 5.3.
@@ -329,7 +338,7 @@ Before publishing any page, confirm:
 ## 14. CSS tokens (copy into every page)
 
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Crimson+Pro:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=IBM+Plex+Mono:wght@400;500&family=Crimson+Pro:wght@300;400;500&display=swap');
 
 :root {
   /* palette */
@@ -355,7 +364,8 @@ Before publishing any page, confirm:
   --grain-blend: multiply;
 
   /* type */
-  --font-head: 'Libre Caslon Text', Georgia, serif;
+  --font-head: 'IM Fell English', Georgia, serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
   --font-body: 'Crimson Pro', Georgia, serif;
 
   /* spacing */
@@ -375,16 +385,17 @@ Before publishing any page, confirm:
 
 html { background: var(--bg); color: var(--fg); }
 body { font: 300 19px/1.6 var(--font-body); }
-h1, h2, h3, h4, .label, nav, .meta, .fig, button { font-family: var(--font-head); }
+h1, h2, h3, h4 { font-family: var(--font-head); }
+.label, nav, .meta, .fig, button { font-family: var(--font-mono); }
 h1, h2, h3, h4 { font-style: italic; font-weight: 400; }
 h1 { font-size: 48px; line-height: 1.17; letter-spacing: -0.005em; }
 h2 { font-size: 30px; line-height: 1.27; }
 h3 { font-size: 22px; line-height: 1.27; }
-.label, nav, button { font-style: normal; font-weight: 400; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; }
+.label, nav, button { font-style: normal; font-weight: 400; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; }
 .caption { font-size: 15px; line-height: 22px; color: var(--fg-muted); }
 .meta, .fig { font-style: normal; font-weight: 400; font-size: 11px; text-transform: uppercase;
-  letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
-.ascii { font-family: monospace; white-space: pre; line-height: 1; } /* live ASCII only */
+  letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+.ascii { font-family: var(--font-mono); white-space: pre; line-height: 1; } /* live ASCII only */
 p { max-width: var(--measure); }
 strong, b { font-weight: 500; }
 
@@ -423,13 +434,39 @@ body::after {
 
 ---
 
-## 15. Do and don't
+## 15. Layout moves (v2.0)
+
+### 15.1 Data stems
+- Thin 1px paper or ink lines rise from each place on the land (satellite or map) to a bar above the horizon.
+- Bars: 9px wide, paper colour on dark imagery; the subject of the page in pink.
+- Labels sit in their own row above the bars (Plex Mono 11px, rotated 90 degrees), never on or overlapping a bar.
+- Only real, sourced values become bars. Schematic samples must be labelled as schematic.
+- Use on: narrative chapters with figures, the timeline, data centre loads by site.
+
+### 15.2 Machine annotation
+- Over archival photographs: a white 1px frame around the subject, a pink node (10px, paper outline) on the frame corner, a dot field fading in from the lower half, and a bracketed Plex Mono tag giving the archive reference, e.g. [NLI_LROY_2870].
+- Nodes may be joined by fine pink lines when several frames sit on one photo.
+- The tag always names a real catalogue reference, so the machine layer doubles as the citation.
+- Use on: narrative pop-ups, matrix detail panels, gallery images.
+
+### 15.3 Numbered list
+- On plain paper, no background colour. Ruled rows (1px ink top rule, 1px warm grey between rows).
+- Plex Mono number (001, 002), Fell item (roman, large), small Plex Mono note on the right.
+- Hover: item turns Fell italic with a pink underline.
+- Use on: menu, headlines list view, sources.
+
+### 15.4 Grounds
+- Paper (#FCFBFA) everywhere. No xerox or tinted page grounds.
+- Dark imagery only where it is the content: satellite maps and the strip behind data stems.
+- No frames around whole pages; white frames appear only inside photographs (15.2).
+
+## 16. Do and don't
 
 Do
 - Off-white or off-black paper with grain.
 - Visible grids, crosshairs, graticules, figure numbers.
 - Desaturated, softened images that turn pink on hover.
-- Caslon italic titles, Caslon capitals for labels, Crimson Pro Light body.
+- Fell italic titles, Plex Mono labels and source tags, Crimson Pro Light body.
 - Bold for emphasis.
 - Large margins and empty cells.
 
