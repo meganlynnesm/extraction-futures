@@ -44,8 +44,8 @@ header.top nav a.on{text-decoration:underline;text-decoration-color:var(--pink);
 .embedded header.top nav{justify-content:flex-start}
 
 /* full screen map */
-#map{position:fixed;top:var(--hh);left:0;right:0;bottom:0;z-index:0;background:#2b2724}
-#maptint{position:fixed;inset:var(--hh) 0 0 0;z-index:1;pointer-events:none;background:var(--ink);opacity:.12;mix-blend-mode:multiply}
+#map{position:fixed;top:var(--hh);left:0;right:0;bottom:var(--tlh);z-index:0;background:#2b2724}
+#maptint{position:fixed;inset:var(--hh) 0 var(--tlh) 0;z-index:1;pointer-events:none;background:var(--ink);opacity:.12;mix-blend-mode:multiply}
 #tokenNote{position:fixed;top:calc(var(--hh) + 16px);left:50%;transform:translateX(-50%);z-index:5;background:var(--paper);border:1px solid var(--ink);padding:10px 16px;font-size:16px;display:none;max-width:90vw}
 .mk{display:flex;align-items:center;gap:7px;pointer-events:none;transition:opacity 400ms}
 .mk i{width:9px;height:9px;border:1px solid var(--paper);display:block;flex:none;border-radius:50%}
@@ -63,6 +63,15 @@ header.top nav a.on{text-decoration:underline;text-decoration-color:var(--pink);
 .opener p{max-width:36rem;font-size:23px;line-height:1.55}
 .opener .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px;max-width:1100px;margin-top:72px}
 .opener .two p{font-size:17px;color:var(--grey)}
+
+/* map key */
+#key{position:fixed;left:var(--m);bottom:calc(var(--tlh) + 30px);z-index:1;background:var(--paper);padding:10px 12px;display:flex;flex-direction:column;gap:4px;font:400 11px/1.4 var(--font-mono);color:var(--ink)}
+#key span{display:flex;align-items:center;gap:8px}
+#key i{width:9px;height:9px;border-radius:50%;border:1px solid var(--ink);flex:none}
+#key i.sq{border-radius:0}
+#key small{font-size:10px;color:var(--grey-text);margin-top:2px}
+.mapboxgl-ctrl-attrib,.mapboxgl-ctrl-logo{position:relative;z-index:5}
+@media (max-width:900px){#key{display:none}}
 
 /* chapters */
 #story{position:relative;z-index:2;padding-bottom:30vh}
@@ -164,6 +173,14 @@ header.top nav a.on{text-decoration:underline;text-decoration-color:var(--pink);
 
 <div id="map" role="img" aria-label="Satellite map of Ireland that moves to each place in the story"></div>
 <div id="maptint"></div>
+<div id="key" aria-label="Map key">
+  <span><i style="background:#F4D387"></i>Bog as archive (studied records)</span>
+  <span><i style="background:#99AD67"></i>Peat cutting sites and bogs</span>
+  <span><i style="background:#D3913F"></i>Peat power and briquette sites</span>
+  <span><i class="sq" style="background:#BCD7E6"></i>Data centre and energy sites</span>
+  <span><i style="background:#CF729B"></i>Named in this chapter</span>
+  <small>Points are approximate centres, not site boundaries.</small>
+</div>
 <div id="tokenNote">Map not loaded: add your Mapbox access token in config.js.</div>
 
 <section class="opener" id="top">
