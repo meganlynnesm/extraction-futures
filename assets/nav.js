@@ -3,18 +3,11 @@
    marks itself with <body data-page="...">. */
 (function () {
   var NAV = [
-    { id: "home", label: "Land here", href: "index.html" },
-    { id: "atlas", label: "Atlas", href: "atlas.html" },
-    { label: "Bog", items: [
-      { id: "bog-archive", label: "as an archive", href: "bog-archive.html" },
-      { id: "bog-extraction", label: "as extraction", href: "bog-extraction.html" }
-    ]},
-    { label: "Data centres", items: [
-      { id: "dc-archive", label: "as an archive", href: "data-centres-archive.html" },
-      { id: "dc-extraction", label: "as extraction", href: "data-centres-extraction.html" }
-    ]},
-    { id: "news", label: "In the news", href: "in-the-news.html" },
-    { id: "prototypes", label: "Prototypes", href: "prototypes.html" }
+    { id: "menu", label: "Menu", href: "menu.html" },
+    { id: "narrative", label: "Narrative", href: "narrative.html" },
+    { id: "timeline", label: "Timeline", href: "timeline.html" },
+    { id: "matrix", label: "Matrix", href: "matrix.html" },
+    { id: "headlines", label: "Headlines", href: "headlines.html" }
   ];
 
   var current = document.body.getAttribute("data-page") || "";

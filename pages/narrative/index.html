@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extracted Archives: two archives, two extractions</title>
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
+<script src="https://unpkg.com/scrollama@3.2.0/build/scrollama.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Crimson+Pro:wght@300;400;500&display=swap">
+<style>
+/* Tokens from claude/style.md (colloquium palette). */
+:root{
+  --pink:#CF729B;--ochre:#D3913F;--yellow:#F4D387;--green-light:#99AD67;--spruce:#0B4430;
+  --blue-mist:#BCD7E6;--blue-slate:#3B5F88;--ink:#221E1C;--grey:#BEB6AC;--grey-text:#6B635C;--paper:#FCFBFA;
+  --rule:rgba(190,182,172,.6);
+  --font-head:'Libre Caslon Text',Georgia,serif;--font-body:'Crimson Pro',Georgia,serif;
+  --hh:52px;--tlh:74px;
+}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;background:var(--ink);color:var(--ink)}
+body{font:300 19px/1.6 var(--font-body);overflow-x:clip}
+h1,h2,h3{font-family:var(--font-head);font-style:italic;font-weight:400;margin:0}
+em,i,p,li,figcaption,blockquote{font-style:normal}
+strong{font-weight:500}
+a{color:inherit;text-decoration:underline;text-decoration-color:var(--pink);text-underline-offset:4px;text-decoration-thickness:1px}
+a:hover,a:focus-visible{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--pink);outline-offset:3px}
+.label{font-family:var(--font-head);font-style:normal;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.meta{font-family:var(--font-head);font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-variant-numeric:tabular-nums}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.07;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* fixed header line */
+header.top{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--hh);display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:0 max(3vw,20px);background:var(--paper);border-bottom:1px solid var(--ink)}
+header.top .name{flex:none;font-family:var(--font-head);font-style:italic;font-size:19px;white-space:nowrap}
+header.top nav{flex:1 1 auto;display:flex;justify-content:flex-end;gap:26px;overflow-x:auto;scrollbar-width:none}
+header.top nav a{flex:none;text-decoration:none;font-family:var(--font-head);font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:6px 0}
+header.top nav a.on{text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:2px;text-underline-offset:6px}
+
+/* inside the site shell the site nav already carries the brand */
+.embedded header.top .name{display:none}
+.embedded header.top nav{justify-content:flex-start}
+
+/* full screen map */
+#map{position:fixed;top:var(--hh);left:0;right:0;bottom:0;z-index:0;background:#2b2724}
+#maptint{position:fixed;inset:var(--hh) 0 0 0;z-index:1;pointer-events:none;background:var(--ink);opacity:.12;mix-blend-mode:multiply}
+#tokenNote{position:fixed;top:calc(var(--hh) + 16px);left:50%;transform:translateX(-50%);z-index:5;background:var(--paper);border:1px solid var(--ink);padding:10px 16px;font-size:16px;display:none;max-width:90vw}
+.mk{display:flex;align-items:center;gap:7px;pointer-events:none;transition:opacity 400ms}
+.mk i{width:9px;height:9px;border:1px solid var(--paper);display:block;flex:none;border-radius:50%}
+.mk.dc i{border-radius:0}
+.mk span{font:400 14px/1 var(--font-body);color:var(--paper);text-shadow:0 0 4px rgba(34,30,28,.9);white-space:nowrap;display:none}
+.mk.on i{width:13px;height:13px;background:var(--pink)!important}
+.mk.on span{display:block}
+.mk.off{opacity:.45}
+
+/* opener */
+.opener{position:relative;z-index:2;min-height:100vh;padding:calc(var(--hh) + 18vh) max(6vw,20px) 20vh;color:var(--paper);
+  background:linear-gradient(rgba(34,30,28,.78),rgba(34,30,28,.55))}
+.opener .label{color:var(--grey)}
+.opener h1{font-size:clamp(46px,7vw,84px);line-height:1.05;margin:18px 0 28px;text-wrap:balance}
+.opener p{max-width:36rem;font-size:23px;line-height:1.55}
+.opener .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:32px;max-width:1100px;margin-top:72px;border-top:1px solid rgba(190,182,172,.4);padding-top:22px}
+.opener .two p{font-size:17px;color:var(--grey)}
+
+/* chapters */
+#story{position:relative;z-index:2;padding-bottom:30vh}
+.step{min-height:110vh;display:flex;align-items:center;padding:0 max(4vw,20px)}
+.card{width:min(440px,100%);background:var(--paper);border:1px solid var(--ink);padding:26px 28px 22px;opacity:.35;transition:opacity 400ms}
+.step.on .card{opacity:1}
+.card .label{color:var(--grey-text);display:block;margin-bottom:12px}
+.card h2{font-size:28px;line-height:1.25;margin-bottom:14px;text-wrap:balance}
+.card p{margin:0 0 .9em;font-size:18px;line-height:1.55}
+.card sup{font-family:var(--font-head);font-size:10px;color:var(--grey-text);margin-left:1px}
+.card .chart{position:relative;height:190px;margin:14px 0 4px}
+.card .chart svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.card .figcap{font-size:13px;line-height:1.4;color:var(--grey-text)}
+
+/* collage layer */
+#collage{position:fixed;top:var(--hh);right:0;bottom:var(--tlh);width:58vw;z-index:3;pointer-events:none}
+.piece{margin:0;position:absolute;pointer-events:auto;background:var(--paper);padding:8px 8px 10px;border:1px solid rgba(34,30,28,.35);
+  opacity:0;transform:translateY(24px) scale(.96) rotate(var(--r,0deg));transition:opacity 500ms ease,transform 600ms cubic-bezier(.2,.7,.2,1)}
+.piece.in{opacity:1;transform:translateY(0) scale(1) rotate(var(--r,0deg))}
+.piece .img{position:relative;display:block}
+.piece img{display:block;width:100%;filter:grayscale(.75) contrast(.85) sepia(.03) brightness(1.02)}
+.piece .img::after{content:"";position:absolute;inset:0;background:var(--pink);mix-blend-mode:multiply;opacity:0;transition:opacity 300ms}
+.piece:hover .img::after,.piece:focus-within .img::after{opacity:.85}
+.piece.news img{filter:grayscale(.55) contrast(.92)}
+.piece figcaption{font:400 12.5px/1.35 var(--font-body);color:var(--grey-text);margin-top:7px;max-width:44ch}
+.slip{position:absolute;pointer-events:auto;background:var(--paper);border:1px solid var(--ink);padding:10px 14px 9px;
+  opacity:0;transform:translateY(18px) rotate(var(--r,0deg));transition:opacity 500ms,transform 600ms cubic-bezier(.2,.7,.2,1)}
+.slip.in{opacity:1;transform:translateY(0) rotate(var(--r,0deg))}
+.slip b{display:block;font:400 italic 19px/1.2 var(--font-head);margin-bottom:4px}
+.slip p{margin:0;font-size:15px;line-height:1.35}
+.slip .meta{display:block;color:var(--grey-text);margin-top:6px;font-size:10px}
+.slip::before{content:"+";position:absolute;top:-9px;left:-6px;font:400 14px/1 var(--font-head);color:var(--pink)}
+
+/* bottom timeline */
+#timeline{position:fixed;left:0;right:0;bottom:0;height:var(--tlh);z-index:50;background:var(--paper);border-top:1px solid var(--ink);padding:0 max(3vw,20px)}
+#timeline .track{position:relative;height:100%}
+#timeline .line{position:absolute;left:0;right:0;top:30px;height:1px;background:var(--ink)}
+#timeline .fill{position:absolute;left:0;top:29px;height:3px;background:var(--pink);width:0;transition:width 500ms ease}
+#timeline .part{position:absolute;top:8px;font-family:var(--font-head);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--grey-text)}
+#timeline button{position:absolute;top:21px;transform:translateX(-50%);background:none;border:0;padding:0 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;color:var(--ink);min-width:44px}
+#timeline button i{width:9px;height:9px;border-radius:50%;background:var(--paper);border:1px solid var(--ink);margin:4px 0 7px}
+#timeline button span{font-family:var(--font-head);font-size:10.5px;letter-spacing:.06em;white-space:nowrap;font-variant-numeric:tabular-nums}
+#timeline button.done i{background:var(--ink)}
+#timeline button.on i{background:var(--pink);border-color:var(--pink);transform:scale(1.5)}
+#timeline button.on span{color:var(--ink);text-decoration:underline;text-decoration-color:var(--pink);text-underline-offset:3px}
+
+/* news + sources sections (paper) */
+.paper{position:relative;z-index:4;background:var(--paper);padding:120px max(6vw,20px) calc(var(--tlh) + 96px);border-top:1px solid var(--ink)}
+.paper h2{font-size:clamp(34px,4vw,48px);line-height:1.15;margin:10px 0 18px}
+.paper .lead{max-width:38rem;font-size:21px;color:var(--grey-text)}
+.newsfeed{max-width:760px;margin:72px 0 0}
+.newsfeed figure{margin:0 0 96px}
+.newsfeed .shot{border:1px solid var(--rule);display:block;position:relative}
+.newsfeed .shot img{display:block;width:100%;filter:grayscale(.35) contrast(.95)}
+.newsfeed .shot::after{content:"";position:absolute;inset:0;background:var(--pink);mix-blend-mode:multiply;opacity:0;transition:opacity 300ms}
+.newsfeed .shot:hover::after,.newsfeed .shot:focus-visible::after{opacity:.6}
+.newsfeed figcaption{font-size:15px;line-height:22px;margin-top:12px;color:var(--grey-text);max-width:34rem}
+.newsfeed figcaption .meta{display:block;color:var(--ink);margin-bottom:4px}
+.further{list-style:none;padding:0;max-width:760px;border-top:1px solid var(--rule)}
+.further li{border-bottom:1px solid var(--rule);padding:12px 0;font-size:17px}
+.further .meta{color:var(--grey-text);display:block;margin-top:2px}
+.sources ol{list-style:none;padding:0;columns:2 380px;column-gap:48px;font:400 15px/1.5 var(--font-body);margin-top:36px}
+.sources li{margin:0 0 10px;break-inside:avoid;display:grid;grid-template-columns:2.2em 1fr}
+.sources li b{font-family:var(--font-head);font-weight:400;font-size:12px;color:var(--grey-text)}
+.note{font-size:15px;line-height:22px;color:var(--grey-text);max-width:44rem}
+
+@media (max-width:900px){
+  #collage{width:100vw;top:auto;height:44vh;bottom:var(--tlh)}
+  .step{align-items:flex-start;padding-top:12vh}
+  .card{width:100%}
+  header.top .name{font-size:16px}
+  header.top nav{gap:16px;justify-content:flex-start}
+  #timeline button span{font-size:9px}
+  #timeline .part{display:none}
+}
+@media (max-width:600px){
+  header.top{gap:12px}
+  .card{padding:20px}
+  .card h2{font-size:24px}
+  #timeline button:not(.on) span{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="name">Extracted Archives</span>
+  <nav id="nav" aria-label="Chapters"></nav>
+</header>
+
+<div id="map" role="img" aria-label="Satellite map of Ireland that moves to each place in the story"></div>
+<div id="maptint"></div>
+<div id="tokenNote">Map not loaded: add your Mapbox access token in config.js.</div>
+
+<section class="opener" id="top">
+  <span class="label">Story map - Ireland, 10,000 years to 2026</span>
+  <h1>Two archives, two extractions</h1>
+  <p>For ten thousand years Irish bogs have stored a record of climate, pollution and people. For two hundred years that record was surveyed, drained, milled and burned. Today a new archive, the data centre, stores the data behind everyday life, and draws on the grid, and some of it is being planned on the same cutaway ground.</p>
+  <div class="two">
+    <div><span class="label">Part 1</span><h3>The bog as archive, the bog as extraction</h3><p>Pollen, ash, metals, butter and bodies; then the Bog Commission, the sleán, Bord na Móna and the last burn. Archival photographs.</p></div>
+    <div><span class="label">Part 2</span><h3>The data centre as archive, the data centre as extraction</h3><p>A quarter of the grid, new rules, a court case and where the buildings go. Current figures and news.</p></div>
+    <div><span class="label">Part 3</span><h3>Same ground</h3><p>Where the two archives meet on former bogland, and who they are kept for.</p></div>
+  </div>
+</section>
+
+<div id="story"></div>
+<div id="collage" aria-live="polite"></div>
+
+<section class="paper" id="news">
+  <span class="label" style="color:var(--grey-text)">In the news</span>
+  <h2>As reported</h2>
+  <p class="lead">Screenshots of the reporting this story draws on, newest first. Each opens the original article.</p>
+  <div class="newsfeed" id="newsfeed"></div>
+  <span class="label" style="color:var(--grey-text)">Further reporting</span>
+  <ul class="further" id="further"></ul>
+</section>
+
+<section class="paper sources" id="sources">
+  <span class="label" style="color:var(--grey-text)">Sources</span>
+  <h2>Sources and notes</h2>
+  <p class="note">Accessed 23 November 2026. Letters in the chapters match the list below. Figures are given as each source states them; news reports are marked as reporting. Archival photographs come from the National Library of Ireland on The Commons (no known copyright restrictions) and Wikimedia Commons (CC BY-SA 2.0, credit Kieran Campbell). Article screenshots are reproduced for comment and study, cropped to the headline and lead image, and link to the original. Map points are approximate centres or photo geotags, not site boundaries. Satellite imagery © Mapbox © OpenStreetMap, Maxar.</p>
+  <ol id="srclist"></ol>
+</section>
+
+<nav id="timeline" aria-label="Timeline"><div class="track"><div class="line"></div><div class="fill" id="tlfill"></div></div></nav>
+
+<script src="config.js"></script>
+<script>
+{
+if(window.self!==window.top) document.documentElement.classList.add('embedded');
+const C = config, CH = C.chapters;
+const COL = {archive:'#F4D387', peat:'#99AD67', power:'#D3913F', dc:'#BCD7E6'};
+
+/* header nav: unique chapter groups, right aligned */
+const groups = [];
+CH.forEach(c => { if(!groups.find(g=>g.n===c.nav)) groups.push({n:c.nav, id:c.id}); });
+groups.push({n:'In the news', id:'news'}, {n:'Sources', id:'sources'});
+document.getElementById('nav').innerHTML = groups.map(g=>`<a href="#${g.id}" data-g="${g.n}">${g.n}</a>`).join('');
+
+/* chapters */
+document.getElementById('story').innerHTML = CH.map((c,i)=>`
+  <section class="step" id="${c.id}" data-i="${i}">
+    <article class="card">
+      <span class="label">${c.eyebrow}</span>
+      <h2>${c.title}</h2>
+      ${c.text}
+      ${c.chart?`<div class="chart" id="chart" role="img" aria-label="Bar chart: data centre electricity use rose from 1,240 GWh (5%) in 2015 to 7,663 GWh (23%) in 2025"></div><div class="figcap">Data centre metered electricity, GWh a year, with share of national total. CSO, Table 1, 7 July 2026.</div>`:''}
+    </article>
+  </section>`).join('');
+
+/* sources */
+document.getElementById('srclist').innerHTML = Object.entries(C.sources).map(([k,[t,u]])=>`<li id="src-${k}"><b>${k}</b><span>${t} <a href="${u}">Link</a></span></li>`).join('');
+document.querySelectorAll('.card sup').forEach(s=>{ const k=s.textContent.trim(); s.innerHTML=`<a href="#src-${k}" style="text-decoration:none">${k}</a>`; });
+
+/* news feed (Marsh Anthology style) */
+document.getElementById('newsfeed').innerHTML = C.newsGallery.map(n=>`
+  <figure><a class="shot" href="${n.u}"><img src="${n.src}" alt="Screenshot of ${n.o} article: ${n.t}" loading="lazy"></a>
+  <figcaption><span class="meta">${n.o} - ${n.d}</span>${n.t}. Screenshot, 23 November 2026.</figcaption></figure>`).join('');
+document.getElementById('further').innerHTML = C.furtherReporting.map(([t,o,d,u])=>`<li><a href="${u}">${t}</a><span class="meta">${o} - ${d}</span></li>`).join('');
+
+/* timeline */
+const track = document.querySelector('#timeline .track');
+const pos = i => 3 + i*(94/(CH.length-1));
+let partLast='';
+CH.forEach((c,i)=>{
+  const p = c.eyebrow.split(' - ')[0];
+  if(p!==partLast){ partLast=p; const s=document.createElement('span'); s.className='part'; s.style.left=pos(i)+'%'; s.textContent=p; track.appendChild(s); }
+  const b=document.createElement('button'); b.style.left=pos(i)+'%'; b.dataset.i=i; b.setAttribute('aria-label',c.eyebrow+': '+c.title);
+  b.innerHTML=`<i></i><span>${c.tl}</span>`;
+  b.addEventListener('click',()=>document.getElementById(c.id).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));
+  track.appendChild(b);
+});
+const tlButtons=[...track.querySelectorAll('button')];
+
+/* collage */
+const collage=document.getElementById('collage');
+function showCollage(c){
+  [...collage.children].forEach(el=>{ el.classList.remove('in'); setTimeout(()=>el.remove(),500); });
+  const items=[];
+  (c.photos||[]).forEach(p=>items.push({max:380,h:`<figure class="piece"><a class="img" href="${p.href}"><img src="${p.src}" alt="${p.cap}"></a><figcaption>${p.cap}</figcaption></figure>`}));
+  (c.news||[]).forEach(n=>{ const g=C.newsGallery.find(x=>x.src===n)||{}; items.push({max:340,h:`<figure class="piece news"><a class="img" href="${g.u||'#news'}"><img src="${n}" alt="Screenshot: ${g.t||''}"></a><figcaption>${g.o||''}, ${g.d||''}</figcaption></figure>`}); });
+  (c.slips||[]).forEach(s=>items.push({max:250,h:`<div class="slip"><b>${s.k}</b><p>${s.t}</p><span class="meta">${s.s}</span></div>`}));
+  if(!items.length) return;
+  if(innerWidth<700) items.splice(2);
+  const W=collage.clientWidth, H=collage.clientHeight, n=items.length;
+  const cols=n===1?1:2, rows=Math.ceil(n/cols), cw=W/cols, chh=H/rows;
+  const rot=[-1.2,1,-.6,.8,1.3,-.9];
+  items.forEach((it,i)=>{
+    const w=document.createElement('div'); w.innerHTML=it.h.trim(); const el=w.firstChild;
+    const col=i%cols,row=Math.floor(i/cols);
+    const width=Math.min(cw*.86,it.max);
+    let x=col*cw+(cw-width)/2+(row%2?-1:1)*cw*.05, y=row*chh+chh*.06+(col%2?chh*.12:0);
+    x=Math.max(8,Math.min(x,W-width-12));
+    el.style.width=width+'px'; el.style.left=x+'px'; el.style.top=y+'px'; el.style.setProperty('--r',rot[i%rot.length]+'deg');
+    collage.appendChild(el); setTimeout(()=>el.classList.add('in'), 120+i*160);
+  });
+}
+
+/* chart */
+function drawChart(){
+  const ch=document.getElementById('chart'); if(!ch) return;
+  const W=ch.clientWidth,H=ch.clientHeight,pl=40,pt=20,pb=20,n=C.cso.length,bw=(W-pl)/n,y=v=>pt+(H-pt-pb)*(1-v/8000);
+  let s=`<svg viewBox="0 0 ${W} ${H}">`;
+  [4000,8000].forEach(v=>s+=`<line x1="${pl}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="#BEB6AC" stroke-width=".5"/><text x="${pl-6}" y="${y(v)+3}" text-anchor="end" font-family="Libre Caslon Text,Georgia" font-size="9" fill="#6B635C">${v.toLocaleString('en-IE')}</text>`);
+  C.cso.forEach(([yr,g,p],i)=>{const x=pl+i*bw+bw*.18,w=bw*.64,last=i===n-1;
+    s+=`<rect x="${x}" y="${y(g)}" width="${w}" height="${y(0)-y(g)}" fill="#CF729B" fill-opacity="${last?1:.5}" stroke="#221E1C" stroke-width=".5"><title>${yr}: ${g.toLocaleString('en-IE')} GWh, ${p}%</title></rect>`;
+    if(i%2===0||last) s+=`<text x="${x+w/2}" y="${H-5}" text-anchor="middle" font-family="Libre Caslon Text,Georgia" font-size="9" fill="#6B635C">${yr}</text>`;
+    if(i===0||last) s+=`<text x="${x+w/2}" y="${y(g)-5}" text-anchor="middle" font-family="Crimson Pro,Georgia" font-size="13" fill="#221E1C">${p}%</text>`;});
+  ch.innerHTML=s+'</svg>';
+}
+const chartEl=document.getElementById('chart'); if(chartEl){ const ro=new ResizeObserver(drawChart); ro.observe(chartEl); }
+
+/* map */
+let map=null; const markers={};
+const hasToken = C.accessToken && !/YOUR_MAPBOX/.test(C.accessToken);
+if(window.mapboxgl && hasToken){
+  mapboxgl.accessToken=C.accessToken;
+  map=new mapboxgl.Map({container:'map',style:C.style,center:CH[0].location.center,zoom:CH[0].location.zoom,pitch:0,bearing:0,interactive:false,attributionControl:true});
+  map.on('load',()=>{
+    /* desaturate and soften the satellite raster to match the style guide */
+    map.getStyle().layers.filter(l=>l.type==='raster').forEach(l=>{
+      map.setPaintProperty(l.id,'raster-saturation',-0.6);
+      map.setPaintProperty(l.id,'raster-contrast',-0.12);
+      map.setPaintProperty(l.id,'raster-brightness-max',0.92);
+    });
+  });
+  Object.entries(C.places).forEach(([k,p])=>{
+    const el=document.createElement('div'); el.className='mk '+p.k;
+    el.innerHTML=`<i style="background:${COL[p.k]}"></i><span>${p.n}</span>`;
+    markers[k]=el; new mapboxgl.Marker({element:el,anchor:'left',offset:[-5,0]}).setLngLat(p.c).addTo(map);
+  });
+} else {
+  document.getElementById('tokenNote').style.display='block';
+}
+
+/* scrolling */
+let current=-1;
+function enter(i){
+  if(i===current) return; current=i; const c=CH[i];
+  document.querySelectorAll('.step').forEach(s=>s.classList.toggle('on',+s.dataset.i===i));
+  tlButtons.forEach((b,j)=>{ b.classList.toggle('on',j===i); b.classList.toggle('done',j<i); });
+  document.getElementById('tlfill').style.width=pos(i)+'%';
+  document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.dataset.g===c.nav));
+  Object.entries(markers).forEach(([k,el])=>{ const on=c.focus.includes(k); el.classList.toggle('on',on); el.classList.toggle('off',!on); });
+  if(map){ const r=matchMedia('(prefers-reduced-motion: reduce)').matches; map[r?'jumpTo':'flyTo']({...c.location,speed:.7,curve:1.3,essential:true}); }
+  showCollage(c);
+}
+if(window.scrollama){
+  const sc=scrollama();
+  sc.setup({step:'.step',offset:.55}).onStepEnter(r=>enter(+r.element.dataset.i));
+  window.addEventListener('resize',()=>sc.resize());
+}else{
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) enter(+e.target.dataset.i); }),{rootMargin:'-45% 0px -45% 0px'});
+  document.querySelectorAll('.step').forEach(s=>io.observe(s));
+}
+/* clear the collage and mark nav when reading news or sources */
+const tail=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ [...collage.children].forEach(el=>el.classList.remove('in')); tlButtons.forEach(b=>{b.classList.remove('on');b.classList.add('done')}); document.getElementById('tlfill').style.width='100%'; document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)); current=-1; } }),{rootMargin:'-30% 0px -60% 0px'});
+['news','sources'].forEach(id=>tail.observe(document.getElementById(id)));
+}
+</script>
+</body>
+</html>
